@@ -11,7 +11,7 @@ import ListKegiatan from "../../_components/listKegiatan";
 
 export default function MosqueDetail () {
   const params = useParams();
-  const [masjidId, setMasjidId] = useState<any>(null);
+  const [masjidId, setMasjidId] = useState<string>();
 
   useEffect(() => {
     if(params?.id) {

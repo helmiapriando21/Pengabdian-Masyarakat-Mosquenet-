@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react";
+
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -10,8 +11,12 @@ import {
   Title,
   Tooltip,
   Legend,
+  ChartData,
+  Point,
 } from 'chart.js';
+
 import { Line } from "react-chartjs-2";
+import { ReportData } from "@/interface/report";
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -22,8 +27,12 @@ ChartJS.register(
   Legend
 );
 
-export default function LineGraph({ data }: any) {
-  const [operateData, setOperateData] = useState<any>();
+interface LineGraphProps {
+  data: ReportData[]
+}
+
+export default function LineGraph({ data }: LineGraphProps) {
+  const [operateData, setOperateData] = useState<ChartData<"line", (number | Point | null)[], unknown>>();
   const [scaleValue, setScaleValue] = useState<number>(10);
   const [startDate, setStartDate] = useState<string>();
   const [endDate, setEndDate] = useState<string>();

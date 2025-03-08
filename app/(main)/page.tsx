@@ -11,12 +11,13 @@ import { useState, useEffect } from 'react';
 import { getDashboardData } from "@/helper/getData";
 import LineGraph from "../(admin)/dashboard/_components/lineGraph";
 import ListKegiatan from "./_components/listKegiatan";
+import { ReportData } from "@/interface/report";
 
 export default function Home() {
   const [isLogin, setIsLogin] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [role, setRole] = useState<string>();
-  const [report, setReport] = useState<any[]>();
+  const [report, setReport] = useState<ReportData[]>();
 
   useEffect(() => {
     init();

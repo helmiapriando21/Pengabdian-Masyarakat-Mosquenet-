@@ -1,5 +1,11 @@
 import Image from "next/image";
-export default function Logo({width, height}: any) {
+
+interface LogoProps {
+  width: number,
+  height: number,
+}
+
+export default function Logo({width, height}: LogoProps) {
     return (
         <div className="flex gap-5 items-center">
             <Image

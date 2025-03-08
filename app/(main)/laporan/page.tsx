@@ -3,16 +3,16 @@
 import { getLaporanMasjid } from "@/helper/getData";
 import { useEffect, useState } from "react";
 import Thead from "@/app/(admin)/dashboard/_components/thead";
+import { reportData } from "@/interface/report";
 
 
 export default function Laporan() {
-  const [reports, setReports] = useState<any[]>();
+  const [reports, setReports] = useState<reportData[]>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const init = async () => {
     const data = await getLaporanMasjid(setIsLoading);
     setReports(data);
-    console.log(data);
   }
 
   useEffect(() => {

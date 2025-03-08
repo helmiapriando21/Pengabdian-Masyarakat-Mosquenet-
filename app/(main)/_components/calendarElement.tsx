@@ -4,10 +4,15 @@ import Calendar from 'react-calendar';
 import { useState, useEffect } from 'react';
 import CalendarLabel from './calendarLabel';
 import { getKegiatanMasjid } from '@/helper/getData';
+import { ListActivities } from '@/interface/activity';
 
-export default function CalendarElement({ masjid_id }: { masjid_id: string | null }) {
-    const [event, setEvent] = useState<any[]>();
-    const [eventMonth, setEventMonth] = useState<any[]>();
+interface CalendarElementProps {
+  masjid_id: string | null
+};
+
+export default function CalendarElement({ masjid_id }: CalendarElementProps) {
+    const [event, setEvent] = useState<ListActivities[]>();
+    const [eventMonth, setEventMonth] = useState<ListActivities[]>();
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [now, setNow] = useState(new Date());
 
@@ -15,7 +20,6 @@ export default function CalendarElement({ masjid_id }: { masjid_id: string | nul
       const init = async () => {
         const data = await getKegiatanMasjid(setIsLoading, masjid_id);
         setEvent(data);
-        console.log(data);
       }
   
       if(isLoading) {
@@ -59,7 +63,6 @@ export default function CalendarElement({ masjid_id }: { masjid_id: string | nul
           new Date(value.date).getMonth() === date.getMonth()
         ));
         setEventMonth(filtered);
-        console.log(filtered);
       }
     }
 

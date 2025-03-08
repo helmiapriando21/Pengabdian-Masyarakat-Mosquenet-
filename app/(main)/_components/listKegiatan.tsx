@@ -1,11 +1,16 @@
 "use client"
 
 import { getKegiatanMasjid } from "@/helper/getData";
+import { ListActivities } from "@/interface/activity";
 import { useState, useEffect } from "react";
 
-export default function ListKegiatan({ masjid_id }: { masjid_id: string | null }) {
+interface ListKegiatanProps {
+  masjid_id: string | null
+};
+
+export default function ListKegiatan({ masjid_id }: ListKegiatanProps) {
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [data, setData] = useState<any>();
+  const [data, setData] = useState<ListActivities[]>();
 
   useEffect(() => {
     const init = async () => {

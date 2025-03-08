@@ -1,5 +1,4 @@
 export default function Footer() {
-    
     return (
         <div className="flex flex-col items-center p-10 gap-3 bg-[#F9FAFB]">
             <p>Contact</p>
@@ -11,5 +10,4 @@ export default function Footer() {
             <p>Copyright by Pertamina University</p>
         </div>
     );
-
 }

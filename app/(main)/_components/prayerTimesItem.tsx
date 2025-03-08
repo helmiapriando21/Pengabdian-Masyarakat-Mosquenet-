@@ -2,8 +2,14 @@
 
 import { useState, useEffect } from "react";
 
-export default function PrayerTimesItem({label, value, after}: any) {
-  const [isTime, setIsTime] = useState(false);
+interface PrayerTimesItemsProps {
+  label: string,
+  value: string,
+  after: string
+};
+
+export default function PrayerTimesItem({label, value, after}: PrayerTimesItemsProps) {
+  const [isTime, setIsTime] = useState<boolean>(false);
 
   useEffect(() => {
     if(

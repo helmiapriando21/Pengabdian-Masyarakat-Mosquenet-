@@ -4,10 +4,15 @@ import { getMasjid, getPrayerTimes } from "@/helper/getData";
 import React, { useEffect, useState } from "react";
 import PrayerTimesItem from "../_components/prayerTimesItem";
 import ClockElement from "../_components/clockElement";
+import { PrayerTimes } from "@/interface/prayerTimes";
 
-export default function PrayerTimesSection({ masjidId }: any) {
+interface PrayerTimesSectionProps {
+  masjidId?: string
+};
+
+export default function PrayerTimesSection({ masjidId }: PrayerTimesSectionProps) {
     const [isLoading, setIsLoading] = useState<boolean>(true);
-    const [prayerTimes, setPrayerTimes] = useState<any>();
+    const [prayerTimes, setPrayerTimes] = useState<PrayerTimes>();
     
     useEffect(() => {
         const init = async () => {

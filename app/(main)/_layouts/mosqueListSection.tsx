@@ -1,12 +1,13 @@
 "use client"
 
 import { getMasjidList } from "@/helper/getData";
+import { ListMosque } from "@/interface/mosque";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 
 export default function MosqueListSection() {
     const [isLoading, setIsLoading] = useState<boolean>(true);
-    const [mosques, setMosques] = useState<any>([]);
+    const [mosques, setMosques] = useState<ListMosque[]>();
     const router = useRouter();
 
     useEffect(() => {
@@ -15,11 +16,12 @@ export default function MosqueListSection() {
             setMosques(data);
         }
 
-        if(isLoading) init();
+        if(isLoading) 
+          init();
     }, [])
 
 
-    if(!isLoading && mosques.length > 0) return (
+    if(!isLoading && mosques) return (
       <div className="bg-white w-screen h-max p-16">
         <div className="flex items-center justify-center w-full h-max bg-[#FFF59C] p-8 rounded-3xl">
             <table>
