@@ -12,17 +12,14 @@ import basicValidation from "@/validation/basic-validation";
 import passwordValidation from "@/validation/password-validation";
 import { getMasjidList } from "@/helper/getData";
 import RedirectSolution from "./redirectSolution";
+import { UserData } from "@/interface/auth";
+import { SelectType } from "@/interface/form";
+import numberValidation from "@/validation/number-validation";
 
 export default function Jamaah({ setMenu, setIsChoose, setSelectedRegisterMenu }: any) {
     const [isLoading, setIsLoading] = useState<boolean>(true);
-    const [data, setData] = useState({
-        email: "",
-        password: "",
-        name: "",
-        telp: "",
-        mosque_id: null
-    });
-    const [mosqueOption, setMosqueOption] = useState();
+    const [data, setData] = useState<UserData>();
+    const [mosqueOption, setMosqueOption] = useState<SelectType[]>([]);
     const [isError, setIsError] = useState<boolean>(false);
     const router = useRouter();
     
@@ -44,11 +41,11 @@ export default function Jamaah({ setMenu, setIsChoose, setSelectedRegisterMenu }
         try {
             nProgress.start();
             if(
-                !emailValidation(data.email, 'alamat email') && 
-                !telpValidation(data.telp, 'nomor handphone') && 
-                !basicValidation(data.name, 'nama') && 
-                !passwordValidation(data.password, 'password') &&
-                !basicValidation(data.mosque_id || '', 'domisili')
+                !emailValidation(data?.email || '', 'alamat email') && 
+                !telpValidation(data?.telp || '', 'nomor handphone') && 
+                !basicValidation(data?.name || '', 'nama') && 
+                !passwordValidation(data?.password || '', 'password') &&
+                !numberValidation(data?.mosque_id, 'domisili')
             ) {
                 const response = await fetch("/api/register", {
                     method: 'POST',
@@ -58,15 +55,10 @@ export default function Jamaah({ setMenu, setIsChoose, setSelectedRegisterMenu }
                     })
                 });
                 const responseData = await response.json();
+                console.log(response);
                 if(response.ok) {
                     showAlert(responseData.message, router, "success", '/auth');
-                    setData({
-                      email: "",
-                      password: "",
-                      name: "",
-                      telp: "",
-                      mosque_id: null
-                    });
+                    setData(undefined);
                 } else {
                     showAlert("Terjadi kesalahan pada registrasi, silahkan coba lagi!", router, "error", '/login');
                 }
@@ -90,7 +82,7 @@ export default function Jamaah({ setMenu, setIsChoose, setSelectedRegisterMenu }
                   type="email"
                   placeholder="email"
                   isError={isError}
-                  message={emailValidation(data.email, 'alamat email')}
+                  message={emailValidation(data?.email || '', 'alamat email')}
                 />
                 <Input
                   label="Nomor Telepon"
@@ -100,7 +92,7 @@ export default function Jamaah({ setMenu, setIsChoose, setSelectedRegisterMenu }
                   type="tel"
                   placeholder="Nomor Telepon"
                   isError={isError}
-                  message={telpValidation(data.telp, 'nomor handphone')}
+                  message={telpValidation(data?.telp || '', 'nomor handphone')}
                 />
                 <Input
                   label={'Nama'}
@@ -110,28 +102,27 @@ export default function Jamaah({ setMenu, setIsChoose, setSelectedRegisterMenu }
                   type="text"
                   placeholder="Nama"
                   isError={isError}
-                  message={basicValidation(data.name, 'nama')}
+                  message={basicValidation(data?.name || '', 'nama')}
                 />
                 <Select
                   label="Domisili"
-                  key={"domisili"}
                   data={data}
                   setData={setData}
                   dataKey="mosque_id"
                   placeholder="--Domisili--"
                   optionsList={mosqueOption}
                   isError={isError}
-                  message={basicValidation(data.mosque_id || '', 'domisili')}
+                  message={numberValidation(data?.mosque_id, 'domisili')}
                 />
                 <Input
                   label="Password"
                   data={data}
                   setData={setData}
                   dataKey="password"
-                      placeholder="password"
+                  placeholder="password"
                   type="password"
                   isError={isError}
-                  message={passwordValidation(data.password, 'password')}
+                  message={passwordValidation(data?.password || '', 'password')}
                 />
             </div>
             <div className="flex flex-col gap-3">

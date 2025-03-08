@@ -5,15 +5,12 @@ import Input  from "../../_components/input";
 import { useState } from "react";
 import passwordValidation from "@/validation/password-validation";
 import showAlert from "@/helper/showAlert";
-import emailValidation from "@/validation/email-validation";
 import {useRouter} from "next/navigation";
 import RedirectSolution from "../../_components/redirectSolution";
+import { AuthResetPassword } from "@/interface/auth";
 
 export default function ResetPassword({setMenu}: any) {
-    const [data, setData] = useState({
-        password: "",
-        confirmPassword: "",
-    });
+    const [data, setData] = useState<AuthResetPassword>();
     const router = useRouter();
     const [isError, setIsError] = useState<boolean>(false);
 
@@ -21,8 +18,8 @@ export default function ResetPassword({setMenu}: any) {
         try {
             nProgress.start();
             if( 
-              !passwordValidation(data.password, 'password')
-              && data.password === data.confirmPassword
+              !passwordValidation(data?.password || '', 'password')
+              && data?.password === data?.confirmPassword
             ) {
                 const response = await fetch("/api/forgot/reset-password", {
                     method: 'POST',
@@ -55,7 +52,7 @@ export default function ResetPassword({setMenu}: any) {
                   placeholder="password"
                   type="password"
                   isError={isError}
-                  message={passwordValidation(data.password, 'password')}
+                  message={passwordValidation(data?.password || '', 'password')}
                 />
                 <Input
                   label="Konfirmasi Password"
@@ -65,7 +62,7 @@ export default function ResetPassword({setMenu}: any) {
                   placeholder="Konfirmasi Password"
                   type="password"
                   isError={isError}
-                  message={isError && !passwordValidation(data.password, 'password') && data.password !== data.confirmPassword && "Pastikan password dan konfirmasi password sama"}
+                  message={isError && !passwordValidation(data?.password || '', 'password') && data?.password !== data?.confirmPassword && "Pastikan password dan konfirmasi password sama"}
                 />
                 <RedirectSolution 
                   question="Sudah punya akun?" 

@@ -6,18 +6,17 @@ import { useState } from "react";
 import showAlert from "@/helper/showAlert";
 import {useRouter} from "next/navigation";
 import RedirectSolution from "../../_components/redirectSolution";
+import { AuthVerification } from "@/interface/auth";
 
 export default function Verification({setMenu}: any) {
-    const [data, setData] = useState({
-        token: "",
-    });
+    const [data, setData] = useState<AuthVerification>();
     const router = useRouter();
     const [isError, setIsError] = useState<boolean>(false);
 
     const handleClick = async () => {
         try {
             nProgress.start();
-            if( data.token !== "" ) {
+            if( data && data.token && data.token !== "" ) {
                 const response = await fetch("/api/forgot/verify-email", {
                     method: 'POST',
                     body: JSON.stringify(data)

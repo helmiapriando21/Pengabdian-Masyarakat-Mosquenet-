@@ -1,6 +1,4 @@
 import "../../../globals.css";
-import ProgressBar from "../../../(main)/_components/progressBar";
-import Image from "next/image";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

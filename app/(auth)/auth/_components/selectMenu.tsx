@@ -1,6 +1,13 @@
+import React from "react";
 import RedirectSolution from "./redirectSolution";
 
-export default function SelectMenu({ setMenu, setIsChoose, setSelectedRegisterMenu }: any) {
+interface SelectMenuProps {
+  setMenu: React.Dispatch<React.SetStateAction<string>>,
+  setIsChoose: React.Dispatch<React.SetStateAction<boolean>>,
+  setSelectedRegisterMenu: React.Dispatch<React.SetStateAction<string>>
+}
+
+export default function SelectMenu({ setMenu, setIsChoose, setSelectedRegisterMenu }: SelectMenuProps) {
     return (
         <>
             <button

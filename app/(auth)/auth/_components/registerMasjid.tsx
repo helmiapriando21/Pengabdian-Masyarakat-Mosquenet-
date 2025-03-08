@@ -11,27 +11,18 @@ import emailValidation from "@/validation/email-validation";
 import telpValidation from "@/validation/telp-validation";
 import passwordValidation from "@/validation/password-validation";
 import RedirectSolution from "./redirectSolution";
+import { MosqueData, UserData } from "@/interface/auth";
+import numberValidation from "@/validation/number-validation";
+import { SelectType } from "@/interface/form";
 
 export default function Masjid({ setMenu, setIsChoose, setSelectedRegisterMenu }: any) {
     const [isLoading, setIsLoading] = useState<boolean>(true);
-    const [data, setData] = useState({
-        email: "",
-        password: "",
-        name: "",
-        telp: "",
-    });
-    const [mosqueData, setMosqueData] = useState({
-        name: "",
-        location: "",
-        subdistrict_id: null,   
-        cityorregency_id: null,
-        province_id: null, 
-        ward_id: null       
-    });
-    const [provinceOptions, setProvinceOptions] = useState<any>();
-    const [cityorregencyOptions, setCityorregencyOptions] = useState<any>();
-    const [subdistrictOptions, setSubdistrictOptions] = useState<any>();
-    const [wardOptions, setWardOptions] = useState<any>();
+    const [data, setData] = useState<UserData>();
+    const [mosqueData, setMosqueData] = useState<MosqueData>();
+    const [provinceOptions, setProvinceOptions] = useState<SelectType[]>([]);
+    const [cityorregencyOptions, setCityorregencyOptions] = useState<SelectType[]>([]);
+    const [subdistrictOptions, setSubdistrictOptions] = useState<SelectType[]>([]);
+    const [wardOptions, setWardOptions] = useState<SelectType[]>([]);
     const [isError, setIsError] = useState<boolean>(false);
     const router = useRouter();
     
@@ -64,16 +55,16 @@ export default function Masjid({ setMenu, setIsChoose, setSelectedRegisterMenu }
         try {
             nProgress.start();
             if(
-                !emailValidation(data.email, 'alamat email') && 
-                !telpValidation(data.telp, 'nomor handphone') && 
-                !basicValidation(data.name, 'nama') && 
-                !passwordValidation(data.password, 'password') &&
-                !basicValidation(mosqueData.province_id || '', 'provinsi masjid') &&
-                !basicValidation(mosqueData.cityorregency_id || '', 'kabupaten/kota masjid') &&
-                !basicValidation(mosqueData.subdistrict_id || '', 'kecamatan masjid') &&
-                !basicValidation(mosqueData.ward_id || '', 'kelurahan masjid') &&
-                !basicValidation(mosqueData.name || '', 'nama masjid') &&
-                !basicValidation(mosqueData.location || '', 'alamat masjid')
+                !emailValidation(data?.email || '', 'alamat email') && 
+                !telpValidation(data?.telp || '', 'nomor handphone') && 
+                !basicValidation(data?.name || '', 'nama') && 
+                !passwordValidation(data?.password || '', 'password') &&
+                !numberValidation(mosqueData?.province_id, 'provinsi masjid') &&
+                !numberValidation(mosqueData?.cityorregency_id, 'kabupaten/kota masjid') &&
+                !numberValidation(mosqueData?.subdistrict_id, 'kecamatan masjid') &&
+                !numberValidation(mosqueData?.ward_id, 'kelurahan masjid') &&
+                !basicValidation(mosqueData?.name || '', 'nama masjid') &&
+                !basicValidation(mosqueData?.location || '', 'alamat masjid')
             ) {
                 const response = await fetch("/api/register", {
                     method: 'POST',
@@ -86,20 +77,9 @@ export default function Masjid({ setMenu, setIsChoose, setSelectedRegisterMenu }
                 const responseData = await response.json();
                 if(response.ok) {
                     showAlert(responseData.message, router, "success", '/auth');
-                    setData({
-                      email: "",
-                      password: "",
-                      name: "",
-                      telp: "",
-                     });
-                     setMosqueData({
-                      name: "",
-                      location: "",
-                      subdistrict_id: null,   
-                      cityorregency_id: null,
-                      province_id: null, 
-                      ward_id: null       
-                    });
+                    setData(undefined);
+                    setMosqueData(undefined);
+                    setIsError(false);
                 } else {
                     showAlert("Terjadi kesalahan pada registrasi, silahkan coba lagi!", router, "error", '/auth');
                 }
@@ -122,8 +102,8 @@ export default function Masjid({ setMenu, setIsChoose, setSelectedRegisterMenu }
                   dataKey="email"
                   type="email"
                   placeholder="email"
-                  isError={isError}
-                  message={emailValidation(data.email, 'alamat email')}
+                  isError={isError} 
+                  message={emailValidation(data?.email || "", 'alamat email')}
                 />
                 <Input
                   label="Nomor Telepon"
@@ -133,7 +113,7 @@ export default function Masjid({ setMenu, setIsChoose, setSelectedRegisterMenu }
                   type="tel"
                   placeholder="Nomor Telpon"
                   isError={isError}
-                  message={telpValidation(data.telp, 'nomor handphone')}
+                  message={telpValidation(data?.telp || "", 'nomor handphone')}
                 />
                 <Input
                   label="Nama Admin"
@@ -143,7 +123,7 @@ export default function Masjid({ setMenu, setIsChoose, setSelectedRegisterMenu }
                   type="text"
                   placeholder="Nama Admin"
                   isError={isError}
-                  message={basicValidation(data.name, 'nama')}
+                  message={basicValidation(data?.name || "", 'nama')}
                 />
                 <Input
                   label="Nama Masjid"
@@ -153,7 +133,7 @@ export default function Masjid({ setMenu, setIsChoose, setSelectedRegisterMenu }
                   type="text"
                   placeholder="Nama Masjid"
                   isError={isError}
-                  message={basicValidation(mosqueData.name, 'nama masjid')}
+                  message={basicValidation(mosqueData?.name || "", 'nama masjid')}
                 />
                 <Input
                   label="Lokasi"
@@ -163,7 +143,7 @@ export default function Masjid({ setMenu, setIsChoose, setSelectedRegisterMenu }
                   type="text"
                   placeholder="Alamat Masjid"
                   isError={isError}
-                  message={basicValidation(mosqueData.location, 'lokasi masjid')}
+                  message={basicValidation(mosqueData?.location || "", 'lokasi masjid')}
                 />
                 <Select
                   label="Provinsi"
@@ -174,46 +154,46 @@ export default function Masjid({ setMenu, setIsChoose, setSelectedRegisterMenu }
                   placeholder="Provinsi"
                   optionsList={provinceOptions}
                   isError={isError}
-                  message={basicValidation(mosqueData.province_id || '', 'provinsi masjid')}
+                  message={numberValidation(mosqueData?.province_id, 'provinsi masjid')}
                 />
                 {
-                    mosqueData.province_id
+                    mosqueData?.province_id
                         && <Select
                             label="Kabupaten/Kota"
                             data={mosqueData}
                             setData={setMosqueData}
                             dataKey="cityorregency_id"
                             placeholder="Kabupaten/Kota"
-                            optionsList={cityorregencyOptions.filter((value: any) => value.provinsi_id == mosqueData.province_id)}
+                            optionsList={cityorregencyOptions?.filter((value: any) => value.provinsi_id == mosqueData!.province_id)}
                             isError={isError}
-                            message={basicValidation(mosqueData.cityorregency_id || '', 'kabupaten/kota masjid')}
+                            message={numberValidation(mosqueData?.cityorregency_id, 'kabupaten/kota masjid')}
                         />
                 }
                 {
-                    mosqueData.cityorregency_id
+                    mosqueData?.cityorregency_id
                         && <Select
                             label="Kecamatan"
                             data={mosqueData}
                             setData={setMosqueData}
                             dataKey="subdistrict_id"
                             placeholder="Kecamatan"
-                            optionsList={subdistrictOptions.filter((value: any) => value.kabupaten_id == mosqueData.cityorregency_id)}
+                            optionsList={subdistrictOptions?.filter((value: SelectType) => value.kabupaten_id == mosqueData!.cityorregency_id)}
                             isError={isError}
-                            message={basicValidation(mosqueData.subdistrict_id || '', 'kecamatan masjid')}
+                            message={numberValidation(mosqueData?.subdistrict_id, 'kecamatan masjid')}
                         />
                 }
                 {
-                    mosqueData.subdistrict_id
-                        && <Select
-                            label="Kelurahan"
-                            data={mosqueData}
-                            setData={setMosqueData}
-                            dataKey="ward_id"
-                            placeholder="Kelurahan"
-                            optionsList={wardOptions.filter((value: any) => value.kecamatan_id == mosqueData.subdistrict_id)}
-                            isError={isError}
-                            message={basicValidation(mosqueData.ward_id || '', 'kelurahan masjid')}
-                        />
+                    mosqueData?.subdistrict_id
+                      && <Select
+                          label="Kelurahan"
+                          data={mosqueData}
+                          setData={setMosqueData}
+                          dataKey="ward_id"
+                          placeholder="Kelurahan"
+                          optionsList={wardOptions?.filter((value: any) => value.kecamatan_id == mosqueData!.subdistrict_id)}
+                          isError={isError}
+                          message={numberValidation(mosqueData?.ward_id, 'kelurahan masjid')}
+                      />
                 }
                 <Input
                   label="Password"
@@ -223,7 +203,7 @@ export default function Masjid({ setMenu, setIsChoose, setSelectedRegisterMenu }
                   placeholder="password"
                   type="password"
                   isError={isError}
-                  message={passwordValidation(data.password || '', 'password')}
+                  message={passwordValidation(data?.password || "", 'password')}
                 />
             </div>
             <div className="flex flex-col gap-3">

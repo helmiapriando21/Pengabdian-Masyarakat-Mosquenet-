@@ -7,9 +7,9 @@ import Masjid from "./_components/registerMasjid";
 import Jamaah from "./_components/registerJamaah";
 
 export default function AuthPage() {
-    const [selectedMenu, setSelectedMenu] = useState('login');
-    const [selectedRegisterMenu, setSelectedRegisterMenu] = useState('');
-    const [isChoose, setIsChoose] = useState(false);
+    const [selectedMenu, setSelectedMenu] = useState<string>('login');
+    const [selectedRegisterMenu, setSelectedRegisterMenu] = useState<string>('');
+    const [isChoose, setIsChoose] = useState<boolean>(false);
 
     return (
         <div 

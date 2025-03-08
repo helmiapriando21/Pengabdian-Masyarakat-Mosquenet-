@@ -1,5 +1,5 @@
-const numberValidation = (value?: number, label?: string) => {
-  if(value === undefined) {
+const numberValidation = (value: number | undefined, label?: string) => {
+  if(!value) {
       return `Tambahkan ${label}`;
   } else {
       return false;

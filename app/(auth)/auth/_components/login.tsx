@@ -1,19 +1,17 @@
 "use client"
 
 import nProgress from "nprogress";
-import Input  from "./input";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import Input  from "./input";
 import passwordValidation from "@/validation/password-validation";
-import showAlert from "@/helper/showAlert";
 import emailValidation from "@/validation/email-validation";
-import {useRouter} from "next/navigation";
 import RedirectSolution from "./redirectSolution";
+import { UserData } from "@/interface/auth";
+import showAlert from "@/helper/showAlert";
 
 export default function Login({setMenu}: any) {
-    const [data, setData] = useState({
-        email: "",
-        password: ""
-    });
+    const [data, setData] = useState<UserData>();
     const router = useRouter();
     const [isError, setIsError] = useState<boolean>(false);
 
@@ -21,8 +19,8 @@ export default function Login({setMenu}: any) {
         try {
             nProgress.start();
             if(
-                !emailValidation(data.email, 'alamat email') && 
-                !passwordValidation(data.password, 'password')
+                !emailValidation(data?.email || '', 'alamat email') && 
+                !passwordValidation(data?.password || '', 'password')
             ) {
                 const response = await fetch("/api/login", {
                     method: 'POST',
@@ -54,7 +52,7 @@ export default function Login({setMenu}: any) {
                   type="email"
                   placeholder="email"
                   isError={isError}
-                  message={emailValidation(data.email, 'email')}
+                  message={emailValidation(data?.email || '', 'email')}
                 />
                 <Input
                   label="Password"
@@ -64,7 +62,7 @@ export default function Login({setMenu}: any) {
                   placeholder="password"
                   type="password"
                   isError={isError}
-                  message={passwordValidation(data.password, 'password')}
+                  message={passwordValidation(data?.password || '', 'password')}
                 />
                 <RedirectSolution
                   question="Lupa Password?"

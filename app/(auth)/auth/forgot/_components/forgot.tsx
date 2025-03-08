@@ -5,20 +5,19 @@ import Input  from "../../_components/input";
 import { useState } from "react";
 import showAlert from "@/helper/showAlert";
 import emailValidation from "@/validation/email-validation";
-import {useRouter} from "next/navigation";
+import { useRouter } from "next/navigation";
 import RedirectSolution from "../../_components/redirectSolution";
+import { AuthForgot } from "@/interface/auth";
 
 export default function Forgot({setMenu}: any) {
-    const [data, setData] = useState({
-        email: ""
-    });
+    const [data, setData] = useState<AuthForgot>();
     const router = useRouter();
     const [isError, setIsError] = useState<boolean>(false);
 
     const handleClick = async () => {
         try {
             nProgress.start();
-            if( !emailValidation(data.email, 'alamat email') ) {
+            if( !emailValidation(data?.email || '', 'alamat email') ) {
                 const response = await fetch("/api/forgot/send-token", {
                     method: 'POST',
                     body: JSON.stringify(data)
@@ -50,7 +49,7 @@ export default function Forgot({setMenu}: any) {
                   type="email"
                   placeholder="email"
                   isError={isError}
-                  message={emailValidation(data.email, 'email')}
+                  message={emailValidation(data?.email || '', 'email')}
                 />
                 <RedirectSolution 
                   question="Sudah punya akun?" 

@@ -18,7 +18,7 @@ export default function Input({ data, setData, dataKey, type, placeholder, isErr
                 }}
                 className="border-[#ccc] border-[1px] rounded-md bg-white px-2 py-1 w-full h-max"
                 placeholder={placeholder}
-                value={data[dataKey]}
+                value={data?.[dataKey] || ""}
             />
             {isError && message && <p className="text-red-500 text-sm font-extralight px-2">{message}</p>}
         </div>

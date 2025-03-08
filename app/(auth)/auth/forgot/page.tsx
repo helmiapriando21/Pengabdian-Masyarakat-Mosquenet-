@@ -5,11 +5,8 @@ import Forgot from "./_components/forgot";
 import Verification from "./_components/verification";
 import ResetPassword from "./_components/resetPassword";
 
-// 'Lupa Password',
-// 'Verifikasi',
-// 'Ubah Password'
 export default function ForgotPage() {
-    const [selectedMenu, setSelectedMenu] = useState('Lupa Password');
+    const [selectedMenu, setSelectedMenu] = useState<string>('Lupa Password');
 
     return (
         <div 
