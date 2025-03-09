@@ -7,7 +7,7 @@ import { getKegiatanMasjid } from '@/helper/getData';
 import { ListActivities } from '@/interface/activity';
 
 interface CalendarElementProps {
-  masjid_id: string | null
+  masjid_id?: string | null
 };
 
 export default function CalendarElement({ masjid_id }: CalendarElementProps) {
@@ -18,7 +18,7 @@ export default function CalendarElement({ masjid_id }: CalendarElementProps) {
 
     useEffect(() => {
       const init = async () => {
-        const data = await getKegiatanMasjid(setIsLoading, masjid_id);
+        const data = await getKegiatanMasjid(setIsLoading, masjid_id || null);
         setEvent(data);
       }
   
