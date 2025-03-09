@@ -61,7 +61,7 @@ const getPrayerTimes = async (
 
 const getMasjid = async (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>> | null, 
-  index: string
+  index: string | null
 ) => {
     try {
         nProgress.start();
