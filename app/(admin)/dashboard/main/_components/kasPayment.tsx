@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+import { useState } from "react";
 import Input from "../../_components/input";
 import numberValidation from "@/validation/number-validation";
 import { createKasPayment } from "@/helper/postData";
-import { QRCodeCanvas } from "qrcode.react";
 import { getValidKasTransaction } from "@/helper/getData";
 import { useRouter } from "next/navigation";
 
