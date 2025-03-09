@@ -33,7 +33,7 @@ export default function MosqueListSection() {
                     </tr>
                 </thead>
                 <tbody>
-                    {mosques!.map((value: any, index: number) => (
+                    {mosques!.map((value: ListMosque, index: number) => (
                       <tr 
                         key={index} 
                         onClick={() => {router.push(`/masjid/${value.id}`)}} 

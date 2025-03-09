@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import checkUser from "@/helper/checkUser";
 import { getMasjid } from "@/helper/getData";
 import { useEffect, useState } from "react";

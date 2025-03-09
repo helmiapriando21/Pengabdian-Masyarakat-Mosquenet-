@@ -2,14 +2,18 @@
 
 import nProgress from "nprogress";
 import Input  from "../../_components/input";
-import { useState } from "react";
+import React, { useState } from "react";
 import showAlert from "@/helper/showAlert";
 import emailValidation from "@/validation/email-validation";
 import { useRouter } from "next/navigation";
 import RedirectSolution from "../../_components/redirectSolution";
 import { AuthForgot } from "@/interface/auth";
 
-export default function Forgot({setMenu}: any) {
+interface ForgotProps {
+  setMenu: React.Dispatch<React.SetStateAction<string>>
+}
+
+export default function Forgot({setMenu}: ForgotProps) {
     const [data, setData] = useState<AuthForgot>();
     const router = useRouter();
     const [isError, setIsError] = useState<boolean>(false);

@@ -9,7 +9,11 @@ import {useRouter} from "next/navigation";
 import RedirectSolution from "../../_components/redirectSolution";
 import { AuthResetPassword } from "@/interface/auth";
 
-export default function ResetPassword({setMenu}: any) {
+interface ResetPasswordProps {
+  setMenu: React.Dispatch<React.SetStateAction<string>>
+}
+
+export default function ResetPassword({setMenu}: ResetPasswordProps) {
     const [data, setData] = useState<AuthResetPassword>();
     const router = useRouter();
     const [isError, setIsError] = useState<boolean>(false);

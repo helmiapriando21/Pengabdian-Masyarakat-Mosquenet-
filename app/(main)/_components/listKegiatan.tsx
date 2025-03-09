@@ -27,7 +27,7 @@ export default function ListKegiatan({ masjid_id }: ListKegiatanProps) {
     return (
       <div className="flex flex-col">
         {
-          data.map((value: any, index: number) => (
+          data.map((value: ListActivities, index: number) => (
             <div key={index} className="flex h-max items-center border-[1px] border-black overflow-hidden">
               { value.image && <img src={`${process.env.NEXT_PUBLIC_API_STATIC_URL}/${value.image}`} className="w-52 h-32 bg-center" /> }
               <div className="flex flex-col gap-2 px-5 ">

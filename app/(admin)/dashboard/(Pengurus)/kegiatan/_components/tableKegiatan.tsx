@@ -14,7 +14,7 @@ export default function TableKegiatan() {
   const [data, setData] = useState<ListActivities[]>();
   const router = useRouter();
 
-  const deleteAction = async (id: any) => {
+  const deleteAction = async (id: number) => {
     const deleteConfirmation = confirm("Apakah anda yakin?");
     if(deleteConfirmation) await deleteKegiatan(id, router)
   }
@@ -36,7 +36,7 @@ export default function TableKegiatan() {
         <Thead labels={['Tanggal', "Nama", 'Alamat', "Penanggungjawab", "Waktu mulai", "Aksi"]} />
         <tbody>
           {
-            data.map((value: any, index: number) => (
+            data.map((value: ListActivities, index: number) => (
               <tr key={index} className="bg-yellow-100 hover:bg-yellow-400">
                 <td className="px-4 py-2 min-w-32 text-center text-xs">
                   {

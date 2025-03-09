@@ -28,7 +28,7 @@ export default function Laporan() {
           <Thead labels={['Tanggal', "Sumber Pemasukan/Keterangan Pengeluaran", 'Jumlah']} />
           <tbody>
             {
-              reports.map((value: any, index: number) => (
+              reports.map((value: ReportData, index: number) => (
                 <tr key={index} className="bg-yellow-100 hover:bg-yellow-400">
                   <td className="px-4 py-2 min-w-32 text-center">
                     {new Date(value.date).toLocaleDateString('id-ID', { weekday: 'long' })},{" "}

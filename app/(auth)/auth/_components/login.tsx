@@ -1,7 +1,7 @@
 "use client"
 
 import nProgress from "nprogress";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Input  from "./input";
 import passwordValidation from "@/validation/password-validation";
@@ -10,7 +10,11 @@ import RedirectSolution from "./redirectSolution";
 import { UserData } from "@/interface/auth";
 import showAlert from "@/helper/showAlert";
 
-export default function Login({setMenu}: any) {
+interface LoginProps {
+  setMenu: React.Dispatch<React.SetStateAction<string>>
+}
+
+export default function Login({setMenu}: LoginProps) {
     const [data, setData] = useState<UserData>();
     const router = useRouter();
     const [isError, setIsError] = useState<boolean>(false);

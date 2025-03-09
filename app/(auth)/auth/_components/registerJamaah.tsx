@@ -2,7 +2,7 @@
 
 import nProgress from "nprogress";
 import Input  from "./input";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Select from "./select";
 import showAlert from "@/helper/showAlert";
 import { useRouter } from "next/navigation";
@@ -16,7 +16,13 @@ import { UserData } from "@/interface/auth";
 import { SelectType } from "@/interface/form";
 import numberValidation from "@/validation/number-validation";
 
-export default function Jamaah({ setMenu, setIsChoose, setSelectedRegisterMenu }: any) {
+interface JamaahProps {
+  setMenu: React.Dispatch<React.SetStateAction<string>>,
+  setIsChoose: React.Dispatch<React.SetStateAction<boolean>>,
+  setSelectedRegisterMenu: React.Dispatch<React.SetStateAction<string>>
+}
+
+export default function Jamaah({ setMenu, setIsChoose, setSelectedRegisterMenu }: JamaahProps) {
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [data, setData] = useState<UserData>();
     const [mosqueOption, setMosqueOption] = useState<SelectType[]>([]);
@@ -26,7 +32,11 @@ export default function Jamaah({ setMenu, setIsChoose, setSelectedRegisterMenu }
     useEffect(() => {
         const initData = async () => {
             const data = await getMasjidList(setIsLoading);
-            setMosqueOption(data.map((value: any) => ({
+            setMosqueOption(data.map((value: {
+              id: number, 
+              name: string, 
+              location: string
+            }) => ({
                 id: value.id,
                 name: `${value.name}. ${value.location}`
             })));

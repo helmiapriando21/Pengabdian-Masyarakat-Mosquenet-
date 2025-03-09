@@ -40,16 +40,19 @@ export default function LineGraph({ data }: LineGraphProps) {
   const filterData = () => {
     let objectData = data;
     if(startDate) {
-      objectData = objectData.filter((value: any) => new Date(value.date) >= new Date(startDate));
+      objectData = objectData.filter((value: ReportData) => new Date(value.date) >= new Date(startDate));
     }
     if(endDate) {
-      objectData = objectData.filter((value: any) => new Date(value.date) <= new Date(endDate));
+      objectData = objectData.filter((value: ReportData) => new Date(value.date) <= new Date(endDate));
     }
     return objectData;
   }
 
-  const scaleGraph = (filteredData: any, x: number, y: number) => {
-    const monthlyData = filteredData.reduce((acc: any, curr: any) => {
+  const scaleGraph = (filteredData: ReportData[], x: number, y: number) => {
+    const monthlyData = filteredData.reduce((
+      acc: Record<string, { pemasukan: number, pengeluaran: number}>,
+      curr: ReportData
+    ) => {
       const month = curr.date.slice(x, y);
       if (!acc[month]) acc[month] = { pemasukan: 0, pengeluaran: 0 };
       if (curr.type === 'Pemasukan') acc[month].pemasukan += curr.amount;

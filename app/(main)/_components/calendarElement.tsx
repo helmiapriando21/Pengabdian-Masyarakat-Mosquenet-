@@ -35,7 +35,7 @@ export default function CalendarElement({ masjid_id }: CalendarElementProps) {
         return () => clearInterval(interval);
     }, []);
 
-    const todayClassList = ({ date }: any) => {
+    const todayClassList = ({ date }: { date: Date }) => {
         const defaultClass = "border-black items-center text-center py-[10px] border-white border-[5px] text-xs font-bold ";
 
         if(
@@ -84,7 +84,7 @@ export default function CalendarElement({ masjid_id }: CalendarElementProps) {
               />
               <div className="flex flex-col gap-3">
                 {
-                  eventMonth && eventMonth.map((value: any, key: number) => (
+                  eventMonth && eventMonth.map((value: ListActivities, key: number) => (
                     <a
                       key={key} 
                       className="flex flex-row gap-3 underline underline-offset-2"

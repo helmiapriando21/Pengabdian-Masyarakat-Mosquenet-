@@ -33,7 +33,7 @@ export default function Account() {
       <table className="rounded-lg overflow-hidden">
         <Thead labels={['Nama', 'Email', 'Status']} />
         <tbody>
-          {jamaah?.map((value, index) => {
+          {jamaah?.map((value: Jamaah, index: number) => {
             return (
               <tr key={index} className="bg-yellow-100 hover:bg-yellow-400">
                 <td className="px-4 py-2 min-w-32 text-center">{value.name}</td>
@@ -45,7 +45,7 @@ export default function Account() {
                           <Checkbox 
                             label="Ketua" 
                             value={value.admin.role}
-                            onChange={(e: any) => {
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                               if(e.target.checked) {
                                 action(value.email, "Ketua")
                               } else {
@@ -56,7 +56,7 @@ export default function Account() {
                           <Checkbox 
                             label="Bendahara" 
                             value={value.admin.role}
-                            onChange={(e: any) => {
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                               if(e.target.checked) {
                                 action(value.email, "Bendahara")
                               } else {
@@ -67,7 +67,7 @@ export default function Account() {
                           <Checkbox 
                             label="Sekretaris" 
                             value={value.admin.role}
-                            onChange={(e: any) => {
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                               if(e.target.checked) {
                                 action(value.email, "Sekretaris")
                               } else {
@@ -78,7 +78,7 @@ export default function Account() {
                           <Checkbox 
                             label="Marbot" 
                             value={value.admin.role}
-                            onChange={(e: any) => {
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                               if(e.target.checked) {
                                 action(value.email, "Marbot")
                               } else {
@@ -91,7 +91,7 @@ export default function Account() {
                   <Checkbox
                     label="Pengurus"
                     value={value.admin.status ? value.admin.role : "Jamaah"}
-                    onChange={(e: any) => {
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                       if(e.target.checked) {
                         action(value.email, "Pengurus")
                       } else {

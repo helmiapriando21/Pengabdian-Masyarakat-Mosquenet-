@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { SelectType } from "@/interface/form";
 
 interface SelectInputProps {
@@ -33,7 +35,7 @@ export default function SelectInput({optionsList, data, setData, placeholder, da
                 }}
             >
                 <option value="" disabled>{placeholder}</option>
-                {optionsList.map((value: any) => {
+                {optionsList.map((value: SelectType) => {
                     return <option key={`${value.id}`} value={`${value.id}`}>{value.name}</option>
                 })}
             </select>

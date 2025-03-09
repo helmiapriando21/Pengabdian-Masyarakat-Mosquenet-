@@ -15,7 +15,13 @@ import { MosqueData, UserData } from "@/interface/auth";
 import numberValidation from "@/validation/number-validation";
 import { SelectType } from "@/interface/form";
 
-export default function Masjid({ setMenu, setIsChoose, setSelectedRegisterMenu }: any) {
+interface MasjidProps {
+  setMenu: React.Dispatch<React.SetStateAction<string>>,
+  setIsChoose: React.Dispatch<React.SetStateAction<boolean>>,
+  setSelectedRegisterMenu: React.Dispatch<React.SetStateAction<string>>
+}
+
+export default function Masjid({ setMenu, setIsChoose, setSelectedRegisterMenu }: MasjidProps) {
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [data, setData] = useState<UserData>();
     const [mosqueData, setMosqueData] = useState<MosqueData>();
@@ -164,7 +170,7 @@ export default function Masjid({ setMenu, setIsChoose, setSelectedRegisterMenu }
                             setData={setMosqueData}
                             dataKey="cityorregency_id"
                             placeholder="Kabupaten/Kota"
-                            optionsList={cityorregencyOptions?.filter((value: any) => value.provinsi_id == mosqueData!.province_id)}
+                            optionsList={cityorregencyOptions?.filter((value: SelectType) => value.provinsi_id == mosqueData!.province_id)}
                             isError={isError}
                             message={numberValidation(mosqueData?.cityorregency_id, 'kabupaten/kota masjid')}
                         />
@@ -190,7 +196,7 @@ export default function Masjid({ setMenu, setIsChoose, setSelectedRegisterMenu }
                           setData={setMosqueData}
                           dataKey="ward_id"
                           placeholder="Kelurahan"
-                          optionsList={wardOptions?.filter((value: any) => value.kecamatan_id == mosqueData!.subdistrict_id)}
+                          optionsList={wardOptions?.filter((value: SelectType) => value.kecamatan_id == mosqueData!.subdistrict_id)}
                           isError={isError}
                           message={numberValidation(mosqueData?.ward_id, 'kelurahan masjid')}
                       />

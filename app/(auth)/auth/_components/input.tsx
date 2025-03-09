@@ -1,4 +1,19 @@
-export default function Input({ data, setData, dataKey, type, placeholder, isError, message, label}: any) {
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+import React from "react";
+
+interface InputProps {
+  data: any, 
+  setData: React.Dispatch<React.SetStateAction<any>>,
+  dataKey: string,
+  type: string,
+  placeholder: string,
+  isError: boolean,
+  message: false | string,
+  label: string
+};
+
+export default function Input({ data, setData, dataKey, type, placeholder, isError, message, label}: InputProps) {
     return (
         <div className="flex flex-col gap-1">
             <label 

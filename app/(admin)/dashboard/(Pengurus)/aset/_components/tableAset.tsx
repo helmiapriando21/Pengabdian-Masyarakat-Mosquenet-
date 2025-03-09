@@ -36,7 +36,7 @@ export default function TableAset() {
         <Thead labels={['Nama', "Jumlah", 'Kondisi', "Aksi"]} />
         <tbody>
           {
-            data.map((value: any, index: number) => (
+            data.map((value: ListAset, index: number) => (
               <tr key={index} className="bg-yellow-100 hover:bg-yellow-400">
                 <td className="px-4 py-2 min-w-32 text-center text-xs">{value.name}</td>
                 <td className="px-4 py-2 min-w-32 text-center text-xs">{Number(value.amount).toLocaleString('id-ID')} {value.unit}</td>
@@ -57,7 +57,7 @@ export default function TableAset() {
                     <button 
                       className="w-max px-2 py-1 rounded-full flex items-center text-center justify-center text-xs bg-red-600 text-red-200"
                       onClick={() => {
-                        deleteAction(value.id)
+                        deleteAction(value.id!)
                       }}
                     >
                       Delete

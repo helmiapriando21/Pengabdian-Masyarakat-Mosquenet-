@@ -8,7 +8,11 @@ import {useRouter} from "next/navigation";
 import RedirectSolution from "../../_components/redirectSolution";
 import { AuthVerification } from "@/interface/auth";
 
-export default function Verification({setMenu}: any) {
+interface VerificationProps {
+  setMenu: React.Dispatch<React.SetStateAction<string>>
+}
+
+export default function Verification({setMenu}: VerificationProps) {
     const [data, setData] = useState<AuthVerification>();
     const router = useRouter();
     const [isError, setIsError] = useState<boolean>(false);
