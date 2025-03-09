@@ -5,10 +5,11 @@ import { useEffect, useState } from "react"
 import Checkbox from "./_components/checkbox";
 import Thead from "../../_components/thead";
 import { updateRole } from "@/helper/postData";
+import { Jamaah } from "@/interface/jamaah";
 
 export default function Account() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [jamaah, setJamaah] = useState<any[]>();
+  const [jamaah, setJamaah] = useState<Jamaah[]>();
 
   const init = async () => {
     const requestJamaah = await getJamaahMasjid(setIsLoading);

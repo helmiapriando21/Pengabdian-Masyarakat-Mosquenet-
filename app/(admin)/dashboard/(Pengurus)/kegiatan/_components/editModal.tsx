@@ -1,8 +1,12 @@
 "use client"
 
-import { useState } from "react";
+import React, { useState } from "react";
 
-export default function EditModal({children}: any) {
+interface EditModalProps {
+  children: React.ReactNode
+}
+
+export default function EditModal({children}: EditModalProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   return (
     <div>

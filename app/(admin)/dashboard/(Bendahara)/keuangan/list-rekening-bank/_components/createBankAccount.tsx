@@ -9,17 +9,12 @@ import { useRouter } from "next/navigation";
 import { addBankAccount } from "@/helper/postData";
 import basicValidation from "@/validation/basic-validation";
 import listBank from "@/data/listBank";
+import { CreateBank } from "@/interface/bank";
+import { SelectType } from "@/interface/form";
 
 export default function CreateBankAccount() {
-  const [purposes, setPurposes] = useState<any>();
-  const [data, setData] = useState({
-    name: "",
-    alias_name: "",
-    bank: "",
-    account: "",
-    email: "",
-    purpose_id: undefined
-  });
+  const [purposes, setPurposes] = useState<SelectType[]>();
+  const [data, setData] = useState<CreateBank>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isError, setIsError] = useState<boolean>(false);
   const router = useRouter();
@@ -31,15 +26,14 @@ export default function CreateBankAccount() {
 
   const action = async () => {
     if(
-      !basicValidation(data.name, "Nama pemilik") &&
-      !basicValidation(data.alias_name, "Nama panggil pemilik") &&
-      !basicValidation(data.bank, "Nama bank pemilik") &&
-      !basicValidation(data.account, "Nomor rekening pemilik") &&
-      !basicValidation(data.email, "Email pemilik") &&
-      !numberValidation(data.purpose_id, "Tujuan rekening bank")
+      !basicValidation(data?.name || '', "Nama pemilik") &&
+      !basicValidation(data?.alias_name || '', "Nama panggil pemilik") &&
+      !basicValidation(data?.bank || '', "Nama bank pemilik") &&
+      !basicValidation(data?.account || '', "Nomor rekening pemilik") &&
+      !basicValidation(data?.email || '', "Email pemilik") &&
+      !numberValidation(data?.purpose_id, "Tujuan rekening bank")
     ) {
-      console.log(data);
-      await addBankAccount(data, router);
+      await addBankAccount(data!, router);
     } else setIsError(true);
   }
 
@@ -54,7 +48,7 @@ export default function CreateBankAccount() {
       <div className="flex flex-col gap-3">
         <Input
           isError={isError}
-          error={basicValidation(data.name, "Nama pemilik")}
+          error={basicValidation(data?.name || '', "Nama pemilik")}
           setValue={setData}
           value={data}
           placeholder="Masukkan nama pemilik bank"
@@ -63,7 +57,7 @@ export default function CreateBankAccount() {
         />
         <Input
           isError={isError}
-          error={basicValidation(data.alias_name, "Nama panggil pemilik")}
+          error={basicValidation(data?.alias_name || '', "Nama panggil pemilik")}
           setValue={setData}
           value={data}
           placeholder="Masukkan nama panggil pemilik bank"
@@ -72,7 +66,7 @@ export default function CreateBankAccount() {
         />
         <Select
           isError={isError}
-          error={basicValidation(data.bank, "Nama bank pemilik")}
+          error={basicValidation(data?.bank || '', "Nama bank pemilik")}
           setValue={setData}
           value={data}
           placeholder="Pilih nama bank pemilik"
@@ -82,7 +76,7 @@ export default function CreateBankAccount() {
         />
         <Input
           isError={isError}
-          error={basicValidation(data.alias_name, "Nomor rekening pemilik")}
+          error={basicValidation(data?.alias_name || '', "Nomor rekening pemilik")}
           setValue={setData}
           value={data}
           placeholder="Masukkan nomor rekening pemilik bank"
@@ -91,7 +85,7 @@ export default function CreateBankAccount() {
         />
         <Input
           isError={isError}
-          error={basicValidation(data.email, "Email pemilik")}
+          error={basicValidation(data?.email || '', "Email pemilik")}
           setValue={setData}
           value={data}
           placeholder="Masukkan alamat email pemilik bank"
@@ -100,7 +94,7 @@ export default function CreateBankAccount() {
         />
         <Select
           isError={isError}
-          error={numberValidation(data.purpose_id, "Tujuan rekening bank")}
+          error={numberValidation(data?.purpose_id, "Tujuan rekening bank")}
           setValue={setData}
           value={data}
           placeholder="Pilih tujuan rekening bank"

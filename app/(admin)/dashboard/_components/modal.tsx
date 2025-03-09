@@ -1,8 +1,13 @@
 "use client"
 
-import { useState } from "react";
+import React, { useState } from "react";
 
-export default function Modal({ label, children }: any) {
+interface ModalProps {
+  label: string,
+  children: React.ReactNode
+}
+
+export default function Modal({ label, children }: ModalProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (

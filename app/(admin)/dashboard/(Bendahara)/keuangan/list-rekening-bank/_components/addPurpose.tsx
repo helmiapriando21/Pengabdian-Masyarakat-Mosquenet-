@@ -4,19 +4,18 @@ import { useState } from "react";
 import { addPurposeBankAccount } from "@/helper/postData";
 import { useRouter } from "next/navigation";
 import Input from "../../../../_components/input";
+import { InformationReport } from "@/interface/report";
 
 export default function AddPurpose() {
-  const [name, setName] = useState({
-    name: ""
-  });
+  const [name, setName] = useState<InformationReport>();
   const [error, setError] = useState<string>("");
   const [isError, setIsError] = useState<boolean>(false);
   const router = useRouter();
 
   const sendPurpose = async () => {
-    if(name.name !== "") {
+    if(name && name.name && name.name !== "") {
       await addPurposeBankAccount(name.name, router);
-      setName({ name: "" });
+      setName(undefined);
     } else {
       setError("Isi tujuan rekening bank terlebih dahulu");
       setIsError(true);

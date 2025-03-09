@@ -9,8 +9,11 @@ import {
   Title,
   Tooltip,
   Legend,
+  ChartData,
 } from 'chart.js';
+
 import { Bar } from "react-chartjs-2";
+import { AsetDashboard } from "@/interface/aset";
 ChartJS.register(
   CategoryScale, 
   LinearScale, 
@@ -20,14 +23,18 @@ ChartJS.register(
   Legend)
 ;
 
-export default function BarGraph({ data }: any) {
-  const [operateData, setOperateData] = useState<any>();
+interface BarGraphProps {
+  data: AsetDashboard
+};
+
+export default function BarGraph({ data }: BarGraphProps) {
+  const [operateData, setOperateData] = useState<ChartData<"bar", (number | [number, number] | null)[], unknown>>();
 
   const init = () => {
     const labels = Object.keys(data);
     let subLabel: string[] = [];
-    labels.forEach(value => {
-      const label = Object.keys(data[value]).filter(value => value !== "total");
+    labels.forEach((value: string) => {
+      const label = Object.keys(data[value as keyof AsetDashboard]).filter(value => value !== "total");
       label.forEach((v => {
         const isset = subLabel.find(label => label === v);
         if(!isset) {
@@ -38,7 +45,7 @@ export default function BarGraph({ data }: any) {
 
     const datasets = subLabel.map(value => {
       const subData = labels.map(v => {
-        return data[v][value] ? data[v][value] : 0;
+        return data[v as keyof AsetDashboard][value] ? data[v as keyof AsetDashboard][value] : 0;
       });
       return {
         label: value,
@@ -57,7 +64,7 @@ export default function BarGraph({ data }: any) {
 
   useEffect(() => {
     init()
-  }, []);
+  }, [data]);
 
 
   if(operateData)

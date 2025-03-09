@@ -1,4 +1,13 @@
-export default function SidebarButton({ label, action, pathname, currentPath }: any) {
+import { MouseEventHandler } from "react";
+
+interface SidebarButtonProps {
+  label: string,
+  action: MouseEventHandler<HTMLButtonElement>,
+  pathname: string,
+  currentPath: string
+}
+
+export default function SidebarButton({ label, action, pathname, currentPath }: SidebarButtonProps) {
   return (
     <button 
       onClick={action}

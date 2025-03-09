@@ -7,13 +7,12 @@ import Input from "../../../../_components/input";
 import numberValidation from "@/validation/number-validation";
 import { useRouter } from "next/navigation";
 import { addPengeluaran } from "@/helper/postData";
+import { CreateOutcome } from "@/interface/report";
+import { SelectType } from "@/interface/form";
 
 export default function CreatePengeluaran() {
-  const [reason, setReason] = useState<any>();
-  const [data, setData] = useState({
-    amount: undefined,
-    reason_id: undefined
-  });
+  const [reason, setReason] = useState<SelectType[]>();
+  const [data, setData] = useState<CreateOutcome>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isError, setIsError] = useState<boolean>(false);
   const router = useRouter();
@@ -25,8 +24,8 @@ export default function CreatePengeluaran() {
 
   const action = async () => {
     if(
-      !numberValidation(data.amount, "Besar Pengeluaran") &&
-      !numberValidation(data.reason_id, "Keterangan pengeluaran")
+      !numberValidation(data?.amount, "Besar Pengeluaran") &&
+      !numberValidation(data?.reason_id, "Keterangan pengeluaran")
     ) {
       await addPengeluaran(data, router);
     } else setIsError(true);
@@ -43,16 +42,17 @@ export default function CreatePengeluaran() {
       <div className="flex flex-col gap-3">
         <Select
           isError={isError}
-          error={numberValidation(data.reason_id, "Keterangan pengeluaran")}
+          error={numberValidation(data?.reason_id, "Keterangan pengeluaran")}
           setValue={setData}
           value={data}
           placeholder="Pilih Keterangan Pengeluaran"
           dataKey="reason_id"
-          options={reason}
+          options={reason} 
+          type={"number"}        
         />
         <Input
           isError={isError}
-          error={numberValidation(data.amount, "Besar pengeluaran")}
+          error={numberValidation(data?.amount, "Besar pengeluaran")}
           setValue={setData}
           value={data}
           placeholder="Masukkan besar pengeluaran"

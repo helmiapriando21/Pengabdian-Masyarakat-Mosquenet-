@@ -1,4 +1,8 @@
-export default function Thead({ labels }: any) {
+interface THeadProps {
+  labels: string[]
+}
+
+export default function Thead({ labels }: THeadProps) {
   return (
     <thead>
       <tr className="bg-yellow-400">

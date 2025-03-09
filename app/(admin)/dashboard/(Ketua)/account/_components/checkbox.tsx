@@ -1,4 +1,12 @@
-export default function Checkbox({ label, value, onChange }: any) {
+import { ChangeEventHandler } from "react";
+
+interface CheckboxProps {
+  label: string,
+  value: string,
+  onChange: ChangeEventHandler<HTMLInputElement>
+}
+
+export default function Checkbox({ label, value, onChange }: CheckboxProps) {
   return (
     <div className="flex flex-col gap-2">
       <input 

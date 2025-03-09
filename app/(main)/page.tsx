@@ -12,12 +12,14 @@ import { getDashboardData } from "@/helper/getData";
 import LineGraph from "../(admin)/dashboard/_components/lineGraph";
 import ListKegiatan from "./_components/listKegiatan";
 import { ReportData } from "@/interface/report";
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
   const [isLogin, setIsLogin] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [role, setRole] = useState<string>();
   const [report, setReport] = useState<ReportData[]>();
+  const router = useRouter();
 
   useEffect(() => {
     init();

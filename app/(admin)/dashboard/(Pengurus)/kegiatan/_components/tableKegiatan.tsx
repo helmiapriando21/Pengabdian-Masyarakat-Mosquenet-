@@ -7,10 +7,11 @@ import EditModal from "./editModal";
 import { deleteKegiatan } from "@/helper/postData";
 import { useRouter } from "next/navigation";
 import EditKegiatan from "./editKegiatan";
+import { ListActivities } from "@/interface/activity";
 
 export default function TableKegiatan() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [data, setData] = useState<any>();
+  const [data, setData] = useState<ListActivities[]>();
   const router = useRouter();
 
   const deleteAction = async (id: any) => {

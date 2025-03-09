@@ -3,16 +3,16 @@
 import { getLaporanMasjid } from "@/helper/getData";
 import { useEffect, useState } from "react";
 import Thead from "../../../_components/thead";
+import { ReportData } from "@/interface/report";
 
 
 export default function Laporan() {
-  const [reports, setReports] = useState<any[]>();
+  const [reports, setReports] = useState<ReportData[]>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const init = async () => {
     const data = await getLaporanMasjid(setIsLoading);
     setReports(data);
-    console.log(data);
   }
 
   useEffect(() => {
@@ -35,7 +35,7 @@ export default function Laporan() {
                     {new Date(value.date).toLocaleDateString('id-ID')}
                   </td>
                   <td className="px-4 py-2 min-w-32 text-center">{value.description}</td>
-                  <td className={`px-4 py-2 min-w-32 text-center ${value.type === "Pemasukan" ? "text-green-500" : "text-red-500"}`}>{value.type === "Pemasukan" ? "+" : "-"} {Number(value.amount).toLocaleString('id-ID')}</td>
+                  <td className={`px-4 py-2 min-w-32 text-center ${value.type === "Pemasukan" ? "text-green-500" : "text-red-500"}`}>{value.type === "Pemasukan" ? "+" : "-"} {value.amount.toLocaleString('id-ID')}</td>
                 </tr>
               ))
             }
@@ -45,14 +45,14 @@ export default function Laporan() {
               <td colSpan={2} className="text-center font-bold p-2">Total</td>
               <td className="text-center font-bold p-2">
                 {
-                  Number(reports.reduce((acc, curr) => {
+                  reports.reduce((acc, curr) => {
                     if(curr.type === "Pemasukan") {
                       acc.amount += curr.amount;
                     } else {
                       acc.amount -= curr.amount;
                     }
                     return acc;
-                  }, {amount: 0}).amount).toLocaleString('id-ID')
+                  }, {amount: 0}).amount.toLocaleString('id-ID')
                 }
               </td>
             </tr>

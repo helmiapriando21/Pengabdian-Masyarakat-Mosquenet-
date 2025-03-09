@@ -7,13 +7,14 @@ import EditAset from "./editAset";
 import EditModal from "../../../_components/editModal";
 import { deleteAset } from "@/helper/postData";
 import { useRouter } from "next/navigation";
+import { ListAset } from "@/interface/aset";
 
 export default function TableAset() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [data, setData] = useState<any>();
+  const [data, setData] = useState<ListAset[]>();
   const router = useRouter();
 
-  const deleteAction = async (id: any) => {
+  const deleteAction = async (id: number) => {
     const deleteConfirmation = confirm("Apakah anda yakin?");
     if(deleteConfirmation) await deleteAset(id, router)
   }
@@ -22,7 +23,6 @@ export default function TableAset() {
     const init = async () => {
       const data = await getAsetMasjid(setIsLoading);
       setData(data);
-      console.log(data);
     }
 
     if(isLoading && !data) {
@@ -50,13 +50,7 @@ export default function TableAset() {
                     <div>
                       <EditModal>
                         <EditAset 
-                          currentData={{
-                            name: value.name,
-                            amount: value.amount,
-                            condition: value.condition,
-                            unit: value.unit
-                          }}
-                          id={value.id}
+                          currentData={value}
                         />
                       </EditModal>
                     </div>

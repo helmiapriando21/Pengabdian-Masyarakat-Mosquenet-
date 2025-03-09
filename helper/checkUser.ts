@@ -1,4 +1,9 @@
-const checkUser = async (setRole: any, setIsLogin: any) => {
+import React from "react";
+
+const checkUser = async (
+  setRole: React.Dispatch<React.SetStateAction<string | undefined>>, 
+  setIsLogin: React.Dispatch<React.SetStateAction<boolean>>
+) => {
     const response = await fetch(
         '/api/check-user', 
         { method: 'GET' }
@@ -9,7 +14,6 @@ const checkUser = async (setRole: any, setIsLogin: any) => {
           setRole("Master Admin");
         } else if(check.adminStatus.value === "true") {
           setRole(check.adminRole.value);
-          console.log(check);
         } else {
           setRole("Jamaah");
         }

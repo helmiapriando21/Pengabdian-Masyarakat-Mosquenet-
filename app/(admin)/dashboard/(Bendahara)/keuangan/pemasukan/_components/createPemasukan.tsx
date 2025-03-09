@@ -7,13 +7,12 @@ import Input from "../../../../_components/input";
 import numberValidation from "@/validation/number-validation";
 import { useRouter } from "next/navigation";
 import { addPemasukan } from "@/helper/postData";
+import { CreateIncome } from "@/interface/report";
+import { SelectType } from "@/interface/form";
 
 export default function CreatePemasukan() {
-  const [category, setCategory] = useState<any>();
-  const [data, setData] = useState({
-    amount: undefined,
-    source_id: undefined
-  });
+  const [category, setCategory] = useState<SelectType[]>();
+  const [data, setData] = useState<CreateIncome>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isError, setIsError] = useState<boolean>(false);
   const router = useRouter();
@@ -25,8 +24,8 @@ export default function CreatePemasukan() {
 
   const action = async () => {
     if(
-      !numberValidation(data.amount, "Besar Pemasukan") &&
-      !numberValidation(data.source_id, "Sumber Dana")
+      !numberValidation(data?.amount, "Besar Pemasukan") &&
+      !numberValidation(data?.source_id, "Sumber Dana")
     ) {
       await addPemasukan(data, router);
     } else setIsError(true);
@@ -43,16 +42,17 @@ export default function CreatePemasukan() {
       <div className="flex flex-col gap-3">
         <Select
           isError={isError}
-          error={numberValidation(data.source_id, "Kategori pemasukan")}
+          error={numberValidation(data?.source_id, "Kategori pemasukan")}
           setValue={setData}
           value={data}
           placeholder="Pilih Kategori Pemasukan"
           dataKey="source_id"
-          options={category}
+          options={category} 
+          type={"number"}        
         />
         <Input
           isError={isError}
-          error={numberValidation(data.amount, "Besar pemasukan")}
+          error={numberValidation(data?.amount, "Besar pemasukan")}
           setValue={setData}
           value={data}
           placeholder="Masukkan besar pemasukan"

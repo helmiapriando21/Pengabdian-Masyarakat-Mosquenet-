@@ -6,38 +6,32 @@ import Input from "../../../_components/input";
 import basicValidation from "@/validation/basic-validation";
 import showAlert from "@/helper/showAlert";
 import Cookies from 'js-cookie';
+import { DetailActivity } from "@/interface/activity";
+import nProgress from "nprogress";
 
 
 export default function CreateKegiatan() {
-  const [data, setData] = useState({
-    name: "",
-    description: "",
-    pic: "",
-    document: null as File | null,
-    image: null as File | null,
-    address: "",
-    video: "",
-    date: "",
-    time: ""
-  });
-  
+  const [data, setData] = useState<DetailActivity & { time: string }>();
   const [isError, setIsError] = useState<boolean>(false);
   const router = useRouter();
 
   const action = async () => {
     if(
-      !basicValidation(data.name, 'Nama kegiatan') &&
-      !basicValidation(data.description, 'Deskripsi kegiatan') &&
-      !basicValidation(data.pic, 'Penanggungjawab kegiatan') &&
-      !basicValidation(data.address, 'Alamat kegiatan') &&
-      !basicValidation(data.date, 'Tanggal kegiatan') &&
-      !basicValidation(data.time, 'Jam mulai kegiatan')
+      !basicValidation(data?.name || '', 'Nama kegiatan') &&
+      !basicValidation(data?.description || '', 'Deskripsi kegiatan') &&
+      !basicValidation(data?.pic || '', 'Penanggungjawab kegiatan') &&
+      !basicValidation(data?.address || '', 'Alamat kegiatan') &&
+      !basicValidation(data?.date || '', 'Tanggal kegiatan') &&
+      !basicValidation(data?.time || '', 'Jam mulai kegiatan')
     ) {
+      nProgress.start();
       try {
         const formData = new FormData();
-        Object.entries(data).forEach(([key, value]) => {
-          if (value) formData.append(key, value);
+        Object.entries(data || {}).forEach(([key, value]) => {
+          if (value !== null && value !== undefined) 
+            formData.append(key, typeof value === "number" ? String(value) : value);
         });
+
         const userId = Cookies.get('user-id');
         if(userId) {
           formData.append("user_id", userId);
@@ -48,6 +42,7 @@ export default function CreateKegiatan() {
           body: formData
         });
 
+        console.log(response);
         const responseData = await response.json();
         if(response.ok) {
           showAlert(responseData.message, router, "success", '/this-page');
@@ -57,6 +52,7 @@ export default function CreateKegiatan() {
       } catch (e) {
         showAlert("Terjadi kesalahan pada menambahkan kegiatan, silahkan coba lagi!", router, "error", '/auth');
       }
+      nProgress.done();
     } else setIsError(true);
   }
   
@@ -71,7 +67,7 @@ export default function CreateKegiatan() {
           placeholder="Masukkan nama kegiatan"
           dataKey="name"
           type="text"
-          error={basicValidation(data.name, 'Nama kegiatan')}
+          error={basicValidation(data?.name || '', 'Nama kegiatan')}
         />
         <Input 
           isError={isError}
@@ -80,7 +76,7 @@ export default function CreateKegiatan() {
           placeholder="Masukkan deskripsi kegiatan"
           dataKey="description"
           type="text"
-          error={basicValidation(data.description, 'Deskripsi kegiatan')}
+          error={basicValidation(data?.description || '', 'Deskripsi kegiatan')}
         />
         <Input 
           isError={isError}
@@ -89,7 +85,7 @@ export default function CreateKegiatan() {
           placeholder="Masukkan penanggungjawab kegiatan"
           dataKey="pic"
           type="text"
-          error={basicValidation(data.pic, 'Penanggungjawab kegiatan')}
+          error={basicValidation(data?.pic || '', 'Penanggungjawab kegiatan')}
         />
         <Input 
           isError={isError}
@@ -98,7 +94,7 @@ export default function CreateKegiatan() {
           placeholder="Masukkan Alamat kegiatan"
           dataKey="address"
           type="text"
-          error={basicValidation(data.address, 'Alamat kegiatan')}
+          error={basicValidation(data?.address || '', 'Alamat kegiatan')}
         />
         <Input 
           isError={isError}
@@ -107,7 +103,7 @@ export default function CreateKegiatan() {
           placeholder="Masukkan Tanggal kegiatan"
           dataKey="date"
           type="date"
-          error={basicValidation(data.date, 'Tanggal kegiatan')}
+          error={basicValidation(data?.date || '', 'Tanggal kegiatan')}
         />
         <Input 
           isError={isError}
@@ -116,7 +112,7 @@ export default function CreateKegiatan() {
           placeholder="Masukkan Jam mulai kegiatan"
           dataKey="time"
           type="time"
-          error={basicValidation(data.time, 'Jam mulai kegiatan')}
+          error={basicValidation(data?.time || '', 'Jam mulai kegiatan')}
         />
         <Input 
           isError={false}
@@ -141,7 +137,7 @@ export default function CreateKegiatan() {
           setValue={setData}
           value={data}
           placeholder="Masukkan URL video dokumentasi kegiatan"
-          dataKey="video"
+          dataKey="video_documentation"
           type="text"
           error={""}
         />

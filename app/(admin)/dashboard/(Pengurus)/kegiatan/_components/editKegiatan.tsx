@@ -6,21 +6,14 @@ import Input from "../../../_components/input";
 import basicValidation from "@/validation/basic-validation";
 import { getDetailKegiatanMasjid } from "@/helper/getData";
 import showAlert from "@/helper/showAlert";
+import { DetailActivity } from "@/interface/activity";
 
+interface EditKegiatanProps {
+  id: number
+}
 
-
-export default function EditKegiatan({ id }: any) {
-  const [data, setData] = useState({
-    name: "",
-    description: "",
-    pic: "",
-    document: null as File | null,
-    image: null as File | null,
-    address: "",
-    video: "",
-    date: "",
-    time: ""
-  });
+export default function EditKegiatan({ id }: EditKegiatanProps) {
+  const [data, setData] = useState<DetailActivity & { time: string }>();
   const [isError, setIsError] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [previousDocument, setPreviousDocument] = useState<string>();
@@ -29,7 +22,6 @@ export default function EditKegiatan({ id }: any) {
 
   const init = async () => {
     const response = await getDetailKegiatanMasjid(setIsLoading, Number(id));
-    console.log(response);
 
     const date = response.date;
     response.date = new Date(date).toISOString().split("T")[0];
@@ -37,9 +29,8 @@ export default function EditKegiatan({ id }: any) {
 
     if(response.document) setPreviousDocument(response.document);
     if(response.image) setPreviousImage(response.image);
-    response.video = response.video_documentation;
 
-    const { document, image, video_documentation, ...rest } = response;
+    const { document, image, ...rest } = response;
     setData(rest);
   }
 
@@ -51,17 +42,18 @@ export default function EditKegiatan({ id }: any) {
 
   const action = async () => {
     if(
-      !basicValidation(data.name, 'Nama kegiatan') &&
-      !basicValidation(data.description, 'Deskripsi kegiatan') &&
-      !basicValidation(data.pic, 'Penanggungjawab kegiatan') &&
-      !basicValidation(data.address, 'Alamat kegiatan') &&
-      !basicValidation(data.date, 'Tanggal kegiatan') &&
-      !basicValidation(data.time, 'Jam mulai kegiatan')
+      !basicValidation(data?.name || '', 'Nama kegiatan') &&
+      !basicValidation(data?.description || '', 'Deskripsi kegiatan') &&
+      !basicValidation(data?.pic || '', 'Penanggungjawab kegiatan') &&
+      !basicValidation(data?.address || '', 'Alamat kegiatan') &&
+      !basicValidation(data?.date || '', 'Tanggal kegiatan') &&
+      !basicValidation(data?.time || '', 'Jam mulai kegiatan')
     ) {
       try {
         const formData = new FormData();
-        Object.entries(data).forEach(([key, value]) => {
-          if (value) formData.append(key, value);
+        Object.entries(data || {}).forEach(([key, value]) => {
+          if (value !== null && value !== undefined) 
+            formData.append(key, typeof value === "number" ? String(value) : value);
         });
 
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/kegiatan/edit`, {
@@ -184,7 +176,7 @@ export default function EditKegiatan({ id }: any) {
             setValue={setData}
             value={data}
             placeholder="Masukkan URL video dokumentasi kegiatan"
-            dataKey="video"
+            dataKey="video_documentation"
             type="text"
             error={""}
           />

@@ -1,12 +1,13 @@
 "use client"
 
 import { getDetailKegiatanMasjid } from "@/helper/getData";
+import { DetailActivity } from "@/interface/activity";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function DetailKegiatan() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [data, setData] = useState<any>();
+  const [data, setData] = useState<DetailActivity>();
   const params = useParams();
   const { id } = params;
 

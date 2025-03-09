@@ -4,19 +4,18 @@ import { useState } from "react";
 import { addReason } from "@/helper/postData";
 import { useRouter } from "next/navigation";
 import Input from "../../../../_components/input";
+import { InformationReport } from "@/interface/report";
 
 export default function AddReason() {
-  const [name, setName] = useState({
-    name: ""
-  });
+  const [name, setName] = useState<InformationReport>();
   const [error, setError] = useState<string>("");
   const [isError, setIsError] = useState<boolean>(false);
   const router = useRouter();
 
   const sendReason = async () => {
-    if(name.name !== "") {
+    if(name && name.name && name.name !== "") {
       await addReason(name.name, router);
-      setName({ name: "" });
+      setName(undefined);
     } else {
       setError("Isi keterangan terlebih dahulu");
       setIsError(true);

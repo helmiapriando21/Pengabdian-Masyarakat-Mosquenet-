@@ -6,12 +6,15 @@ import Input from "../../../_components/input";
 import basicValidation from "@/validation/basic-validation";
 import numberValidation from "@/validation/number-validation";
 import Select from "../../../_components/select";
-import { addAset, editAset } from "@/helper/postData";
+import { editAset } from "@/helper/postData";
+import { ListAset } from "@/interface/aset";
 
+interface EditAsetProps {
+  currentData: ListAset
+}
 
-
-export default function EditAset({currentData, id}: any) {
-  const [data, setData] = useState(currentData);
+export default function EditAset({ currentData }: EditAsetProps) {
+  const [data, setData] = useState<ListAset>(currentData);
   const conditions = [
     {
       id: "Baik",
@@ -36,7 +39,7 @@ export default function EditAset({currentData, id}: any) {
       !basicValidation(data.condition, "Kondisi aset") &&
       !basicValidation(data.unit, "Satuan aset")
     ) {
-      await editAset(data, id, router);
+      await editAset(data, currentData.id, router);
     } else setIsError(true);
   }
   

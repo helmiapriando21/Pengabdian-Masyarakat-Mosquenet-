@@ -1,4 +1,16 @@
-export default function Input({isError, error, setValue, value, placeholder, dataKey, type}: any) {
+import React from "react";
+
+interface InputProps {
+  isError: boolean,
+  error: string | boolean,
+  setValue: React.Dispatch<React.SetStateAction<any>>,
+  value: any,
+  placeholder: string,
+  dataKey: string,
+  type: string
+};
+
+export default function Input({isError, error, setValue, value, placeholder, dataKey, type}: InputProps) {
   return (
     <div className="flex flex-col gap-2">
       <input
@@ -14,7 +26,7 @@ export default function Input({isError, error, setValue, value, placeholder, dat
               : e.target.value
           });
         }}
-        {...(type !== 'file' && { value: value[dataKey] || "" })}
+        {...(type !== 'file' && { value: value?.[dataKey] || "" })}
         placeholder={placeholder}
       />
       {

@@ -1,5 +1,9 @@
 import nProgress from "nprogress";
 import showAlert from "./showAlert";
+import { ListAset } from "@/interface/aset";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import { CreateIncome, CreateOutcome } from "@/interface/report";
+import { CreateBank } from "@/interface/bank";
 
 const updateRole = async (email: string, role: string) => {
   nProgress.start();
@@ -13,7 +17,7 @@ const updateRole = async (email: string, role: string) => {
   nProgress.done();
 }
 
-const addCategory = async (name: string, router: any) => {
+const addCategory = async (name: string, router: AppRouterInstance) => {
   nProgress.start();
   const response = await fetch('/api/pemasukan/category/create', {
     method: "POST",
@@ -30,7 +34,7 @@ const addCategory = async (name: string, router: any) => {
   nProgress.done();
 }
 
-const addPemasukan = async (data: any, router: any) => {
+const addPemasukan = async (data: CreateIncome | undefined, router: AppRouterInstance) => {
   nProgress.start();
   const response = await fetch('/api/pemasukan/create', {
     method: "POST",
@@ -47,7 +51,7 @@ const addPemasukan = async (data: any, router: any) => {
   nProgress.done();
 }
 
-const addReason = async (name: string, router: any) => {
+const addReason = async (name: string, router: AppRouterInstance) => {
   nProgress.start();
   const response = await fetch('/api/pengeluaran/reason/create', {
     method: "POST",
@@ -64,7 +68,7 @@ const addReason = async (name: string, router: any) => {
   nProgress.done();
 }
 
-const addPengeluaran = async (data: any, router: any) => {
+const addPengeluaran = async (data: CreateOutcome | undefined, router: AppRouterInstance) => {
   nProgress.start();
   const response = await fetch('/api/pengeluaran/create', {
     method: "POST",
@@ -81,7 +85,7 @@ const addPengeluaran = async (data: any, router: any) => {
   nProgress.done();
 }
 
-const addAset = async (data: any, router: any) => {
+const addAset = async (data: ListAset | undefined, router: any) => {
   nProgress.start();
   const response = await fetch('/api/aset/create', {
     method: "POST",
@@ -98,12 +102,18 @@ const addAset = async (data: any, router: any) => {
   nProgress.done();
 }
 
-const editAset = async (data: any, id: any, router: any) => {
+const editAset = async (data: ListAset, id: number | undefined, router: any) => {
   nProgress.start();
+  const sendData = {
+    amount: data.amount,
+    condition: data.condition,
+    name: data.name,
+    unit: data.unit
+  }
   const response = await fetch(`/api/aset/edit/${id}`, {
     method: "POST",
     body: JSON.stringify({
-      ...data
+      ...sendData
     })
   });
   const responseData = await response.json();
@@ -115,7 +125,7 @@ const editAset = async (data: any, id: any, router: any) => {
   nProgress.done();
 }
 
-const deleteAset = async (id: any, router: any) => {
+const deleteAset = async (id: number, router: AppRouterInstance) => {
   nProgress.start();
   const response = await fetch(`/api/aset/delete/${id}`, {
     method: "POST"
@@ -129,7 +139,7 @@ const deleteAset = async (id: any, router: any) => {
   nProgress.done();
 }
 
-const deleteKegiatan = async (id: any, router: any) => {
+const deleteKegiatan = async (id: number, router: AppRouterInstance) => {
   nProgress.start();
   const response = await fetch(`/api/kegiatan/delete/${id}`, {
     method: "POST"
@@ -154,7 +164,7 @@ const createKasPayment = async (amount: number) => {
   return responseData.payment;
 }
 
-const addPurposeBankAccount = async (data: any, router: any) => {
+const addPurposeBankAccount = async (data: string, router: AppRouterInstance) => {
   nProgress.start();
   const response = await fetch('/api/daftar-rekening-bank/purpose/create', {
     method: "POST",
@@ -171,7 +181,7 @@ const addPurposeBankAccount = async (data: any, router: any) => {
   nProgress.done();
 }
 
-const addBankAccount = async (data: any, router: any) => {
+const addBankAccount = async (data: CreateBank, router: AppRouterInstance) => {
   nProgress.start();
   const response = await fetch('/api/daftar-rekening-bank/create', {
     method: "POST",

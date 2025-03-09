@@ -2,11 +2,12 @@
 
 import Thead from "@/app/(admin)/dashboard/_components/thead";
 import { getBankAccountMosque } from "@/helper/getData";
+import { ListBank } from "@/interface/bank";
 import { useState, useEffect } from "react";
 
 export default function TableMosqueBank() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [data, setData] = useState<any>();
+  const [data, setData] = useState<ListBank[]>();
 
   useEffect(() => {
     const init = async () => {

@@ -1,7 +1,11 @@
 import nProgress from "nprogress";
 import showAlert from "./showAlert";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import React from "react";
 
-const getJamaahMasjid = async (setIsLoading: any) => {
+const getJamaahMasjid = async (
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+) => {
   try {
     nProgress.start();
     const response = await fetch('/api/mosque/jamaah', {
@@ -16,7 +20,9 @@ const getJamaahMasjid = async (setIsLoading: any) => {
   }
 }
 
-const getMasjidList = async (setIsLoading: any | null) => {
+const getMasjidList = async (
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>> | null
+) => {
     try {
         nProgress.start();
         const response = await fetch('/api/mosques/list', {
@@ -32,7 +38,11 @@ const getMasjidList = async (setIsLoading: any | null) => {
     }
 }
 
-const getPrayerTimes = async (setIsLoading: any | null, date: any, city: string) => {
+const getPrayerTimes = async (
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>> | null, 
+  date: string, 
+  city: string
+) => {
     try {
         nProgress.start();
         const response = await fetch(
@@ -49,7 +59,10 @@ const getPrayerTimes = async (setIsLoading: any | null, date: any, city: string)
     }
 }
 
-const getMasjid = async (setIsLoading: any | null, index: any) => {
+const getMasjid = async (
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>> | null, 
+  index: string
+) => {
     try {
         nProgress.start();
         
@@ -82,7 +95,9 @@ const getMasjid = async (setIsLoading: any | null, index: any) => {
     }
 }
 
-const getCategoryPemasukanMasjid = async (setIsLoading: any) => {
+const getCategoryPemasukanMasjid = async (
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+) => {
   try {
     nProgress.start();
     const response = await fetch(
@@ -99,7 +114,9 @@ const getCategoryPemasukanMasjid = async (setIsLoading: any) => {
   }
 }
 
-const getPemasukanMasjid = async (setIsLoading: any) => {
+const getPemasukanMasjid = async (
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+) => {
   try {
     nProgress.start();
     const response = await fetch(
@@ -116,7 +133,9 @@ const getPemasukanMasjid = async (setIsLoading: any) => {
   }
 }
 
-const getReasonPengeluaranMasjid = async (setIsLoading: any) => {
+const getReasonPengeluaranMasjid = async (
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+) => {
   try {
     nProgress.start();
     const response = await fetch(
@@ -133,7 +152,9 @@ const getReasonPengeluaranMasjid = async (setIsLoading: any) => {
   }
 }
 
-const getPengeluaranMasjid = async (setIsLoading: any) => {
+const getPengeluaranMasjid = async (
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+) => {
   try {
     nProgress.start();
     const response = await fetch(
@@ -150,7 +171,9 @@ const getPengeluaranMasjid = async (setIsLoading: any) => {
   }
 }
 
-const getLaporanMasjid = async (setIsLoading: any) => {
+const getLaporanMasjid = async (
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+) => {
   try {
     nProgress.start();
     const response = await fetch(
@@ -167,7 +190,9 @@ const getLaporanMasjid = async (setIsLoading: any) => {
   }
 }
 
-const getAsetMasjid = async (setIsLoading: any) => {
+const getAsetMasjid = async (
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+) => {
   try {
     nProgress.start();
     const response = await fetch(
@@ -184,7 +209,10 @@ const getAsetMasjid = async (setIsLoading: any) => {
   }
 }
 
-const getKegiatanMasjid = async (setIsLoading: any, masjid_id: string | null) => {
+const getKegiatanMasjid = async (
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>, 
+  masjid_id: string | null
+) => {
   try {
     nProgress.start();
     let data;
@@ -211,7 +239,10 @@ const getKegiatanMasjid = async (setIsLoading: any, masjid_id: string | null) =>
   }
 }
 
-const getDetailKegiatanMasjid = async (setIsLoading: any, id: number) => {
+const getDetailKegiatanMasjid = async (
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>, 
+  id: number
+) => {
   try {
     nProgress.start();
     const response = await fetch(
@@ -228,7 +259,9 @@ const getDetailKegiatanMasjid = async (setIsLoading: any, id: number) => {
   }
 }
 
-const getDashboardData = async (setIsLoading: any) => {
+const getDashboardData = async (
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+) => {
   try {
     nProgress.start();
     const response = await fetch(
@@ -250,7 +283,10 @@ const getDashboardData = async (setIsLoading: any) => {
   }
 }
 
-const getValidKasTransaction = async (id: any, router: any) => {
+const getValidKasTransaction = async (
+  id: number, 
+  router: AppRouterInstance
+) => {
   nProgress.start();
   const response = await fetch(`/api/check-payment-kas/${id}`, {
     method: "GET"
@@ -264,7 +300,9 @@ const getValidKasTransaction = async (id: any, router: any) => {
   nProgress.done();
 }
 
-const getPurposesBankAccountMosque = async (setIsLoading: any) => {
+const getPurposesBankAccountMosque = async (
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+) => {
   nProgress.start();
   const response = await fetch(
     '/api/daftar-rekening-bank/purpose/get', {
@@ -277,7 +315,9 @@ const getPurposesBankAccountMosque = async (setIsLoading: any) => {
   return data.purposes;
 }
 
-const getBankAccountMosque = async (setIsLoading: any) => {
+const getBankAccountMosque = async (
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+) => {
   nProgress.start();
   const response = await fetch(
     '/api/daftar-rekening-bank/get', {

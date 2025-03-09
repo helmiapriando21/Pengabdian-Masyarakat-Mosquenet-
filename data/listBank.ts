@@ -1,4 +1,6 @@
-const listBank = [
+import { SelectType } from "@/interface/form";
+
+const listBank: SelectType[] = [
   {
     id: "bca",
     name: "BANK CENTRAL ASIA"

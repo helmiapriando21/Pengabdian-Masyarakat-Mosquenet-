@@ -6,12 +6,14 @@ import { useState, useEffect } from "react";
 import BarGraph from "../_components/barGraph";
 import Modal from "../_components/modal";
 import KasPayment from "./_components/kasPayment";
+import { ReportData } from "@/interface/report";
+import { AsetDashboard } from "@/interface/aset";
 
 export default function Main() {
-  const [report, setReport] = useState<any>();
+  const [report, setReport] = useState<ReportData[]>();
   const [pemasukan, setPemasukan] = useState<number>();
   const [pengeluaran, setPengeluaran] = useState<number>();
-  const [aset, setAset] = useState<any>();
+  const [aset, setAset] = useState<AsetDashboard>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const init = async () => {
@@ -21,7 +23,6 @@ export default function Main() {
       setPemasukan(data.pemasukan);
       setPengeluaran(data.pengeluaran);
       setAset(data.aset);
-      console.log(data.aset);
     }
   }
 
