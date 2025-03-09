@@ -32,7 +32,7 @@ export default function BarGraph({ data }: BarGraphProps) {
 
   const init = () => {
     const labels = Object.keys(data);
-    let subLabel: string[] = [];
+    const subLabel: string[] = [];
     labels.forEach((value: string) => {
       const label = Object.keys(data[value as keyof AsetDashboard]).filter(value => value !== "total");
       label.forEach((v => {
