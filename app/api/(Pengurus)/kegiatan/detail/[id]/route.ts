@@ -5,8 +5,9 @@
 import { NextRequest } from "next/server";
 import axios from "axios";
 
-export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
-  const id = params.id;
+export async function GET(req: NextRequest) {
+  const urlParts = req.nextUrl.pathname.split("/");
+  const id = urlParts[urlParts.length - 1];
     try {
       if(id) {
         const response = await axios.get(
