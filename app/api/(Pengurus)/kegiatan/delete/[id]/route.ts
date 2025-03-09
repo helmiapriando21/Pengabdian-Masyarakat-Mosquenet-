@@ -5,9 +5,10 @@
 import { NextRequest } from "next/server";
 import axios from "axios";
 
-export async function POST(req: NextRequest, { params }: { params: { id: string } }) {
+export async function POST(req: NextRequest) {
   const userId = req.cookies.get('user-id');
-  const id = params.id;
+  const urlParts = req.nextUrl.pathname.split("/");
+  const id = urlParts[urlParts.length - 1];
     try {
       if(userId && id) {
         const response = await axios.post(
