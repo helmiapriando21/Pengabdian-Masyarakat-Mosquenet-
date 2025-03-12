@@ -14,6 +14,7 @@ export default function DescribeSection() {
         <div className="flex flex-col gap-4 items-center justify-center w-[50%] h-full p-10 text-center">
           <h1 className="font-bold text-4xl">Kelola Keuangan Masjid</h1>
           <p className="text-3xl">Kelola uang kas, infaq, zakat, dan donasi dari masjid anda.</p>
+          <p className="text-xl">Bayar uang kas setiap pengurus dan donasi untuk pembangunan masjid dengan sistem pembayaran secara online dan terintegrasi dengan sistem</p>
         </div>
       </div>
       <div className="flex w-full h-screen">
