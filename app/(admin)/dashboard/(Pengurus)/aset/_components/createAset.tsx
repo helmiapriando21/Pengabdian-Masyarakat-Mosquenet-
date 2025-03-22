@@ -70,6 +70,15 @@ export default function CreateAset() {
         type="text"
         error={basicValidation(data?.unit || '', "Satuan aset")} 
       />
+      <Input
+        isError={isError}
+        setValue={setData}
+        value={data}
+        placeholder="Masukkan harga aset per satuan barang"
+        dataKey="price"
+        type="number"
+        error={numberValidation(data?.price, "Harga aset")} 
+      />
       <Select
         isError={isError}
         error={basicValidation(data?.condition || '', "Kondisi aset")}

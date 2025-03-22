@@ -3,7 +3,8 @@ export type ListAset = {
   condition: "Baik" | "Sedang_diperbaiki" | "Rusak",
   id?: number,
   name: string,
-  unit: string
+  unit: string,
+  price: number
 };
 
 export type AsetAnalytic = {
