@@ -4,6 +4,7 @@ type BankAccount = {
   bank: string,
   account: string,
   email: string,
+  image: string | File
 };
 
 export type CreateBank = BankAccount & {

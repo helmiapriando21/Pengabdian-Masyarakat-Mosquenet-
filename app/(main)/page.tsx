@@ -13,6 +13,7 @@ import LineGraph from "../(admin)/dashboard/_components/lineGraph";
 import ListKegiatan from "./_components/listKegiatan";
 import { ReportData } from "@/interface/report";
 import { useRouter } from 'next/navigation';
+import CardNavigation from "./_components/cardNavigation";
 
 export default function Home() {
   const [isLogin, setIsLogin] = useState<boolean>(false);
@@ -68,6 +69,20 @@ export default function Home() {
             <ListKegiatan masjid_id={null} />
           </div>
         }
+        <div className="flex w-full h-40 items-center justify-center mb-20 gap-3">
+          <CardNavigation
+            action={() => {
+              router.push('/muratal-al-quran');
+            }}
+            label="Muratal"
+          />
+          <CardNavigation 
+            action={() => {
+              router.push('/messages-to-developer');
+            }}
+            label="Kritik dan Saran Pengembangan Website"
+          />
+        </div>
         <Footer />
       </div>
     );

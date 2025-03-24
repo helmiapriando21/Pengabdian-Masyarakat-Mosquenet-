@@ -59,6 +59,57 @@ const getPrayerTimes = async (
     }
 }
 
+const getSurahList = async (setIsLoading: React.Dispatch<React.SetStateAction<boolean>> | null) => {
+  try {
+    nProgress.start();
+    const response = await fetch(
+        `https://api.quran.com/api/v4/chapters?language=id`, {
+        method: 'GET',
+    });
+    const data = await response.json();
+    if(setIsLoading) 
+        setIsLoading(false);
+    nProgress.done();
+    return data.chapters;
+  } catch (err) {
+      console.error("Error: ", err);
+  }
+}
+
+const getSurah = async (setIsLoading: React.Dispatch<React.SetStateAction<boolean>> | null, nomor: number, verses_count: number, selectedRecitation: number) => {
+  try {
+    nProgress.start();
+    const response = await fetch(
+        `https://api.quran.com/api/v4/verses/by_chapter/${nomor}?language=id&translations=33&per_page=${verses_count}&fields=text_uthmani&audio=${selectedRecitation}`, {
+        method: 'GET',
+    });
+    const data = await response.json();
+    if(setIsLoading) 
+        setIsLoading(false);
+    nProgress.done();
+    return data.verses;
+  } catch (err) {
+      console.error("Error: ", err);
+  }
+}
+
+const getRecitations = async (setIsLoading: React.Dispatch<React.SetStateAction<boolean>> | null) => {
+  try {
+    nProgress.start();
+    const response = await fetch(
+        `https://api.quran.com/api/v4/resources/recitations`, {
+        method: 'GET',
+    });
+    const data = await response.json();
+    if(setIsLoading) 
+        setIsLoading(false);
+    nProgress.done();
+    return data.recitations;
+  } catch (err) {
+      console.error("Error: ", err);
+  }
+}
+
 const getMasjid = async (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>> | null, 
   index: string | null
@@ -333,6 +384,9 @@ const getBankAccountMosque = async (
 export {
     getMasjidList,
     getPrayerTimes,
+    getSurahList,
+    getSurah,
+    getRecitations,
     getMasjid,
     getJamaahMasjid,
     getCategoryPemasukanMasjid,

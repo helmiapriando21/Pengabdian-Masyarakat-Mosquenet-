@@ -41,6 +41,26 @@ const listBank: SelectType[] = [
     id: "panin",
     name: "BANK PANIN"
   },
+  {
+    id: "va-ovo",
+    name: "OVO"
+  },
+  {
+    id: "va-dana",
+    name: "DANA"
+  },
+  {
+    id: "va-gopay",
+    name: "GOPAY"
+  },
+  {
+    id: "va-shoopepay",
+    name: "SHOOPEPAY"
+  },
+  {
+    id: "qris",
+    name: "QRIS"
+  },
 ];
 
 export default listBank;

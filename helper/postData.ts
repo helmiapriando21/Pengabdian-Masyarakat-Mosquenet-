@@ -198,6 +198,23 @@ const addBankAccount = async (data: CreateBank, router: AppRouterInstance) => {
   nProgress.done();
 }
 
+const sendCritics = async (data: { message: string }, router: AppRouterInstance) => {
+  nProgress.start();
+  const response = await fetch('/api/critics-suggestion', {
+    method: "POST",
+    body: JSON.stringify({
+      ...data
+    })
+  });
+  const responseData = await response.json();
+  if(response.ok) {
+    showAlert(responseData.message, router, "success", '/this-page');
+  } else {
+    showAlert(responseData.error || "Terjadi kesalahan pada mengirimkan kritik. silahkan coba lagi!", router, "error", '/auth');
+  }
+  nProgress.done();
+}
+
 export {
   updateRole,
   addCategory,
@@ -210,5 +227,6 @@ export {
   deleteKegiatan,
   createKasPayment,
   addPurposeBankAccount,
-  addBankAccount
+  addBankAccount,
+  sendCritics
 };

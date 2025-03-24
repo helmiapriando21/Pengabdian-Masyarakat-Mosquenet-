@@ -42,7 +42,6 @@ export default function CreateKegiatan() {
           body: formData
         });
 
-        console.log(response);
         const responseData = await response.json();
         if(response.ok) {
           showAlert(responseData.message, router, "success", '/this-page');
