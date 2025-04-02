@@ -3,7 +3,7 @@
 import nProgress from "nprogress";
 import Input  from "../../_components/input";
 import React, { useState } from "react";
-import showAlert from "@/helper/showAlert";
+import showAlert from "@/services/showAlert";
 import emailValidation from "@/validation/email-validation";
 import { useRouter } from "next/navigation";
 import RedirectSolution from "../../_components/redirectSolution";

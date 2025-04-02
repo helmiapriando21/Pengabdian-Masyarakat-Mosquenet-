@@ -4,9 +4,9 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Input from "../../../_components/input";
 import basicValidation from "@/validation/basic-validation";
-import { getDetailKegiatanMasjid } from "@/helper/getData";
-import showAlert from "@/helper/showAlert";
+import { getDetailKegiatanMasjid } from "@/services/getData";
 import { DetailActivity } from "@/interface/activity";
+import { editKegiatan } from "@/services/postData";
 
 interface EditKegiatanProps {
   id: number
@@ -49,27 +49,7 @@ export default function EditKegiatan({ id }: EditKegiatanProps) {
       !basicValidation(data?.date || '', 'Tanggal kegiatan') &&
       !basicValidation(data?.time || '', 'Jam mulai kegiatan')
     ) {
-      try {
-        const formData = new FormData();
-        Object.entries(data || {}).forEach(([key, value]) => {
-          if (value !== null && value !== undefined) 
-            formData.append(key, typeof value === "number" ? String(value) : value);
-        });
-
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/kegiatan/edit`, {
-          method: "POST",
-          body: formData
-        });
-
-        const responseData = await response.json();
-        if(response.ok) {
-          showAlert(responseData.message, router, "success", '/this-page');
-        } else {
-          showAlert(responseData.error || "Terjadi kesalahan pada mengubah kegiatan, silahkan coba lagi!", router, "error", '/auth');
-        }
-      } catch (e) {
-        showAlert("Terjadi kesalahan pada menambahkan kegiatan, silahkan coba lagi!", router, "error", '/auth');
-      }
+      await editKegiatan(data!, router);
     } else setIsError(true);
   }
   

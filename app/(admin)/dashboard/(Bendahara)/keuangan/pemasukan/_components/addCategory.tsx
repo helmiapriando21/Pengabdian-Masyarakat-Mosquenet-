@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react";
-import { addCategory } from "@/helper/postData";
+import { addCategory } from "@/services/postData";
 import { useRouter } from "next/navigation";
 import Input from "../../../../_components/input";
 import { InformationReport } from "@/interface/report";

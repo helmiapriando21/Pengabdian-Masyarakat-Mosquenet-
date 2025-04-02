@@ -1,6 +1,6 @@
 "use client"
 
-import { getLaporanMasjid } from "@/helper/getData";
+import { getLaporanMasjid } from "@/services/getData";
 import { useEffect, useState } from "react";
 import Thead from "../../../_components/thead";
 import { ReportData } from "@/interface/report";

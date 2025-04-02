@@ -3,8 +3,8 @@
 import { useState } from "react";
 import Input from "../../_components/input";
 import numberValidation from "@/validation/number-validation";
-import { createKasPayment } from "@/helper/postData";
-import { getValidKasTransaction } from "@/helper/getData";
+import { createKasPayment } from "@/services/postData";
+import { getValidKasTransaction } from "@/services/getData";
 import { useRouter } from "next/navigation";
 
 export default function KasPayment() {

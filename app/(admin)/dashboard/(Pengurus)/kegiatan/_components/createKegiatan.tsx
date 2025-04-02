@@ -4,10 +4,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Input from "../../../_components/input";
 import basicValidation from "@/validation/basic-validation";
-import showAlert from "@/helper/showAlert";
-import Cookies from 'js-cookie';
 import { DetailActivity } from "@/interface/activity";
-import nProgress from "nprogress";
+import { createKegiatan } from "@/services/postData";
 
 
 export default function CreateKegiatan() {
@@ -24,34 +22,7 @@ export default function CreateKegiatan() {
       !basicValidation(data?.date || '', 'Tanggal kegiatan') &&
       !basicValidation(data?.time || '', 'Jam mulai kegiatan')
     ) {
-      nProgress.start();
-      try {
-        const formData = new FormData();
-        Object.entries(data || {}).forEach(([key, value]) => {
-          if (value !== null && value !== undefined) 
-            formData.append(key, typeof value === "number" ? String(value) : value);
-        });
-
-        const userId = Cookies.get('user-id');
-        if(userId) {
-          formData.append("user_id", userId);
-        }
-
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/kegiatan/add`, {
-          method: "POST",
-          body: formData
-        });
-
-        const responseData = await response.json();
-        if(response.ok) {
-          showAlert(responseData.message, router, "success", '/this-page');
-        } else {
-          showAlert(responseData.error || "Terjadi kesalahan pada menambahkan kegiatan, silahkan coba lagi!", router, "error", '/auth');
-        }
-      } catch (e) {
-        showAlert("Terjadi kesalahan pada menambahkan kegiatan, silahkan coba lagi!", router, "error", '/auth');
-      }
-      nProgress.done();
+      await createKegiatan(data!, router);
     } else setIsError(true);
   }
   

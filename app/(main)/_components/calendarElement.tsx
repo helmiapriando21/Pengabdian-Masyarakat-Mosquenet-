@@ -3,7 +3,7 @@
 import Calendar from 'react-calendar';
 import { useState, useEffect } from 'react';
 import CalendarLabel from './calendarLabel';
-import { getKegiatanMasjid } from '@/helper/getData';
+import { getKegiatanMasjid } from '@/services/getData';
 import { ListActivities } from '@/interface/activity';
 
 interface CalendarElementProps {

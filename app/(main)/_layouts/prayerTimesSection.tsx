@@ -1,6 +1,6 @@
 "use client"
 
-import { getMasjid, getPrayerTimes } from "@/helper/getData";
+import { getMasjid, getPrayerTimes } from "@/services/getData";
 import React, { useEffect, useState } from "react";
 import PrayerTimesItem from "../_components/prayerTimesItem";
 import ClockElement from "../_components/clockElement";

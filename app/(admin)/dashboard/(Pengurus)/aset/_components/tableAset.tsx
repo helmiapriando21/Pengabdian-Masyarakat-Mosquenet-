@@ -1,11 +1,11 @@
 "use client"
 
 import Thead from "@/app/(admin)/dashboard/_components/thead";
-import { getAsetMasjid } from "@/helper/getData";
+import { getAsetMasjid } from "@/services/getData";
 import { useState, useEffect } from "react";
 import EditAset from "./editAset";
 import EditModal from "../../../_components/editModal";
-import { deleteAset } from "@/helper/postData";
+import { deleteAset } from "@/services/postData";
 import { useRouter } from "next/navigation";
 import { ListAset } from "@/interface/aset";
 

@@ -1,7 +1,7 @@
 "use client"
 
 import Input from "@/app/(auth)/auth/_components/input";
-import { sendCritics } from "@/helper/postData";
+import { sendCritics } from "@/services/postData";
 import basicValidation from "@/validation/basic-validation";
 import { useState } from "react";
 import { useRouter } from "next/navigation";

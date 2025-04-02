@@ -1,7 +1,7 @@
 "use client"
 
 import LineGraph from "@/app/(admin)/dashboard/_components/lineGraph";
-import { getDashboardData } from "@/helper/getData";
+import { getDashboardData } from "@/services/getData";
 import { useState, useEffect } from "react";
 import BarGraph from "../_components/barGraph";
 import Modal from "../_components/modal";

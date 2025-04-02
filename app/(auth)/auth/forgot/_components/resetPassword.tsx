@@ -4,7 +4,7 @@ import nProgress from "nprogress";
 import Input  from "../../_components/input";
 import { useState } from "react";
 import passwordValidation from "@/validation/password-validation";
-import showAlert from "@/helper/showAlert";
+import showAlert from "@/services/showAlert";
 import {useRouter} from "next/navigation";
 import RedirectSolution from "../../_components/redirectSolution";
 import { AuthResetPassword } from "@/interface/auth";

@@ -1,6 +1,6 @@
 "use client"
 
-import { getMasjidList } from "@/helper/getData";
+import { getMasjidList } from "@/services/getData";
 import { ListMosque } from "@/interface/mosque";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";

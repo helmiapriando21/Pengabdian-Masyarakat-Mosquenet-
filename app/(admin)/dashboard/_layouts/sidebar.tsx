@@ -56,6 +56,24 @@ export default function Sidebar() {
           pathname="/dashboard/keuangan/list-rekening-bank"
         />
       </GroupButton>
+      <GroupButton 
+        label="Manajemen Arsip"
+        currentPath={pathname}
+        pathname="/dashboard/archive"
+      >
+        <SidebarButton
+          label="Dokumen"
+          action={() => { router.push('/dashboard/archive/document') }}
+          currentPath={pathname}
+          pathname="/dashboard/archive/document"
+        />
+        <SidebarButton
+          label="Template"
+          action={() => { router.push('/dashboard/archive/template') }}
+          currentPath={pathname}
+          pathname="/dashboard/archive/template"
+        />
+      </GroupButton>
       <div className="flex flex-col gap-5">
         <SidebarButton
           label="Manajemen Aset"

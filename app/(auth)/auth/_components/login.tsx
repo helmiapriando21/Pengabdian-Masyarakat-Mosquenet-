@@ -8,7 +8,7 @@ import passwordValidation from "@/validation/password-validation";
 import emailValidation from "@/validation/email-validation";
 import RedirectSolution from "./redirectSolution";
 import { UserData } from "@/interface/auth";
-import showAlert from "@/helper/showAlert";
+import showAlert from "@/services/showAlert";
 
 interface LoginProps {
   setMenu: React.Dispatch<React.SetStateAction<string>>

@@ -6,7 +6,7 @@ import Input from "../../../_components/input";
 import basicValidation from "@/validation/basic-validation";
 import numberValidation from "@/validation/number-validation";
 import Select from "../../../_components/select";
-import { editAset } from "@/helper/postData";
+import { editAset } from "@/services/postData";
 import { ListAset } from "@/interface/aset";
 
 interface EditAsetProps {

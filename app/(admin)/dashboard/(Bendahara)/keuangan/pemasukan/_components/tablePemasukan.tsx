@@ -1,7 +1,7 @@
 "use client"
 
 import Thead from "@/app/(admin)/dashboard/_components/thead";
-import { getPemasukanMasjid } from "@/helper/getData";
+import { getPemasukanMasjid } from "@/services/getData";
 import { IncomeData } from "@/interface/report";
 import { useState, useEffect } from "react";
 

@@ -6,7 +6,7 @@ import Input from "../../../_components/input";
 import basicValidation from "@/validation/basic-validation";
 import numberValidation from "@/validation/number-validation";
 import Select from "../../../_components/select";
-import { addAset } from "@/helper/postData";
+import { addAset } from "@/services/postData";
 import { ListAset } from "@/interface/aset";
 import { SelectType } from "@/interface/form";
 
@@ -41,7 +41,7 @@ export default function CreateAset() {
   }
   
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-3 overflow-scroll">
       <h1 className="font-bold text-black text-xl">Tambah Aset</h1>
       <Input 
         isError={isError}

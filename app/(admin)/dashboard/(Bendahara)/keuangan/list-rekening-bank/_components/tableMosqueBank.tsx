@@ -1,7 +1,7 @@
 "use client"
 
 import Thead from "@/app/(admin)/dashboard/_components/thead";
-import { getBankAccountMosque } from "@/helper/getData";
+import { getBankAccountMosque } from "@/services/getData";
 import { ListBank } from "@/interface/bank";
 import { useState, useEffect } from "react";
 

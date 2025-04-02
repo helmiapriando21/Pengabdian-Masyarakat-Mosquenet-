@@ -1,12 +1,12 @@
 "use client"
 
-import { getCategoryPemasukanMasjid } from "@/helper/getData";
+import { getCategoryPemasukanMasjid } from "@/services/getData";
 import { useState, useEffect } from "react";
 import Select from "../../../../_components/select";
 import Input from "../../../../_components/input";
 import numberValidation from "@/validation/number-validation";
 import { useRouter } from "next/navigation";
-import { addPemasukan } from "@/helper/postData";
+import { addPemasukan } from "@/services/postData";
 import { CreateIncome } from "@/interface/report";
 import { SelectType } from "@/interface/form";
 

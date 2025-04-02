@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import checkUser from "@/helper/checkUser";
-import { getMasjid } from "@/helper/getData";
+import checkUser from "@/services/checkUser";
+import { getMasjid } from "@/services/getData";
 import { useEffect, useState } from "react";
 
 export default function HeroSection({ masjidId }: any) {

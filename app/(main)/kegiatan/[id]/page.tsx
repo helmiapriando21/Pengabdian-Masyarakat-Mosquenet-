@@ -1,6 +1,6 @@
 "use client"
 
-import { getDetailKegiatanMasjid } from "@/helper/getData";
+import { getDetailKegiatanMasjid } from "@/services/getData";
 import { DetailActivity } from "@/interface/activity";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";

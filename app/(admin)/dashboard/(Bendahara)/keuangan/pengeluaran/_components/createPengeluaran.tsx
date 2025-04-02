@@ -1,12 +1,12 @@
 "use client"
 
-import { getReasonPengeluaranMasjid } from "@/helper/getData";
+import { getReasonPengeluaranMasjid } from "@/services/getData";
 import { useState, useEffect } from "react";
 import Select from "../../../../_components/select";
 import Input from "../../../../_components/input";
 import numberValidation from "@/validation/number-validation";
 import { useRouter } from "next/navigation";
-import { addPengeluaran } from "@/helper/postData";
+import { addPengeluaran } from "@/services/postData";
 import { CreateOutcome } from "@/interface/report";
 import { SelectType } from "@/interface/form";
 

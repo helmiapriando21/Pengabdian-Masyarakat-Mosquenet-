@@ -1,6 +1,6 @@
 "use client"
 
-import { getRecitations, getSurah } from "@/helper/getData";
+import { getRecitations, getSurah } from "@/services/getData";
 import { useParams } from "next/navigation";
 import { useEffect, useState, useRef } from "react";
 

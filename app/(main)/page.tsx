@@ -1,6 +1,6 @@
 "use client"
 
-import checkUser from "@/helper/checkUser";
+import checkUser from "@/services/checkUser";
 import Footer from "./_layouts/footer";
 import HeroSection from "./_layouts/heroSection";
 import MosqueListSection from "./_layouts/mosqueListSection";
@@ -8,7 +8,7 @@ import PrayerTimesSection from "./_layouts/prayerTimesSection";
 import DescribeSection from "./_layouts/describeSection";
 import CalendarElement from "./_components/calendarElement";
 import { useState, useEffect } from 'react';
-import { getDashboardData } from "@/helper/getData";
+import { getDashboardData } from "@/services/getData";
 import LineGraph from "../(admin)/dashboard/_components/lineGraph";
 import ListKegiatan from "./_components/listKegiatan";
 import { ReportData } from "@/interface/report";
@@ -81,6 +81,12 @@ export default function Home() {
               router.push('/messages-to-developer');
             }}
             label="Kritik dan Saran Pengembangan Website"
+          />
+          <CardNavigation
+            action={() => {
+              router.push('/calc-zakat')
+            }}
+            label="Kalkulator Zakat"
           />
         </div>
         <Footer />

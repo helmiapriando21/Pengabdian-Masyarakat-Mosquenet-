@@ -1,18 +1,18 @@
 "use client"
 
-import { getPurposesBankAccountMosque } from "@/helper/getData";
+import { getPurposesBankAccountMosque } from "@/services/getData";
 import { useState, useEffect } from "react";
 import Select from "../../../../_components/select";
 import Input from "../../../../_components/input";
 import numberValidation from "@/validation/number-validation";
 import { useRouter } from "next/navigation";
-import { addBankAccount } from "@/helper/postData";
+import { addBankAccount } from "@/services/postData";
 import basicValidation from "@/validation/basic-validation";
 import listBank from "@/data/listBank";
 import { CreateBank } from "@/interface/bank";
 import { SelectType } from "@/interface/form";
 import Cookies from "js-cookie";
-import showAlert from "@/helper/showAlert";
+import showAlert from "@/services/showAlert";
 import nProgress from "nprogress";
 
 export default function CreateBankAccount() {
@@ -35,30 +35,7 @@ export default function CreateBankAccount() {
       !basicValidation(data?.email || '', "Email pemilik") &&
       !numberValidation(data?.purpose_id, "Tujuan rekening bank")
     ) {
-        nProgress.start();
-        try {
-          const formData = new FormData();
-          Object.entries(data || {}).forEach(([key, value]) => {
-            if(value !== null && value !== undefined)
-              formData.append(key, typeof value === "number" ? String(value) : value);
-          });
-    
-          const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/account-bank/create`, {
-            method: 'POST',
-            body: formData
-          });
-    
-          const responseData = await response.json();
-    
-          if(response.ok) {
-            showAlert(responseData.message, router, "success", '/this-page');
-          } else {
-            showAlert(responseData.error || "Terjadi kesalahan pada menambahkan rekening, silahkan coba lagi!", router, "error", '/auth');
-          }
-        } catch (e) {
-          showAlert("Terjadi kesalahan pada menambahkan rekening, silahkan coba lagi!", router, "error", '/auth');
-        }
-        nProgress.done();
+      await addBankAccount(data!, router);
     } else setIsError(true);
   }
 

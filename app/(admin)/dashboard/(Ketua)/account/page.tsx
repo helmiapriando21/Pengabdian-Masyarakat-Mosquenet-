@@ -1,10 +1,10 @@
 "use client"
 
-import { getJamaahMasjid } from "@/helper/getData";
+import { getJamaahMasjid } from "@/services/getData";
 import { useEffect, useState } from "react"
 import Checkbox from "./_components/checkbox";
 import Thead from "../../_components/thead";
-import { updateRole } from "@/helper/postData";
+import { updateRole } from "@/services/postData";
 import { Jamaah } from "@/interface/jamaah";
 
 export default function Account() {

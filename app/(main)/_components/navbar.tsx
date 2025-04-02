@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 import Logo from "./logo";
 import { useRouter } from "next/navigation";
-import showAlert from "@/helper/showAlert";
-import checkUser from "@/helper/checkUser";
+import showAlert from "@/services/showAlert";
+import checkUser from "@/services/checkUser";
 
 export default function NavBar() {
     const router = useRouter();

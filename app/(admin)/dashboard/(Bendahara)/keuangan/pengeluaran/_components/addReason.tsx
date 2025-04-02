@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react";
-import { addReason } from "@/helper/postData";
+import { addReason } from "@/services/postData";
 import { useRouter } from "next/navigation";
 import Input from "../../../../_components/input";
 import { InformationReport } from "@/interface/report";
