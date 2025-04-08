@@ -1,7 +1,7 @@
 import { ListAset } from "@/interface/aset";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { CreateIncome, CreateOutcome } from "@/interface/report";
-import { CreateBank } from "@/interface/bank";
+import { CreateBank, Donation } from "@/interface/bank";
 import { postDataOnly, postDataWithRedirectServices } from "./api";
 import Cookies from 'js-cookie'
 import { DetailActivity } from "@/interface/activity";
@@ -236,6 +236,18 @@ const deleteDocument = async (id: number, router: AppRouterInstance) => {
   );
 }
 
+const sendDonation = async (data: Donation, masjid_id: string, donation_id: string, router: AppRouterInstance) => {
+  const formData: FormData = generateFormData(data);
+
+  postDataWithRedirectServices(
+    `${process.env.NEXT_PUBLIC_API_URL}/mosque/donations/${masjid_id}/post/${donation_id}`,
+    formData,
+    router,
+    "Terjadi kesalahan pada pengiriman donasi, silahkan coba lagi!",
+    'POST'
+  );
+}
+
 export {
   updateRole,
   addCategory,
@@ -257,5 +269,6 @@ export {
   deleteTemplateDocument,
   saveDocument,
   changeDocument,
-  deleteDocument
+  deleteDocument,
+  sendDonation
 };

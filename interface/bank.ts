@@ -12,5 +12,12 @@ export type CreateBank = BankAccount & {
 };
 
 export type ListBank = BankAccount & {
-  purpose: string
+  purpose: string,
+  id?: string
 };
+
+export type Donation = {
+  name: string;
+  amount: number;
+  image: File | String;
+}

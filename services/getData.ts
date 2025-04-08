@@ -227,6 +227,16 @@ const getMosqueDocuments = async (setIsLoading: React.Dispatch<React.SetStateAct
   return documents;
 }
 
+const getDonationsList = async (masjid_id: string, setIsLoading: React.Dispatch<React.SetStateAction<boolean>>) => {
+  const { donations } = await requestGetApi(`/api/mosques/donation/get/${masjid_id}`, setIsLoading);
+  return donations;
+}
+
+const getDonation = async (masjid_id: string, donation_id: string, setIsLoading: React.Dispatch<React.SetStateAction<boolean>>) => {
+  const { account } = await requestGetApi(`/api/mosques/donation/get/${masjid_id}/detail/${donation_id}`, setIsLoading);
+  return account;
+}
+
 export {
     getMasjidList,
     getPrayerTimes,
@@ -248,5 +258,7 @@ export {
     getPurposesBankAccountMosque,
     getBankAccountMosque,
     getMosqueTemplateDocuments,
-    getMosqueDocuments
+    getMosqueDocuments,
+    getDonationsList,
+    getDonation
 }

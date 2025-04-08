@@ -12,8 +12,8 @@ export default function MosqueListSection() {
 
     useEffect(() => {
         const init = async () => {
-            const data = await getMasjidList(setIsLoading);
-            setMosques(data);
+          const data = await getMasjidList(setIsLoading);
+          setMosques(data);
         }
 
         if(isLoading) 
