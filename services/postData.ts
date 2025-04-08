@@ -248,6 +248,16 @@ const sendDonation = async (data: Donation, masjid_id: string, donation_id: stri
   );
 }
 
+const verifyDonation = async (verified: boolean, masjid_id: string, donation_id: string, router: AppRouterInstance) => {
+  postDataWithRedirectServices(
+    `/api/pemasukan/mosque/${masjid_id}/donation/${donation_id}`,
+    { verified },
+    router,
+    "Terjadi kesalahan pada proses verifikasi donasi. Silahkan coba lagi",
+    'PUT'
+  );
+}
+
 export {
   updateRole,
   addCategory,
@@ -270,5 +280,6 @@ export {
   saveDocument,
   changeDocument,
   deleteDocument,
-  sendDonation
+  sendDonation,
+  verifyDonation
 };

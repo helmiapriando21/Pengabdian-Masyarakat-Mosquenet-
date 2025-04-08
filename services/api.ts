@@ -32,9 +32,9 @@ const postDataOnly = async (
   nProgress.start();
   const response = await fetch(endPoints, {
     method: method,
-    body: data instanceof FormData ? data : JSON.stringify(data)
-  })
-  console.log(response);
+    body: data instanceof FormData ? data : JSON.stringify(data),
+    headers: data instanceof FormData ? undefined :{ "Content-Type": "application/json" }
+  });
   nProgress.done();
   return response;
 }

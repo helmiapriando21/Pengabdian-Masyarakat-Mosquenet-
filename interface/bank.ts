@@ -21,3 +21,10 @@ export type Donation = {
   amount: number;
   image: File | String;
 }
+
+export type AdminDonationDisplay = Donation & {
+  type: string;
+  verified: boolean;
+  masjid_id: string;
+  id: string;
+}

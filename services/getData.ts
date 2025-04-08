@@ -97,8 +97,8 @@ const getPemasukanMasjid = async (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
   try {
-    const { incomes } = await requestGetApi('/api/pemasukan/get', setIsLoading);
-    return incomes;
+    const { incomes, donations } = await requestGetApi('/api/pemasukan/get', setIsLoading);
+    return { incomes, donations };
   } catch (err) {
       console.error("Error: ", err);
   }

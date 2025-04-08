@@ -5,15 +5,16 @@
 import { NextRequest } from "next/server";
 import axios from "axios";
 
-export async function GET(req: NextRequest) {
-  const userId = req.cookies.get('user-id');
-    try {
-      if(userId) {
-        const response = await axios.post(
-          `${process.env.API_URL}/pemasukan/get`, 
-          {
-            user_id: userId.value,
-          },
+export async function PUT(req: NextRequest) {
+  const urlParts = req.nextUrl.pathname.split("/");
+  const donation_id = urlParts[urlParts.length - 1];
+  const masjid_id = urlParts[urlParts.length - 3];
+  try {
+    const data = await req.json();
+      if(donation_id && masjid_id && data) {
+        const response = await axios.put(
+          `${process.env.API_URL}/pemasukan/mosque/${masjid_id}/donation/${donation_id}`,
+          { ...data },
           {
             headers: {
               'Content-Type': 'application/json'
@@ -21,8 +22,7 @@ export async function GET(req: NextRequest) {
           }
         );
         return new Response(JSON.stringify({
-          incomes: response.data.incomes,
-          donations: response.data.donations
+          message: response.data.message
         }), {
           status: response.data.status,
           headers: { "Content-Type": "application/json" }
