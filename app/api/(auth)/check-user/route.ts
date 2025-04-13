@@ -2,14 +2,12 @@
 
 "use server"
 
+import axios from "axios";
 import { NextRequest } from "next/server";
 
 export async function GET(req: NextRequest) {
     try {
         const userId = req.cookies.get('user-id');
-        const adminStatus = req.cookies.get('admin-status');
-        const adminRole = req.cookies.get('admin-role');
-        const masterStatus = req.cookies.get('master-status');
         
         if( !userId ) {
             return new Response(JSON.stringify({
@@ -19,11 +17,16 @@ export async function GET(req: NextRequest) {
                 headers: { "Content-Type": "application/json" },
             });
         } else {
+            const data = await axios.post(
+              `${process.env.API_URL}/auth/check`,
+              { user_id: userId.value }
+            );
+            
             return new Response(JSON.stringify({
                 isLogin: true,
-                adminStatus,
-                adminRole, 
-                masterStatus
+                adminStatus: data.data.admin.status,
+                adminRole: data.data.admin.role, 
+                masterStatus: data.data.master.status
             }), {
                 status: 200,
                 headers: { "Content-Type": "application/json" },

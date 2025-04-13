@@ -10,7 +10,6 @@ export async function POST(req: NextRequest) {
   const data = await req.json();
     try {
       if(userId) {
-        console.log(userId);
         const response = await axios.post(
           `${process.env.API_URL}/payment/kas/`, 
           {

@@ -29,6 +29,16 @@ export default function NavBar() {
 
     useEffect(() => {
       checkUser(setRole, setIsLogin);
+
+      const handleUserUpdated = () => {
+        checkUser(setRole, setIsLogin);
+      }
+
+      window.addEventListener('user-updated', handleUserUpdated);
+
+      return () => {
+        window.removeEventListener('user-updated', handleUserUpdated);
+      }
     }, [])
 
     return (

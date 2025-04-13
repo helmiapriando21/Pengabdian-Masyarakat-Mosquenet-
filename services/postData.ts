@@ -7,15 +7,21 @@ import Cookies from 'js-cookie'
 import { DetailActivity } from "@/interface/activity";
 import generateFormData from "./generateFormData";
 import { ArchiveDocument, ArchiveDocuments, ArchiveTemplate, ArchiveTemplates } from "@/interface/archive";
+import { Animal } from "@/interface/qurban";
 
 const updateRole = async (email: string, role: string) => {
-  await postDataOnly(
+  const data = await postDataOnly(
     '/api/user/update-role',
     {
       email: email,
       role: role
     }
   )
+
+  if(!data.ok) {
+    const jsonData = await data.json();
+    alert(jsonData.error);
+  }
 };
 
 const addCategory = async (name: string, router: AppRouterInstance) => {
@@ -258,6 +264,16 @@ const verifyDonation = async (verified: boolean, masjid_id: string, donation_id:
   );
 }
 
+// const addAnimal = async (data: Animal, router: AppRouterInstance) => {
+//   postDataWithRedirectServices(
+//     '/api/monitoring-kurban/animal/add',
+//     data,
+//     router,
+//     "Terjadi kesalahan pada proses penambahan hewan kurban. Silahkan coba lagi",
+//     'POST'
+//   );
+// }
+
 export {
   updateRole,
   addCategory,
@@ -281,5 +297,6 @@ export {
   changeDocument,
   deleteDocument,
   sendDonation,
-  verifyDonation
+  verifyDonation,
+  // addAnimal
 };

@@ -17,8 +17,12 @@ export default function Account() {
   }
 
   const action = async (email: string, role: string) => {
-    await updateRole(email, role);
-    await init();
+    const isAction = confirm("Apakah anda ingin role ini diubah?");
+    if(isAction) {
+      await updateRole(email, role);
+      await init();
+      window.dispatchEvent(new Event('user-updated'));
+    }
   }
 
   useEffect(() => {

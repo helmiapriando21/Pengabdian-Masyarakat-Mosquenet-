@@ -2,20 +2,22 @@ import React from "react";
 import { requestGetApi } from "./api";
 
 const checkUser = async (
-  setRole: React.Dispatch<React.SetStateAction<string | undefined>>, 
-  setIsLogin: React.Dispatch<React.SetStateAction<boolean>>
+  setRole?: React.Dispatch<React.SetStateAction<string | undefined>>, 
+  setIsLogin?: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
     const check = await requestGetApi('/api/check-user', null);
-    if(check.isLogin) {
-        if(check.masterStatus.value === "true") {
+    if(check && check.isLogin && setRole) {
+        if(check.masterStatus) {
           setRole("Master Admin");
-        } else if(check.adminStatus.value === "true") {
-          setRole(check.adminRole.value);
+        } else if(check.adminStatus) {
+          setRole(check.adminRole);
         } else {
           setRole("Jamaah");
         }
     }
-    setIsLogin(check.isLogin);
+
+    if(setIsLogin) setIsLogin(check.isLogin);
+
     return check;
 }
 

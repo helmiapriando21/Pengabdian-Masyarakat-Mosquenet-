@@ -35,6 +35,7 @@ const postDataOnly = async (
     body: data instanceof FormData ? data : JSON.stringify(data),
     headers: data instanceof FormData ? undefined :{ "Content-Type": "application/json" }
   });
+  
   nProgress.done();
   return response;
 }

@@ -18,9 +18,10 @@ export async function POST(req: NextRequest) {
         );
 
         cookieStore.set('admin-status', response.data.user.admin.status);
+        cookieStore.set('admin-email', request.email);
         cookieStore.set('admin-role', response.data.user.admin.role);
         cookieStore.set('master-status', response.data.user.master.status);
-        cookieStore.set('user-id', await bcrypt.hash(`${response.data.user.id}`, Number(process.env.ROUND_SALT)));
+        cookieStore.set('user-id', response.data.user.id);
     
         return new Response(JSON.stringify({
             message: response.data.message

@@ -10,6 +10,7 @@ export async function POST(req: NextRequest) {
     try {
 
         cookieStore.delete('admin-status');
+        cookieStore.delete('admin-email');
         cookieStore.delete('admin-role');
         cookieStore.delete('master-status');
         cookieStore.delete('user-id');
