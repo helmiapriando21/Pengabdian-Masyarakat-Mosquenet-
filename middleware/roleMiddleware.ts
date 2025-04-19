@@ -8,12 +8,12 @@ export function roleMiddleware(request: NextRequest, role: string) {
     adminStatus: request.cookies.get('admin-status')?.value === "true" ? true : false
   }
 
-  if(check && role === '' && check.isLogin) {
+  if(check && role === 'Pengurus' && check.adminStatus && check.isLogin) {
     return NextResponse.next();
   } 
   
   if (!check?.isLogin || check?.adminRole !== role || !check?.adminStatus) {
-    const homeUrl = new URL('/', request.nextUrl.origin);
+    const homeUrl = new URL(check.adminStatus ? '/dashboard/main' : '/', request.nextUrl.origin);
     return NextResponse.redirect(homeUrl);
   }
 

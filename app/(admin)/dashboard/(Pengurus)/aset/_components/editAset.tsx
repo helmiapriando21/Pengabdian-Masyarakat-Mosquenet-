@@ -8,6 +8,7 @@ import numberValidation from "@/validation/number-validation";
 import Select from "../../../_components/select";
 import { editAset } from "@/services/postData";
 import { ListAset } from "@/interface/aset";
+import asetConditions from "@/data/asetConditions";
 
 interface EditAsetProps {
   currentData: ListAset
@@ -15,20 +16,6 @@ interface EditAsetProps {
 
 export default function EditAset({ currentData }: EditAsetProps) {
   const [data, setData] = useState<ListAset>(currentData);
-  const conditions = [
-    {
-      id: "Baik",
-      name: "Baik"
-    },
-    {
-      id: "Sedang_diperbaiki",
-      name: "Sedang diperbaiki"
-    },
-    {
-      id: "Rusak",
-      name: "Rusak"
-    }
-  ];
   const [isError, setIsError] = useState<boolean>(false);
   const router = useRouter();
 
@@ -73,6 +60,15 @@ export default function EditAset({ currentData }: EditAsetProps) {
         type="text"
         error={basicValidation(data.unit, "Satuan aset")} 
       />
+      <Input
+        isError={isError}
+        setValue={setData}
+        value={data}
+        placeholder="Masukkan harga aset per satuan barang"
+        dataKey="price"
+        type="number"
+        error={numberValidation(data?.price, "Harga aset")} 
+      />
       <Select
         isError={isError}
         error={basicValidation(data.condition, "Kondisi aset")}
@@ -80,7 +76,7 @@ export default function EditAset({ currentData }: EditAsetProps) {
         value={data}
         placeholder="Pilih kondisi aset"
         dataKey="condition"
-        options={conditions}
+        options={asetConditions}
         type="text"
       />
       <button

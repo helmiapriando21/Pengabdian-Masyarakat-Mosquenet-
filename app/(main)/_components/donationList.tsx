@@ -13,7 +13,6 @@ export default function DonationList({ masjid_id }: { masjid_id: string }) {
   useEffect(() => {
     const init = async () => {
       const data = await getDonationsList(masjid_id, setIsLoading);
-      console.log(data);
       setData(data);
     }
 

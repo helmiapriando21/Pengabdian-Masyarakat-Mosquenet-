@@ -8,24 +8,10 @@ import numberValidation from "@/validation/number-validation";
 import Select from "../../../_components/select";
 import { addAset } from "@/services/postData";
 import { ListAset } from "@/interface/aset";
-import { SelectType } from "@/interface/form";
+import asetConditions from "@/data/asetConditions";
 
 export default function CreateAset() {
   const [data, setData] = useState<ListAset>();
-  const conditions: SelectType[] = [
-    {
-      id: "Baik",
-      name: "Baik"
-    },
-    {
-      id: "Sedang_diperbaiki",
-      name: "Sedang diperbaiki"
-    },
-    {
-      id: "Rusak",
-      name: "Rusak"
-    }
-  ];
   const [isError, setIsError] = useState<boolean>(false);
   const router = useRouter();
 
@@ -86,7 +72,7 @@ export default function CreateAset() {
         value={data}
         placeholder="Pilih kondisi aset"
         dataKey="condition"
-        options={conditions}
+        options={asetConditions}
         type="text"
       />
       <button

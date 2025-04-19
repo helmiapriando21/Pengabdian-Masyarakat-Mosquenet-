@@ -9,6 +9,7 @@ import PrayerTimesSection from "../../_layouts/prayerTimesSection";
 import { useEffect, useState } from "react";
 import ListKegiatan from "../../_components/listKegiatan";
 import DonationList from "../../_components/donationList";
+import ListKonten from "../../_components/listKonten";
 
 export default function MosqueDetail () {
   const params = useParams();
@@ -35,6 +36,10 @@ export default function MosqueDetail () {
         <div className="w-screen h-screen flex flex-col gap-3 items-center justify-center px-20">
           <h1 className="font-bold text-2xl">Donasi yang dapat anda berikan</h1>
           <DonationList masjid_id={masjidId} />
+        </div>
+        <div className="w-screen h-screen flex flex-col gap-3 items-center justify-center px-20">
+          <h1 className="font-bold text-2xl">Konten seputar Masjid</h1>
+          <ListKonten masjid_id={masjidId} />
         </div>
         <MosqueListSection />
         <Footer />

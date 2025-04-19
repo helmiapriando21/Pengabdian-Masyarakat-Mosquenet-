@@ -116,6 +116,14 @@ export default function Sidebar() {
             pathname="/dashboard/kegiatan"
           />
         </div>
+        <div className="flex flex-col gap-5">
+          <SidebarButton
+            label="Manajemen Konten"
+            action={() => { router.push('/dashboard/content') }}
+            currentPath={pathname}
+            pathname="/dashboard/content"
+          />
+        </div>
         {/* <div className="flex flex-col gap-5">
           <SidebarButton
             label="Manajemen Qurban"

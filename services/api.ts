@@ -35,7 +35,6 @@ const postDataOnly = async (
     body: data instanceof FormData ? data : JSON.stringify(data),
     headers: data instanceof FormData ? undefined :{ "Content-Type": "application/json" }
   });
-  
   nProgress.done();
   return response;
 }
@@ -50,8 +49,8 @@ const postDataWithRedirectServices = async (
   const response = method === 'GET' 
     ? await requestGetApi(endPoints, null) 
     : (method === 'POST' || method === "PUT" || method === "DELETE") && await postDataOnly(endPoints, data, method);
-    
-  const jsonResponse = await response.json();
+  
+    const jsonResponse = await response.json();
   if(response.ok) {
     showAlert(jsonResponse.message, router, "success", '/this-page');
   } else {

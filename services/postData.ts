@@ -8,6 +8,7 @@ import { DetailActivity } from "@/interface/activity";
 import generateFormData from "./generateFormData";
 import { ArchiveDocument, ArchiveDocuments, ArchiveTemplate, ArchiveTemplates } from "@/interface/archive";
 import { Animal } from "@/interface/qurban";
+import { Content, ListContent } from "@/interface/content";
 
 const updateRole = async (email: string, role: string) => {
   const data = await postDataOnly(
@@ -69,15 +70,10 @@ const addAset = async (data: ListAset | undefined, router: any) => {
   );
 }
 
-const editAset = async (data: ListAset, id: number | undefined, router: any) => {
-  const sendData = {
-    amount: data.amount,
-    condition: data.condition,
-    name: data.name,
-    unit: data.unit
-  }
+const editAset = async (data: ListAset, idData: number | undefined, router: any) => {
+  const {id, ...sendData} = data;
   await postDataWithRedirectServices(
-    `/api/aset/edit/${id}`,
+    `/api/aset/edit/${idData}`,
     sendData,
     router,
     "Terjadi kesalahan pada mengubah aset, silahkan coba lagi!"
@@ -102,21 +98,24 @@ const createKegiatan = async (data: DetailActivity & { time: string }, router: A
   }
 
   postDataWithRedirectServices(
-    `${process.env.NEXT_PUBLIC_API_URL}/kegiatan/add`,
+    `${process.env.NEXT_PUBLIC_API_URL}/kegiatan`,
     formData,
     router,
-    "Terjadi kesalahan pada menambahkan kegiatan, silahkan coba lagi!"
+    "Terjadi kesalahan pada menambahkan kegiatan, silahkan coba lagi!",
+    "POST"
   );
 }
 
 const editKegiatan = async (data: DetailActivity & { time: string }, router: AppRouterInstance) => {
-  const formData: FormData = generateFormData(data);
+  const {id, ...postData} = data;
+  const formData: FormData = generateFormData(postData);
 
   postDataWithRedirectServices(
-    `${process.env.NEXT_PUBLIC_API_URL}/kegiatan/edit`,
+    `${process.env.NEXT_PUBLIC_API_URL}/kegiatan/${id}`,
     formData,
     router,
-    "Terjadi kesalahan pada mengubah kegiatan, silahkan coba lagi!"
+    "Terjadi kesalahan pada mengubah kegiatan, silahkan coba lagi!",
+    "PUT"
   );
 }
 
@@ -126,6 +125,16 @@ const deleteKegiatan = async (id: number, router: AppRouterInstance) => {
     {},
     router,
     "Terjadi kesalahan pada menghapus kegiatan, silahkan coba lagi!"
+  );
+}
+
+const deleteContent = async (id: number, router: AppRouterInstance) => {
+  await postDataWithRedirectServices(
+    `/api/konten/delete/${id}`,
+    {},
+    router,
+    "Terjadi kesalahan pada menghapus konten, silahkan coba lagi!",
+    "DELETE"
   );
 }
 
@@ -148,7 +157,7 @@ const addBankAccount = async (data: CreateBank, router: AppRouterInstance) => {
   const formData: FormData = generateFormData(data);
 
   postDataWithRedirectServices(
-    `${process.env.NEXT_PUBLIC_API_URL}/account-bank/create`,
+    `${process.env.NEXT_PUBLIC_API_URL}/account-bank`,
     formData,
     router,
     "Terjadi kesalahan pada menambahkan rekening, silahkan coba lagi!"
@@ -173,7 +182,7 @@ const saveTemplateDocument = async (data: ArchiveTemplate, router: AppRouterInst
   }
 
   postDataWithRedirectServices(
-    `${process.env.NEXT_PUBLIC_API_URL}/archive/template/create`,
+    `${process.env.NEXT_PUBLIC_API_URL}/archive/template`,
     formData,
     router,
     "Terjadi kesalahan pada menambahkan template dokumen. Silahkan coba lagi!"
@@ -185,7 +194,7 @@ const changeTemplateDocument = async (data: ArchiveTemplates, router: AppRouterI
   const formData: FormData = generateFormData(document instanceof File ? {...sendData, document} : sendData);
 
   postDataWithRedirectServices(
-    `${process.env.NEXT_PUBLIC_API_URL}/archive/template/update/${id}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/archive/template/${id}`,
     formData,
     router,
     "Terjadi kesalahan pada mengubah template dokumen, silahkan coba lagi!",
@@ -195,7 +204,7 @@ const changeTemplateDocument = async (data: ArchiveTemplates, router: AppRouterI
 
 const deleteTemplateDocument = async (id: number, router: AppRouterInstance) => {
   postDataWithRedirectServices(
-    `${process.env.NEXT_PUBLIC_API_URL}/archive/template/delete/${id}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/archive/template/${id}`,
     {},
     router,
     "Terjadi kesalahan pada menghapus template dokumen, silahkan coba lagi!",
@@ -212,7 +221,7 @@ const saveDocument = async (data: ArchiveDocument, router: AppRouterInstance) =>
   }
 
   postDataWithRedirectServices(
-    `${process.env.NEXT_PUBLIC_API_URL}/archive/document/create`,
+    `${process.env.NEXT_PUBLIC_API_URL}/archive/document`,
     formData,
     router,
     "Terjadi kesalahan pada menambahkan dokumen. Silahkan coba lagi!"
@@ -224,7 +233,7 @@ const changeDocument = async (data: ArchiveDocuments, router: AppRouterInstance)
   const formData: FormData = generateFormData(document instanceof File ? {...sendData, document} : sendData);
 
   postDataWithRedirectServices(
-    `${process.env.NEXT_PUBLIC_API_URL}/archive/document/update/${id}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/archive/document/${id}`,
     formData,
     router,
     "Terjadi kesalahan pada mengubah dokumen, silahkan coba lagi!",
@@ -234,7 +243,7 @@ const changeDocument = async (data: ArchiveDocuments, router: AppRouterInstance)
 
 const deleteDocument = async (id: number, router: AppRouterInstance) => {
   postDataWithRedirectServices(
-    `${process.env.NEXT_PUBLIC_API_URL}/archive/document/delete/${id}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/archive/document/${id}`,
     {},
     router,
     "Terjadi kesalahan pada menghapus dokumen, silahkan coba lagi!",
@@ -261,6 +270,36 @@ const verifyDonation = async (verified: boolean, masjid_id: string, donation_id:
     router,
     "Terjadi kesalahan pada proses verifikasi donasi. Silahkan coba lagi",
     'PUT'
+  );
+}
+
+const sendContents = async (data: Content, router: AppRouterInstance) => {
+  const formData: FormData = generateFormData(data);
+
+  const userId = Cookies.get('user-id');
+  if(userId) {
+    formData.append("user_id", userId);
+  }
+
+  postDataWithRedirectServices(
+    `${process.env.NEXT_PUBLIC_API_URL}/content`,
+    formData,
+    router,
+    "Terjadi kesalahan pada menambahkan konten, silahkan coba lagi!",
+    "POST"
+  );
+}
+
+const updateContents = async (data: ListContent, router: AppRouterInstance) => {
+  const {post_date, ...postData} = data;
+  const formData: FormData = generateFormData(postData);
+
+  postDataWithRedirectServices(
+    `${process.env.NEXT_PUBLIC_API_URL}/content/${postData.id}`,
+    formData,
+    router,
+    "Terjadi kesalahan pada mengubah konten, silahkan coba lagi!",
+    "PUT"
   );
 }
 
@@ -298,5 +337,8 @@ export {
   deleteDocument,
   sendDonation,
   verifyDonation,
+  sendContents,
+  deleteContent,
+  updateContents
   // addAnimal
 };

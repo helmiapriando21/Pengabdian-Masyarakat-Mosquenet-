@@ -2,7 +2,7 @@
 
 import { getLaporanMasjid } from "@/services/getData";
 import { useEffect, useState } from "react";
-import Thead from "@/app/(admin)/dashboard/_components/thead";
+import Thead from "@/app/components/thead";
 import { ReportData } from "@/interface/report";
 
 
@@ -30,7 +30,10 @@ export default function Laporan() {
           <tbody>
             {
               reports.map((value: ReportData, index: number) => (
-                <tr key={index} className="bg-yellow-100 hover:bg-yellow-400">
+                <tr 
+                  key={index} 
+                  className="bg-yellow-100 hover:bg-yellow-400"
+                >
                   <td className="px-4 py-2 min-w-32 text-center">
                     {new Date(value.date).toLocaleDateString('id-ID', { weekday: 'long' })},{" "}
                     {new Date(value.date).toLocaleDateString('id-ID')}
@@ -47,11 +50,8 @@ export default function Laporan() {
               <td className="text-center font-bold p-2">
                 {
                   Number(reports.reduce((acc, curr) => {
-                    if(curr.type === "Pemasukan") {
-                      acc.amount += curr.amount;
-                    } else {
-                      acc.amount -= curr.amount;
-                    }
+                    if(curr.type === "Pemasukan") acc.amount += curr.amount;
+                    else acc.amount -= curr.amount;
                     return acc;
                   }, {amount: 0}).amount).toLocaleString('id-ID')
                 }

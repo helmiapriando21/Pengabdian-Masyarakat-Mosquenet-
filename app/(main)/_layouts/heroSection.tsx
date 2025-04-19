@@ -15,7 +15,7 @@ export default function HeroSection({ masjidId }: any) {
     const init = async () => {
       const response = await checkUser(setRole, setIsLogin);
       if(response.adminStatus)
-        setIsAdmin(Boolean(response.adminStatus.value));
+        setIsAdmin(response.adminStatus);
 
       const data = await getMasjid(null, masjidId || null);
       if(data.mosque)

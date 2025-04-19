@@ -1,8 +1,8 @@
 "use client"
 
-import { getMosqueDocuments, getMosqueTemplateDocuments } from "@/services/getData";
+import { getMosqueDocuments } from "@/services/getData";
 import { useState, useEffect } from "react";
-import { ArchiveDocuments, ArchiveTemplates } from "@/interface/archive";
+import { ArchiveDocuments } from "@/interface/archive";
 import TemplateItems from "./items";
 
 export default function ListArchive() {

@@ -11,7 +11,7 @@ export async function GET(req: NextRequest) {
     try {
       if(id) {
         const response = await axios.get(
-          `${process.env.API_URL}/kegiatan/detail/${id}`,
+          `${process.env.API_URL}/kegiatan/${id}`,
           {
             headers: {
               'Content-Type': 'application/json'

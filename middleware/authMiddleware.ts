@@ -18,7 +18,7 @@ export async function authMiddleware(request: NextRequest) {
     } else if(pathname.startsWith('/dashboard/archive')) {
       return roleMiddleware(request, 'Sekretaris');
     } else {
-      return roleMiddleware(request, '');
+      return roleMiddleware(request, 'Pengurus');
     }
   }
   return NextResponse.next();

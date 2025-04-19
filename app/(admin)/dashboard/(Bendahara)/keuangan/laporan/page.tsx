@@ -2,7 +2,7 @@
 
 import { getLaporanMasjid } from "@/services/getData";
 import { useEffect, useState } from "react";
-import Thead from "../../../_components/thead";
+import Thead from "../../../../../components/thead";
 import { ReportData } from "@/interface/report";
 
 

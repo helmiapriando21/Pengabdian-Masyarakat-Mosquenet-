@@ -3,7 +3,7 @@
 import { getJamaahMasjid } from "@/services/getData";
 import { useEffect, useState } from "react"
 import Checkbox from "./_components/checkbox";
-import Thead from "../../_components/thead";
+import Thead from "../../../../components/thead";
 import { updateRole } from "@/services/postData";
 import { Jamaah } from "@/interface/jamaah";
 

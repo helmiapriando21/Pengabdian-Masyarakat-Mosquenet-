@@ -12,8 +12,8 @@ export async function POST(req: NextRequest) {
   const data = await req.json();
     try {
       if(userId && id) {
-        const response = await axios.post(
-          `${process.env.API_URL}/aset/edit/${id}`, 
+        const response = await axios.put(
+          `${process.env.API_URL}/aset/${id}`, 
           data,
           {
             headers: {

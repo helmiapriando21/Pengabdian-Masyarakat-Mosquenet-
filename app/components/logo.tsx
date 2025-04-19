@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 interface LogoProps {
   width: number,
@@ -6,8 +7,12 @@ interface LogoProps {
 }
 
 export default function Logo({width, height}: LogoProps) {
+  const router = useRouter();
     return (
-        <div className="flex gap-5 items-center">
+        <div 
+          className="flex gap-5 items-center"
+          onClick={() => { router.push("/") }}
+        >
             <Image
                 src="/img/logo-small.jpg"
                 width={width}

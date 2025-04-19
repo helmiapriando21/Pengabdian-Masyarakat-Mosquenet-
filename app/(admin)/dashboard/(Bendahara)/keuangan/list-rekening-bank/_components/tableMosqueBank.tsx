@@ -1,6 +1,6 @@
 "use client"
 
-import Thead from "@/app/(admin)/dashboard/_components/thead";
+import Thead from "@/app/components/thead";
 import { getBankAccountMosque } from "@/services/getData";
 import { ListBank } from "@/interface/bank";
 import { useState, useEffect } from "react";
@@ -13,7 +13,6 @@ export default function TableMosqueBank() {
     const init = async () => {
       const data = await getBankAccountMosque(setIsLoading);
       setData(data);
-      console.log(data);
     }
 
     if(isLoading && !data) {

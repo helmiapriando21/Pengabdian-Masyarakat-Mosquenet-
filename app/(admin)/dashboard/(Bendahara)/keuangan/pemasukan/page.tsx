@@ -3,6 +3,7 @@
 import Modal from "../../../_components/modal";
 import AddCategory from "./_components/addCategory";
 import CreatePemasukan from "./_components/createPemasukan";
+import TableDonasi from "./_components/tableDonasi";
 import TablePemasukan from "./_components/tablePemasukan";
 
 export default function Pemasukan() {
@@ -18,7 +19,10 @@ export default function Pemasukan() {
           <AddCategory />
         </Modal>
       </div>
-      <TablePemasukan />
+      <div className="flex flex-col gap-10">
+        <TablePemasukan />
+        <TableDonasi />
+      </div>
     </div>
   );
 }

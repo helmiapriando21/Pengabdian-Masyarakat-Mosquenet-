@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
     try {
       if(userId) {
         const response = await axios.post(
-          `${process.env.API_URL}/aset/add`, 
+          `${process.env.API_URL}/aset`, 
           {
             user_id: userId.value,
             ...data

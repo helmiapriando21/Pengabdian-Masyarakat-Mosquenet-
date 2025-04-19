@@ -10,7 +10,7 @@ export async function GET(req: NextRequest) {
     try {
       if(userId) {
         const response = await axios.post(
-          `${process.env.API_URL}/laporan/get`, 
+          `${process.env.API_URL}/laporan`, 
           {
             user_id: userId.value,
           },

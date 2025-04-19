@@ -175,6 +175,34 @@ const getDetailKegiatanMasjid = async (
   }
 }
 
+const getContentMasjid = async (
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>, 
+  masjid_id: string | null
+) => {
+  try {
+    const { contents } = await requestGetApi(
+      masjid_id ? `/api/mosques/konten/${masjid_id}` : '/api/konten/get',
+      setIsLoading
+    );
+    return contents;
+  } catch (err) {
+      console.error("Error: ", err);
+  }
+}
+
+
+const getDetailContentMasjid = async (
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>, 
+  id: number
+) => {
+  try {
+    const { content } = await requestGetApi(`/api/konten/detail/${id}`, setIsLoading);
+    return content;
+  } catch (err) {
+    console.error("Error: ", err);
+  }
+}
+
 const getDashboardData = async (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
@@ -260,5 +288,7 @@ export {
     getMosqueTemplateDocuments,
     getMosqueDocuments,
     getDonationsList,
-    getDonation
+    getDonation,
+    getContentMasjid,
+    getDetailContentMasjid
 }

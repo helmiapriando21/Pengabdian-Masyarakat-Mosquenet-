@@ -1,9 +1,9 @@
 "use client"
 
-import Thead from "@/app/(admin)/dashboard/_components/thead";
+import Thead from "@/app/components/thead";
 import { getKegiatanMasjid } from "@/services/getData";
 import { useState, useEffect } from "react";
-import EditModal from "./editModal";
+import EditModal from "../../../_components/editModal";
 import { deleteKegiatan } from "@/services/postData";
 import { useRouter } from "next/navigation";
 import EditKegiatan from "./editKegiatan";

@@ -16,6 +16,7 @@ export default function Input({isError, error, setValue, value, placeholder, dat
   return (
     <div className="flex flex-col gap-2">
       <input
+        key={type}
         type={type}
         className="w-full border-[1px] border-black px-3 py-1 rounded-lg"
         onChange={(e) => {

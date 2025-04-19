@@ -5,21 +5,15 @@
 import { NextRequest } from "next/server";
 import axios from "axios";
 
-export async function POST(req: NextRequest) {
+export async function DELETE(req: NextRequest) {
   const userId = req.cookies.get('user-id');
-  const data = await req.json();
+  const urlParts = req.nextUrl.pathname.split("/");
+  const id = urlParts[urlParts.length - 1];
     try {
-      if(userId) {
-        const response = await axios.post(
-          `${process.env.API_URL}/account-bank/create`, 
-          {
-            ...data
-          },
-          {
-            headers: {
-              'Content-Type': 'application/json'
-            }
-          }
+      if(userId && id) {
+        const response = await axios.delete(
+          `${process.env.API_URL}/content/${id}`,
+          { headers: { 'Content-Type': 'application/json' } }
         );
         return new Response(JSON.stringify({
           message: response.data.message

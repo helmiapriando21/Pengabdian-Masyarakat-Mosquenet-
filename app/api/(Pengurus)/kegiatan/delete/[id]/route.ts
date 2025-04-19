@@ -11,8 +11,8 @@ export async function POST(req: NextRequest) {
   const id = urlParts[urlParts.length - 1];
     try {
       if(userId && id) {
-        const response = await axios.post(
-          `${process.env.API_URL}/kegiatan/delete/${id}`,
+        const response = await axios.delete(
+          `${process.env.API_URL}/kegiatan/${id}`,
           {
             headers: {
               'Content-Type': 'application/json'

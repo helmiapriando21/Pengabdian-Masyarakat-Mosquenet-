@@ -1,6 +1,6 @@
 "use client"
 
-import Thead from "@/app/(admin)/dashboard/_components/thead";
+import Thead from "@/app/components/thead";
 import { getAsetMasjid } from "@/services/getData";
 import { useState, useEffect } from "react";
 import EditAset from "./editAset";
