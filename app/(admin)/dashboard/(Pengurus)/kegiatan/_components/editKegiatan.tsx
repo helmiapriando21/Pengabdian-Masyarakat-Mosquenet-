@@ -148,6 +148,7 @@ export default function EditKegiatan({ id }: EditKegiatanProps) {
                 && <img 
                   src={`${process.env.NEXT_PUBLIC_API_STATIC_URL}/${previousImage}`} 
                   className="w-32 h-auto"
+                  alt={`Gambar kegiatan ${data.name} saat ini`}
                 />
             }
           </div>

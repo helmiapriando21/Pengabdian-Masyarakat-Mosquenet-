@@ -28,6 +28,7 @@ export default function DetailKegiatan() {
         <img 
           src={`${process.env.NEXT_PUBLIC_API_STATIC_URL}/${data.image}`}
           className="w-[100rem] h-[30rem]"
+          alt={`Representasi Kegiatan ${data.name}`}
         />
         <div className="flex flex-col gap-3">
           <h1 className="font-bold text-black text-3xl text-center">{data.name}</h1>

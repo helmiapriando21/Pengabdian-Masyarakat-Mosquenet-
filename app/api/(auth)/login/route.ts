@@ -3,11 +3,10 @@
 "use server"
 
 import axios from "axios";
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import { cookies } from "next/headers";
-import bcrypt from 'bcrypt';
 
-export async function POST(req: NextRequest, res: NextResponse) {
+export async function POST(req: NextRequest) {
     const cookieStore = await cookies();
     try {
         const request = await req.json();

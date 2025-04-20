@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { ArchiveTemplates } from "@/interface/archive";
 import TemplateItems from "./templateItems";
 
-export default function listArchiveTemplate() {
+export default function ListArchiveTemplate() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [data, setData] = useState<ArchiveTemplates[]>();
 

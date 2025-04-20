@@ -7,7 +7,7 @@ import Cookies from 'js-cookie'
 import { DetailActivity } from "@/interface/activity";
 import generateFormData from "./generateFormData";
 import { ArchiveDocument, ArchiveDocuments, ArchiveTemplate, ArchiveTemplates } from "@/interface/archive";
-// import { Animal } from "@/interface/qurban";
+import { Animal } from "@/interface/qurban";
 import { Content, ListContent } from "@/interface/content";
 
 const updateRole = async (email: string, role: string) => {
@@ -318,15 +318,15 @@ const updateContents = async (data: ListContent, router: AppRouterInstance) => {
   );
 }
 
-// const addAnimal = async (data: Animal, router: AppRouterInstance) => {
-//   postDataWithRedirectServices(
-//     '/api/monitoring-kurban/animal/add',
-//     data,
-//     router,
-//     "Terjadi kesalahan pada proses penambahan hewan kurban. Silahkan coba lagi",
-//     'POST'
-//   );
-// }
+const addAnimal = async (data: Animal, router: AppRouterInstance) => {
+  postDataWithRedirectServices(
+    '/api/monitoring-kurban/animal/add',
+    data,
+    router,
+    "Terjadi kesalahan pada proses penambahan hewan kurban. Silahkan coba lagi",
+    'POST'
+  );
+}
 
 export {
   updateRole,
@@ -354,6 +354,6 @@ export {
   verifyDonation,
   sendContents,
   deleteContent,
-  updateContents
-  // addAnimal
+  updateContents,
+  addAnimal
 };

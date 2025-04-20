@@ -52,6 +52,7 @@ export default function TableDonasi() {
                       src={`${process.env.NEXT_PUBLIC_API_STATIC_URL}/${value.image}`} 
                       className="w-32 h-auto"
                       onClick={() => { window.open(`${process.env.NEXT_PUBLIC_API_STATIC_URL}/${value.image}`, '_blank'); }}
+                      alt={`QR Donasi ${value.type}`}
                     />
                   </td>
                 </tr>
