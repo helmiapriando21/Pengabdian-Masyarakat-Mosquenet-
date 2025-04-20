@@ -7,7 +7,7 @@ import Cookies from 'js-cookie'
 import { DetailActivity } from "@/interface/activity";
 import generateFormData from "./generateFormData";
 import { ArchiveDocument, ArchiveDocuments, ArchiveTemplate, ArchiveTemplates } from "@/interface/archive";
-import { Animal } from "@/interface/qurban";
+// import { Animal } from "@/interface/qurban";
 import { Content, ListContent } from "@/interface/content";
 
 const updateRole = async (email: string, role: string) => {
@@ -93,16 +93,14 @@ const createKegiatan = async (data: DetailActivity & { time: string }, router: A
   const formData: FormData = generateFormData(data);
 
   const userId = Cookies.get('user-id');
-  if(userId) {
-    formData.append("user_id", userId);
-  }
 
   postDataWithRedirectServices(
     `${process.env.NEXT_PUBLIC_API_URL}/kegiatan`,
     formData,
     router,
     "Terjadi kesalahan pada menambahkan kegiatan, silahkan coba lagi!",
-    "POST"
+    "POST",
+    userId
   );
 }
 
@@ -110,12 +108,15 @@ const editKegiatan = async (data: DetailActivity & { time: string }, router: App
   const {id, ...postData} = data;
   const formData: FormData = generateFormData(postData);
 
+  const userId = Cookies.get('user-id');
+
   postDataWithRedirectServices(
     `${process.env.NEXT_PUBLIC_API_URL}/kegiatan/${id}`,
     formData,
     router,
     "Terjadi kesalahan pada mengubah kegiatan, silahkan coba lagi!",
-    "PUT"
+    "PUT",
+    userId
   );
 }
 
@@ -156,11 +157,15 @@ const addPurposeBankAccount = async (data: string, router: AppRouterInstance) =>
 const addBankAccount = async (data: CreateBank, router: AppRouterInstance) => {
   const formData: FormData = generateFormData(data);
 
+  const userId = Cookies.get('user-id');
+
   postDataWithRedirectServices(
-    `${process.env.NEXT_PUBLIC_API_URL}/account-bank`,
+    `${process.env.NEXT_PUBLIC_API_URL}/transaction/account-bank`,
     formData,
     router,
-    "Terjadi kesalahan pada menambahkan rekening, silahkan coba lagi!"
+    "Terjadi kesalahan pada menambahkan rekening, silahkan coba lagi!",
+    'POST',
+    userId
   );
 }
 
@@ -177,38 +182,42 @@ const saveTemplateDocument = async (data: ArchiveTemplate, router: AppRouterInst
   const formData: FormData = generateFormData(data);
 
   const userId = Cookies.get('user-id');
-  if(userId) {
-    formData.append("user_id", userId);
-  }
 
   postDataWithRedirectServices(
     `${process.env.NEXT_PUBLIC_API_URL}/archive/template`,
     formData,
     router,
-    "Terjadi kesalahan pada menambahkan template dokumen. Silahkan coba lagi!"
+    "Terjadi kesalahan pada menambahkan template dokumen. Silahkan coba lagi!",
+    "POST",
+    userId
   );
 }
 
 const changeTemplateDocument = async (data: ArchiveTemplates, router: AppRouterInstance) => {
   const { id, document, ...sendData } = data;
   const formData: FormData = generateFormData(document instanceof File ? {...sendData, document} : sendData);
+  const userId = Cookies.get('user-id');
 
   postDataWithRedirectServices(
     `${process.env.NEXT_PUBLIC_API_URL}/archive/template/${id}`,
     formData,
     router,
     "Terjadi kesalahan pada mengubah template dokumen, silahkan coba lagi!",
-    "PUT"
+    "PUT",
+    userId
   );
 }
 
 const deleteTemplateDocument = async (id: number, router: AppRouterInstance) => {
+  const userId = Cookies.get('user-id');
+
   postDataWithRedirectServices(
     `${process.env.NEXT_PUBLIC_API_URL}/archive/template/${id}`,
     {},
     router,
     "Terjadi kesalahan pada menghapus template dokumen, silahkan coba lagi!",
-    "DELETE"
+    "DELETE",
+    userId
   );
 }
 
@@ -216,15 +225,14 @@ const saveDocument = async (data: ArchiveDocument, router: AppRouterInstance) =>
   const formData: FormData = generateFormData(data);
 
   const userId = Cookies.get('user-id');
-  if(userId) {
-    formData.append("user_id", userId);
-  }
 
   postDataWithRedirectServices(
     `${process.env.NEXT_PUBLIC_API_URL}/archive/document`,
     formData,
     router,
-    "Terjadi kesalahan pada menambahkan dokumen. Silahkan coba lagi!"
+    "Terjadi kesalahan pada menambahkan dokumen. Silahkan coba lagi!",
+    "POST",
+    userId
   );
 }
 
@@ -232,22 +240,28 @@ const changeDocument = async (data: ArchiveDocuments, router: AppRouterInstance)
   const { id, document, ...sendData } = data;
   const formData: FormData = generateFormData(document instanceof File ? {...sendData, document} : sendData);
 
+  const userId = Cookies.get('user-id');
+
   postDataWithRedirectServices(
     `${process.env.NEXT_PUBLIC_API_URL}/archive/document/${id}`,
     formData,
     router,
     "Terjadi kesalahan pada mengubah dokumen, silahkan coba lagi!",
-    "PUT"
+    "PUT",
+    userId
   );
 }
 
 const deleteDocument = async (id: number, router: AppRouterInstance) => {
+  const userId = Cookies.get('user-id');
+
   postDataWithRedirectServices(
     `${process.env.NEXT_PUBLIC_API_URL}/archive/document/${id}`,
     {},
     router,
     "Terjadi kesalahan pada menghapus dokumen, silahkan coba lagi!",
-    "DELETE"
+    "DELETE",
+    userId
   );
 }
 
@@ -277,16 +291,14 @@ const sendContents = async (data: Content, router: AppRouterInstance) => {
   const formData: FormData = generateFormData(data);
 
   const userId = Cookies.get('user-id');
-  if(userId) {
-    formData.append("user_id", userId);
-  }
 
   postDataWithRedirectServices(
     `${process.env.NEXT_PUBLIC_API_URL}/content`,
     formData,
     router,
     "Terjadi kesalahan pada menambahkan konten, silahkan coba lagi!",
-    "POST"
+    "POST",
+    userId
   );
 }
 
@@ -294,12 +306,15 @@ const updateContents = async (data: ListContent, router: AppRouterInstance) => {
   const {post_date, ...postData} = data;
   const formData: FormData = generateFormData(postData);
 
+  const userId = Cookies.get('user-id');
+
   postDataWithRedirectServices(
     `${process.env.NEXT_PUBLIC_API_URL}/content/${postData.id}`,
     formData,
     router,
     "Terjadi kesalahan pada mengubah konten, silahkan coba lagi!",
-    "PUT"
+    "PUT",
+    userId
   );
 }
 

@@ -12,11 +12,7 @@ export async function GET(req: NextRequest) {
       if(id) {
         const response = await axios.get(
           `${process.env.API_URL}/kegiatan/${id}`,
-          {
-            headers: {
-              'Content-Type': 'application/json'
-            }
-          }
+          { headers: { 'Content-Type': 'application/json' } }
         );
         return new Response(JSON.stringify({
           activity: response.data.activity

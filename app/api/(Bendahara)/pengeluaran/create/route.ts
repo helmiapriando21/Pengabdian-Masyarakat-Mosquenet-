@@ -11,14 +11,12 @@ export async function POST(req: NextRequest) {
     try {
       if(userId) {
         const response = await axios.post(
-          `${process.env.API_URL}/pengeluaran`, 
-          {
-            user_id: userId.value,
-            ...data
-          },
+          `${process.env.API_URL}/transaction/pengeluaran`, 
+          data,
           {
             headers: {
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
+              'Authorization': userId.value
             }
           }
         );

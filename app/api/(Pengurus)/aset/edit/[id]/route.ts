@@ -17,7 +17,8 @@ export async function POST(req: NextRequest) {
           data,
           {
             headers: {
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
+              'Authorization': userId.value
             }
           }
         );

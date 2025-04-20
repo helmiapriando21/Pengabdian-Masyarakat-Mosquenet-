@@ -15,7 +15,8 @@ export async function POST(req: NextRequest) {
           `${process.env.API_URL}/kegiatan/${id}`,
           {
             headers: {
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
+              'Authorization': userId.value
             }
           }
         );

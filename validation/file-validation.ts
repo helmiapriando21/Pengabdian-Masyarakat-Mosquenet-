@@ -3,9 +3,10 @@ const fileValidation = (
   label: string, 
   formatFile: string,
   formatFileErrorMessage: string,
-  formatFileMustSame: boolean = true
+  formatFileMustSame: boolean = true,
+  isRequired: boolean = true
 ) => {
-  if(!value) {
+  if(!value && isRequired) {
       return `Tambahkan ${label}`;
   }
 

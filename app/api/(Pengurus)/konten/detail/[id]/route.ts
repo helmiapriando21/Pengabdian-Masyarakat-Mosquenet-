@@ -12,7 +12,9 @@ export async function GET(req: NextRequest) {
       if(id) {
         const response = await axios.get(
           `${process.env.API_URL}/content/${id}`,
-          { headers: { 'Content-Type': 'application/json' } }
+          { 
+            headers: { 'Content-Type': 'application/json' } 
+          }
         );
         return new Response(JSON.stringify({
           content: response.data.content

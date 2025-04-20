@@ -13,7 +13,13 @@ export async function DELETE(req: NextRequest) {
       if(userId && id) {
         const response = await axios.delete(
           `${process.env.API_URL}/content/${id}`,
-          { headers: { 'Content-Type': 'application/json' } }
+          { 
+            headers: { 
+              'Content-Type': 'application/json',
+              'Authorization': userId.value
+            },
+             
+          }
         );
         return new Response(JSON.stringify({
           message: response.data.message

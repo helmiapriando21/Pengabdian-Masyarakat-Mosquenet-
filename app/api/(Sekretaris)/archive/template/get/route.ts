@@ -9,14 +9,12 @@ export async function GET(req: NextRequest) {
   const userId = req.cookies.get('user-id');
     try {
       if(userId) {
-        const response = await axios.post(
-          `${process.env.API_URL}/archive/templates`, 
-          {
-            user_id: userId.value,
-          },
+        const response = await axios.get(
+          `${process.env.API_URL}/archive/template`,
           {
             headers: {
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
+              'Authorization': userId.value
             }
           }
         );

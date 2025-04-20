@@ -11,7 +11,8 @@ export async function GET(req: NextRequest) {
         if(userId) {
           const data = await axios.get(`${process.env.API_URL}/mosque/jamaah/${encodeURIComponent(userId.value)}`, {
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': userId.value
             }
           });
 

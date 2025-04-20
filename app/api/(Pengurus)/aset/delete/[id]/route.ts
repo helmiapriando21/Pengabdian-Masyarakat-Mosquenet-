@@ -15,7 +15,8 @@ export async function POST(req: NextRequest) {
           `${process.env.API_URL}/aset/${id}`,
           {
             headers: {
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
+              'Authorization': userId.value
             }
           }
         );

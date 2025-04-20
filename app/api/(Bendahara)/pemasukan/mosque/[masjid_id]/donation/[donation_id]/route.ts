@@ -9,15 +9,17 @@ export async function PUT(req: NextRequest) {
   const urlParts = req.nextUrl.pathname.split("/");
   const donation_id = urlParts[urlParts.length - 1];
   const masjid_id = urlParts[urlParts.length - 3];
+  const userId = req.cookies.get('user-id');
   try {
     const data = await req.json();
-      if(donation_id && masjid_id && data) {
+      if(donation_id && masjid_id && data && userId) {
         const response = await axios.put(
-          `${process.env.API_URL}/pemasukan/mosque/${masjid_id}/donation/${donation_id}`,
+          `${process.env.API_URL}/transaction/pemasukan/mosque/${masjid_id}/donation/${donation_id}`,
           { ...data },
           {
             headers: {
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
+              'Authorization': userId.value
             }
           }
         );

@@ -12,7 +12,7 @@ const requestGetApi = async (
   try {
     nProgress.start();
     const response = await fetch(endPoints, {
-      method: 'GET'
+      method: 'GET',
     });
     const data = await response.json();
     if(setIsLoading)
@@ -27,13 +27,17 @@ const requestGetApi = async (
 const postDataOnly = async (
   endPoints: string,
   data: any,
-  method: string = "POST"
+  method: string = "POST",
+  userId?: string
 ) => {
   nProgress.start();
   const response = await fetch(endPoints, {
     method: method,
     body: data instanceof FormData ? data : JSON.stringify(data),
-    headers: data instanceof FormData ? undefined :{ "Content-Type": "application/json" }
+    headers: { 
+      ...(data instanceof FormData ? {} : {"Content-Type": "application/json"}),
+      ...(userId ? { "Authorization": userId } : {})
+    }
   });
   nProgress.done();
   return response;
@@ -45,10 +49,11 @@ const postDataWithRedirectServices = async (
   router: AppRouterInstance,
   optionalErrorMessages: string,
   method: string = 'POST',
+  userId?: string
 ) => {
   const response = method === 'GET' 
     ? await requestGetApi(endPoints, null) 
-    : (method === 'POST' || method === "PUT" || method === "DELETE") && await postDataOnly(endPoints, data, method);
+    : (method === 'POST' || method === "PUT" || method === "DELETE") && await postDataOnly(endPoints, data, method, userId);
   
     const jsonResponse = await response.json();
   if(response.ok) {

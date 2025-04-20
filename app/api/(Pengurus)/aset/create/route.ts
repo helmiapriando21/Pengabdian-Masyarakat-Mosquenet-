@@ -12,13 +12,11 @@ export async function POST(req: NextRequest) {
       if(userId) {
         const response = await axios.post(
           `${process.env.API_URL}/aset`, 
-          {
-            user_id: userId.value,
-            ...data
-          },
+          data,
           {
             headers: {
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
+              'Authorization': userId.value
             }
           }
         );
