@@ -7,6 +7,7 @@ import basicValidation from "@/validation/basic-validation";
 import { getDetailKegiatanMasjid } from "@/services/getData";
 import { DetailActivity } from "@/interface/activity";
 import { editKegiatan } from "@/services/postData";
+import confirmAlert from "@/services/confirmAlert";
 
 interface EditKegiatanProps {
   id: number
@@ -41,16 +42,19 @@ export default function EditKegiatan({ id }: EditKegiatanProps) {
   }, [id])
 
   const action = async () => {
-    if(
-      !basicValidation(data?.name || '', 'Nama kegiatan') &&
-      !basicValidation(data?.description || '', 'Deskripsi kegiatan') &&
-      !basicValidation(data?.pic || '', 'Penanggungjawab kegiatan') &&
-      !basicValidation(data?.address || '', 'Alamat kegiatan') &&
-      !basicValidation(data?.date || '', 'Tanggal kegiatan') &&
-      !basicValidation(data?.time || '', 'Jam mulai kegiatan')
-    ) {
-      await editKegiatan(data!, router);
-    } else setIsError(true);
+    const confirm = await confirmAlert('Apakah kegiatan ini akan diubah?', 'Ya, benar', 'Tidak');
+    if(confirm) {
+      if(
+        !basicValidation(data?.name || '', 'Nama kegiatan') &&
+        !basicValidation(data?.description || '', 'Deskripsi kegiatan') &&
+        !basicValidation(data?.pic || '', 'Penanggungjawab kegiatan') &&
+        !basicValidation(data?.address || '', 'Alamat kegiatan') &&
+        !basicValidation(data?.date || '', 'Tanggal kegiatan') &&
+        !basicValidation(data?.time || '', 'Jam mulai kegiatan')
+      ) {
+        await editKegiatan(data!, router);
+      } else setIsError(true);
+    }
   }
   
   if(!isLoading && data)

@@ -76,7 +76,7 @@ export default function LineGraph({ data }: LineGraphProps) {
           data: balanceData,
           borderColor: 'rgb(54, 162, 235)',
           backgroundColor: 'rgba(54, 162, 235, 0.2)',
-          tension: 0.4,
+          tension: 0,
         },
       ],
     }
@@ -143,6 +143,12 @@ export default function LineGraph({ data }: LineGraphProps) {
         <Line 
           className="w-full h-full"
           data={operateData}
+          options={{
+            scales: {
+              x: { grid: { display: false } },
+              y: { grid: { display: false } }
+            }
+          }}
         />
       </div>
     );

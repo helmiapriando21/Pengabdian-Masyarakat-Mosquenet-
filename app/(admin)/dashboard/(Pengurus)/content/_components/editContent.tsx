@@ -10,6 +10,10 @@ import Select from "../../../_components/select";
 import { updateContents } from "@/services/postData";
 import contentTypeOption from "@/data/contentTypeOption";
 import { generateVisualContentImageURL } from "@/services/generateVisualContentURL";
+import dynamic from "next/dynamic";
+import confirmAlert from "@/services/confirmAlert";
+
+const TextEditor = dynamic(() => import('./textEditor'), { ssr: false })
 
 interface EditKontenProps {
   id: number
@@ -42,12 +46,15 @@ export default function EditContent({ id }: EditKontenProps) {
   }, [id])
 
   const action = async () => {
-    if(
-      !basicValidation(data?.title || '', 'Nama kegiatan') &&
-      !basicValidation(data?.contents || '', 'Deskripsi kegiatan')
-    ) {
-      await updateContents(data!, router);
-    } else setIsError(true);
+    const confirm = await confirmAlert('Apakah konten ini ingin diubah?', 'Ya, benar.', 'Tidak');
+    if(confirm) {
+      if(
+        !basicValidation(data?.title || '', 'Nama kegiatan') &&
+        !basicValidation(data?.contents || '', 'Deskripsi kegiatan')
+      ) {
+        await updateContents(data!, router);
+      } else setIsError(true);
+    }
   }
   
   if(!isLoading && data)
@@ -64,14 +71,12 @@ export default function EditContent({ id }: EditKontenProps) {
           type="text"
           error={basicValidation(data?.title || '', 'Judul konten')}
         />
-        <Input 
-          isError={isError}
-          setValue={setData}
+        <TextEditor
           value={data}
-          placeholder="Masukkan isi konten"
+          setValue={setData}
+          isError={isError}
+          error={basicValidation(data?.contents || '', 'Isi Konten')}
           dataKey="contents"
-          type="text"
-          error={basicValidation(data?.contents || '', 'Isi konten')}
         />
         <Select
           isError={false}

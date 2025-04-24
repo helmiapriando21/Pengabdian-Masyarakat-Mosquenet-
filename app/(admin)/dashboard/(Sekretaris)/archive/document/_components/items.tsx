@@ -3,6 +3,7 @@ import { ArchiveDocuments } from "@/interface/archive";
 import EditArchive from "./editArchive";
 import { useRouter } from "next/navigation";
 import { deleteDocument } from "@/services/postData";
+import confirmAlert from "@/services/confirmAlert";
 
 interface Items {
   data: ArchiveDocuments;
@@ -12,7 +13,7 @@ export default function Items({data}: Items) {
   const router = useRouter();
 
   const deleteAction = async () => {
-    const deleteConfirmation = confirm("Apakah anda yakin?");
+    const deleteConfirmation = await confirmAlert("Apakah anda yakin ingin menghapus dokumen ini?", 'Ya, saya yakin!', 'Tidak, tunggu dulu');
     if(deleteConfirmation) await deleteDocument(data.id, router)
   }
 

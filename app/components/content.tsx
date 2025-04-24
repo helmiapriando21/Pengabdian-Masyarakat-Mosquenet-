@@ -18,7 +18,7 @@ export default function Content({title, post_date, contents}: ContentProps) {
           })
         }
       </h4>
-      <p className="text-lg text-justify">{contents}</p>
+      <div className="text-lg text-justify" dangerouslySetInnerHTML={{ __html: contents }} />
     </div>
   );
 }

@@ -7,6 +7,7 @@ import basicValidation from "@/validation/basic-validation";
 import { changeTemplateDocument, editAset } from "@/services/postData";
 import { ArchiveTemplates } from "@/interface/archive";
 import fileValidation from "@/validation/file-validation";
+import confirmAlert from "@/services/confirmAlert";
 
 interface EditTemplatesProps {
   currentData: ArchiveTemplates
@@ -19,17 +20,20 @@ export default function EditTemplates({ currentData }: EditTemplatesProps) {
   const router = useRouter();
 
   const action = async () => {
-    if(
-      !basicValidation(data?.type || '', 'Jenis Template ') &&
-      !fileValidation(
-        data?.document as File || null, 
-        "Dokumen untuk template ", 
-        "application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
-        'DOCX'
-      )
-    ) {
-      await changeTemplateDocument(data, router);
-    } else setIsError(true);
+    const confirm = await confirmAlert('Apakah dokumen ini akan diubah?', 'Ya, benar', 'Tidak');
+    if(confirm) {
+      if(
+        !basicValidation(data?.type || '', 'Jenis Template ') &&
+        !fileValidation(
+          data?.document as File || null, 
+          "Dokumen untuk template ", 
+          "application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
+          'DOCX'
+        )
+      ) {
+        await changeTemplateDocument(data, router);
+      } else setIsError(true);
+    }
   }
   
   return (

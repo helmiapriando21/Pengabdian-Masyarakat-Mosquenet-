@@ -8,6 +8,10 @@ import { Content } from "@/interface/content";
 import Select from "../../../_components/select";
 import { sendContents } from "@/services/postData";
 import contentTypeOption from "@/data/contentTypeOption";
+// import TextEditor from "./textEditor";
+import dynamic from "next/dynamic";
+
+const TextEditor = dynamic(() => import('./textEditor'), { ssr: false })
 
 export default function CreateContent() {
   const [data, setData] = useState<Content>();
@@ -44,14 +48,12 @@ export default function CreateContent() {
           type="text"
           error={basicValidation(data?.title || '', 'Judul konten')}
         />
-        <Input 
-          isError={isError}
-          setValue={setData}
+        <TextEditor
           value={data}
-          placeholder="Masukkan isi konten"
+          setValue={setData}
+          isError={isError}
+          error={basicValidation(data?.contents || '', 'Isi Konten')}
           dataKey="contents"
-          type="text"
-          error={basicValidation(data?.contents || '', 'Isi konten')}
         />
         <Select
           isError={false}

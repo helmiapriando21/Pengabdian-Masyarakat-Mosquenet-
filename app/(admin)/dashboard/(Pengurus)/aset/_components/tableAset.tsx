@@ -8,6 +8,7 @@ import EditModal from "../../../_components/editModal";
 import { deleteAset } from "@/services/postData";
 import { useRouter } from "next/navigation";
 import { ListAset } from "@/interface/aset";
+import confirmAlert from "@/services/confirmAlert";
 
 export default function TableAset() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -15,7 +16,7 @@ export default function TableAset() {
   const router = useRouter();
 
   const deleteAction = async (id: number) => {
-    const deleteConfirmation = confirm("Apakah anda yakin?");
+    const deleteConfirmation = await confirmAlert("Apakah anda yakin ingin menghapus aset ini?", 'Ya, saya yakin!', 'Tidak, tunggu dulu');
     if(deleteConfirmation) await deleteAset(id, router)
   }
 

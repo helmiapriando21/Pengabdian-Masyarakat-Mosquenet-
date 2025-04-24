@@ -7,6 +7,7 @@ import basicValidation from "@/validation/basic-validation";
 import { changeDocument } from "@/services/postData";
 import { ArchiveDocuments } from "@/interface/archive";
 import fileValidation from "@/validation/file-validation";
+import confirmAlert from "@/services/confirmAlert";
 
 interface EditDocumentProps {
   currentData: ArchiveDocuments
@@ -19,17 +20,20 @@ export default function EditArchive({ currentData }: EditDocumentProps) {
   const router = useRouter();
 
   const action = async () => {
-    if(
-      !basicValidation(data?.title || '', 'Judul Dokumen ') &&
-      !fileValidation(
-        data?.document as File || null, 
-        "Dokumen ", 
-        "application/pdf", 
-        'PDF'
-      )
-    ) {
-      await changeDocument(data, router);
-    } else setIsError(true);
+    const confirm = await confirmAlert('Apakah template ini akan diubah?', 'Ya, benar', 'Tidak');
+    if(confirm) {
+      if(
+        !basicValidation(data?.title || '', 'Judul Dokumen ') &&
+        !fileValidation(
+          data?.document as File || null, 
+          "Dokumen ", 
+          "application/pdf", 
+          'PDF'
+        )
+      ) {
+        await changeDocument(data, router);
+      } else setIsError(true);
+    }
   }
   
   return (

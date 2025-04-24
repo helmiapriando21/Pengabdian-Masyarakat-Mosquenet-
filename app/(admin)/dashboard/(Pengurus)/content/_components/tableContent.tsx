@@ -8,6 +8,7 @@ import { deleteContent } from "@/services/postData";
 import { useRouter } from "next/navigation";
 import EditContent from "./editContent";
 import { ListContent } from "@/interface/content";
+import confirmAlert from "@/services/confirmAlert";
 
 export default function TableContent() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -15,7 +16,7 @@ export default function TableContent() {
   const router = useRouter();
 
   const deleteAction = async (id: number) => {
-    const deleteConfirmation = confirm("Apakah anda yakin?");
+    const deleteConfirmation = await confirmAlert("Apakah anda yakin ingin menghapus artikel ini?", 'Ya, saya yakin!', 'Tidak, tunggu dulu');
     if(deleteConfirmation) await deleteContent(id, router)
   }
 

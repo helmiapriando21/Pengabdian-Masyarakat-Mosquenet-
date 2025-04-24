@@ -7,6 +7,7 @@ import fileValidation from "@/validation/file-validation";
 import numberValidation from "@/validation/number-validation";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import confirmAlert from "@/services/confirmAlert";
 
 interface SendDonationProps {
   data: ListBank;
@@ -20,13 +21,16 @@ export default function SendDonation({ data, masjid_id, donation_id }: SendDonat
   const router = useRouter();
 
   const handleSubmit = async () => {
-    if(
-      !basicValidation(formData?.name || '', 'Nama') ||
-      !numberValidation(formData?.amount, 'Jumlah') ||
-      !fileValidation( formData?.image,'Bukti penyerahan ', 'image/ ', 'PNG/JPG/JPEG', false)
-    ) {
-      await sendDonation(formData!, masjid_id, donation_id, router);
-    } else setIsError(true);
+    const confirmationSubmit = await confirmAlert(`Apakah anda yakin ingin mengirimkan donasi dengan tujuan ${data.purpose}?`, 'Ya, saya yakin!', 'Tidak');
+    if(confirmationSubmit) {
+      if(
+        !basicValidation(formData?.name || '', 'Nama') ||
+        !numberValidation(formData?.amount, 'Jumlah') ||
+        !fileValidation( formData?.image,'Bukti penyerahan ', 'image/ ', 'PNG/JPG/JPEG', false)
+      ) {
+        await sendDonation(formData!, masjid_id, donation_id, router);
+      } else setIsError(true);
+    }
   }
 
   return (

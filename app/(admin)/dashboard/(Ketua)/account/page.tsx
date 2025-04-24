@@ -6,6 +6,7 @@ import Checkbox from "./_components/checkbox";
 import Thead from "../../../../components/thead";
 import { updateRole } from "@/services/postData";
 import { Jamaah } from "@/interface/jamaah";
+import confirmAlert from "@/services/confirmAlert";
 
 export default function Account() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -17,7 +18,7 @@ export default function Account() {
   }
 
   const action = async (email: string, role: string) => {
-    const isAction = confirm("Apakah anda ingin role ini diubah?");
+    const isAction = await confirmAlert("Apakah anda ingin role ini diubah?", 'Ya, tolong diubah!', 'Tidak, jangan diubah');
     if(isAction) {
       await updateRole(email, role);
       await init();

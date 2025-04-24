@@ -8,6 +8,7 @@ import { deleteKegiatan } from "@/services/postData";
 import { useRouter } from "next/navigation";
 import EditKegiatan from "./editKegiatan";
 import { ListActivities } from "@/interface/activity";
+import confirmAlert from "@/services/confirmAlert";
 
 export default function TableKegiatan() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -15,8 +16,8 @@ export default function TableKegiatan() {
   const router = useRouter();
 
   const deleteAction = async (id: number) => {
-    const deleteConfirmation = confirm("Apakah anda yakin?");
-    if(deleteConfirmation) await deleteKegiatan(id, router)
+    const deleteConfirmation = await confirmAlert("Apakah anda yakin kegiatan ini dihapus?", "Ya, saya yakin!", 'Tidak, tunggu dulu!');
+    if(deleteConfirmation) await deleteKegiatan(id, router);
   }
 
   useEffect(() => {

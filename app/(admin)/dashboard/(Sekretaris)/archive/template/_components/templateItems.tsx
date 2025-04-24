@@ -3,6 +3,7 @@ import { ArchiveTemplates } from "@/interface/archive";
 import EditTemplates from "./editArchiveTemplate";
 import { useRouter } from "next/navigation";
 import { deleteTemplateDocument } from "@/services/postData";
+import confirmAlert from "@/services/confirmAlert";
 
 interface TemplateItemsProps {
   data: ArchiveTemplates;
@@ -12,7 +13,7 @@ export default function TemplateItems({data}: TemplateItemsProps) {
   const router = useRouter();
 
   const deleteAction = async () => {
-    const deleteConfirmation = confirm("Apakah anda yakin?");
+    const deleteConfirmation = await confirmAlert("Apakah anda yakin ingin menghapus template dokumen ini?", 'Ya, saya yakin!', 'Tidak, tunggu dulu');
     if(deleteConfirmation) await deleteTemplateDocument(data.id, router)
   }
 

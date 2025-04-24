@@ -9,6 +9,7 @@ import Select from "../../../_components/select";
 import { editAset } from "@/services/postData";
 import { ListAset } from "@/interface/aset";
 import asetConditions from "@/data/asetConditions";
+import confirmAlert from "@/services/confirmAlert";
 
 interface EditAsetProps {
   currentData: ListAset
@@ -20,19 +21,22 @@ export default function EditAset({ currentData }: EditAsetProps) {
   const router = useRouter();
 
   const action = async () => {
-    if(
-      !basicValidation(data.name, 'Nama aset') &&
-      !numberValidation(data.amount, "Jumlah aset") &&
-      !basicValidation(data.condition, "Kondisi aset") &&
-      !basicValidation(data.unit, "Satuan aset")
-    ) {
-      await editAset(data, currentData.id, router);
-    } else setIsError(true);
+    const confirm = await confirmAlert('Apakah aset ini akan diubah?', 'Ya, benar', 'Tidak');
+    if(confirm) {
+      if(
+        !basicValidation(data.name, 'Nama aset') &&
+        !numberValidation(data.amount, "Jumlah aset") &&
+        !basicValidation(data.condition, "Kondisi aset") &&
+        !basicValidation(data.unit, "Satuan aset")
+      ) {
+        await editAset(data, currentData.id, router);
+      } else setIsError(true);
+    }
   }
   
   return (
     <div className="flex flex-col gap-3">
-      <h1 className="font-bold text-black text-xl">Tambah Aset</h1>
+      <h1 className="font-bold text-black text-xl">Ubah Aset</h1>
       <Input 
         isError={isError}
         setValue={setData}
@@ -83,7 +87,7 @@ export default function EditAset({ currentData }: EditAsetProps) {
         className="bg-green-600 rounded-lg px-3 py-1 text-white"
         onClick={action}
       >
-        Tambah Aset
+        Ubah Aset
       </button>
     </div>
   );
