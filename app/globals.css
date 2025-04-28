@@ -32,13 +32,15 @@ body {
 }
 
 .react-calendar__navigation__label__labelText {
-  font-size: 20px;
+  font-size: 12px;
   font-weight: bold;  
-  letter-spacing: 2px;
+  letter-spacing: 1px;
   text-transform: uppercase;
-  padding: 10px;
+  padding: 5px;
   text-align: center;
 }
+
+
 
 #nprogress .bar {
   background: #ffdd00;
@@ -64,4 +66,10 @@ ul {
 ol {
   list-style-type: decimal;
   padding-left: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .react-calendar__navigation__label__labelText {
+    font-size: 20px;
+  }
 }

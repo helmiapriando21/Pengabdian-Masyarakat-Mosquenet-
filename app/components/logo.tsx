@@ -10,7 +10,7 @@ export default function Logo({width, height}: LogoProps) {
   const router = useRouter();
     return (
         <div 
-          className="flex gap-5 items-center"
+          className="flex max-sm:flex-col sm:gap-5 items-center"
           onClick={() => { router.push("/") }}
         >
             <Image
@@ -19,7 +19,7 @@ export default function Logo({width, height}: LogoProps) {
                 height={height}
                 alt=""
             />
-            <h1 className="text-2xl font-semibold">{process.env.NEXT_PUBLIC_APP_NAME}</h1>
+            <h1 className="text-md sm:text-2xl font-semibold">{process.env.NEXT_PUBLIC_APP_NAME}</h1>
         </div>
     );
 }

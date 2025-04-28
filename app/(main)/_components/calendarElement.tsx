@@ -90,7 +90,7 @@ export default function CalendarElement({ masjid_id }: CalendarElementProps) {
                       className="flex flex-row gap-3 underline underline-offset-2"
                       href={`/kegiatan/${value.id}`}
                     >
-                      <p className="text-green-900 font-bold">Tanggal {new Date(value.date).getDate()} : {value.name}</p>
+                      <p className="text-green-900 font-bold max-sm:text-[9px]">Tanggal {new Date(value.date).getDate()} : {value.name}</p>
                     </a>
                   ))
                 }

@@ -50,7 +50,7 @@ export default function PrayerTimesItem({label, value, after}: PrayerTimesItemsP
     }
   }, []);
 
-    return <div className={`flex flex-col gap-4 items-center justify-center text-center font-bold text-2xl ${isTime ? "bg-green-400 p-3 rounded-xl" : ""}`}>
+    return <div className={`flex flex-col gap-2 items-center justify-center text-center font-bold text-xs sm:text-2xl ${isTime ? "bg-green-400 p-3 rounded-xl" : ""}`}>
       <label htmlFor={label}>{label}</label>
       <p id={label}>{value}</p>
     </div>

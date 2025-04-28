@@ -12,7 +12,7 @@ export default function ClockElement() {
     }, []);
 
     return (
-        <div className="flex gap-2 text-6xl font-extrabold">
+        <div className="flex sm:gap-2 text-3xl sm:text-6xl font-extrabold">
             <p>{String(now.getHours()).padStart(2, '0')}</p>
             <p>:</p>
             <p>{String(now.getMinutes()).padStart(2, '0')}</p>

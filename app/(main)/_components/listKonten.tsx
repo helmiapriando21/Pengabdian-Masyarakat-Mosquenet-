@@ -37,12 +37,12 @@ export default function ListKonten({ masjid_id }: ListKontenProps) {
       <div className="flex flex-col">
         {
           data.map((value: ListContent, index: number) => (
-            <div key={index} className="flex h-max items-center border-[1px] border-black overflow-hidden">
-              <img src={value.visual_content && typeof value.visual_content === "string" ? getImageSource(value.visual_content) : ""} className="w-52 h-32 bg-center" /> 
-              <div className="flex flex-col gap-2 px-5 ">
-                <h1 className="text-xl font-extrabold">{value.title}</h1>
-                <div className="flex items-center justify-between">
-                  <p className="text-sm">
+            <div key={index} className="flex max-sm:flex-col h-max items-center border-[1px] border-black overflow-hidden">
+              <img src={value.visual_content && typeof value.visual_content === "string" ? getImageSource(value.visual_content) : ""} className="w-full sm:w-52 h-52 sm:h-full bg-center" /> 
+              <div className="flex flex-col gap-2 px-5 py-2">
+                <h1 className="text-sm sm:text-xl font-extrabold">{value.title}</h1>
+                <div className="flex sm:items-center sm:justify-between max-sm:flex-col">
+                  <p className="text-xs sm:text-sm">
                       {
                         new Date(value.post_date).toLocaleDateString('id-ID', {
                           weekday: 'long',
@@ -53,7 +53,7 @@ export default function ListKonten({ masjid_id }: ListKontenProps) {
                       }
                   </p>
                 </div>
-                <a href={`/konten/${value.id}`} className="bg-yellow-500 rounded-lg h-max w-max px-3 py-1 font-bold text-white text-xs">Lihat Selengkapnya</a>
+                <a href={`/konten/${value.id}`} className="bg-yellow-500 rounded-lg h-max w-max px-3 py-1 font-bold text-white text-[0.5rem] sm:text-xs">Lihat Selengkapnya</a>
               </div>
             </div>
           ))

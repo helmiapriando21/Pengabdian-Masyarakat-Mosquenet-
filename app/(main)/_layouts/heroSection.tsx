@@ -31,22 +31,22 @@ export default function HeroSection({ masjidId }: any) {
   if(!isLoading)
     return (
       <div className="bg-[url('/img/main-background.png')] bg-cover bg-center w-screen h-[calc(100vh-2.5rem-50px)]">
-        <div className="w-full h-full bg-[#FFF59C] bg-opacity-90 text-white flex flex-col gap-3 text-center items-center justify-center px-20">
-          <div className="h-full w-max px-20 bg-[#FFDE72] flex flex-col items-center justify-center gap-3 rounded-[70px] shadow-xl">
-            <h1 className="font-semibold text-5xl text-black">Assalamualaikum, </h1>
-            <h1 className="font-semibold text-5xl text-black">Selamat datang di</h1>
-            <h1 className="font-semibold text-5xl text-black">{mosqueName}</h1>
+        <div className="w-full h-full bg-[#FFF59C] bg-opacity-90 text-white flex flex-col gap-3 text-center items-center justify-center sm:px-20">
+          <div className="h-full w-max sm:px-20 sm:bg-[#FFDE72] flex flex-col items-center justify-center sm:gap-3 sm:rounded-[70px] sm:shadow-xl">
+            <h1 className="font-semibold text-3xl sm:text-5xl text-black">Assalamualaikum, </h1>
+            <h1 className="font-semibold text-3xl sm:text-5xl text-black">Selamat datang di</h1>
+            <h1 className="font-semibold text-3xl sm:text-5xl text-black">{mosqueName}</h1>
             {
               !isLogin 
                 ? <a 
-                    className="text-2xl mt-10 text-white justify-self-end w-max px-20 py-3 bg-[#72C299] rounded-3xl font-extrabold shadow-md" 
+                    className="text-sm sm:text-2xl mt-5 sm:mt-10 text-white justify-self-end w-max px-5 sm:px-20 py-1 sm:py-3 bg-[#72C299] rounded-3xl font-extrabold shadow-md" 
                     href="/auth"
                   >
                     Daftar Sekarang
                   </a>
                 : isAdmin
                     && <a 
-                          className="text-2xl mt-10 text-white justify-self-end w-max px-20 py-3 bg-[#72C299] rounded-3xl font-extrabold shadow-md" 
+                          className="text-sm sm:text-2xl mt-5 sm:mt-10 text-white justify-self-end w-max px-5 sm:px-20 py-1 sm:py-3 bg-[#72C299] rounded-3xl font-extrabold shadow-md" 
                           href="/dashboard/main"
                         >
                           Kelola Masjid
