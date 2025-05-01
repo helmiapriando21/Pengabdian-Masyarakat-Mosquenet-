@@ -1,8 +1,7 @@
 "use client"
 
-import { getKegiatanMasjid } from "@/services/getData";
 import { ListActivities } from "@/interface/activity";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { fetchActivities } from "@/thunks/activityThunks";
 

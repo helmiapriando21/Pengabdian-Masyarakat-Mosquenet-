@@ -12,7 +12,7 @@ export default function TableMosqueBank() {
 
   useEffect(() => {
     if(!loading && (!accountBanks || accountBanks.length === 0)) {
-      dispatch(fetchAccountBank())
+      dispatch(fetchAccountBank(null))
     }
   }, [dispatch, accountBanks]);
 

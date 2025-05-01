@@ -56,21 +56,10 @@ const verifyDonation = async (verified: boolean, masjid_id: string, donation_id:
   );
 }
 
-const addAnimal = async (data: Animal, router: AppRouterInstance) => {
-  postDataWithRedirectServices(
-    '/api/monitoring-kurban/animal/add',
-    data,
-    router,
-    "Terjadi kesalahan pada proses penambahan hewan kurban. Silahkan coba lagi",
-    'POST'
-  );
-}
-
 export {
   updateRole,
   createKasPayment,
   sendCritics,
   sendDonation,
   verifyDonation,
-  addAnimal
 };

@@ -27,7 +27,7 @@ export default function CreateBankAccount() {
     ) {
       try {
         await dispatch(createAccountBank(data!)).unwrap();
-        notificationAlert("Rekening bank berhasil ditambahkan!", "success", () => { dispatch(fetchAccountBank()) });
+        notificationAlert("Rekening bank berhasil ditambahkan!", "success", () => { dispatch(fetchAccountBank(null)) });
         setData(undefined);
       } catch (e) {
         notificationAlert('Rekening bank gagal ditambahkan!', 'error', () => {});
