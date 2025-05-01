@@ -82,82 +82,12 @@ const getMasjid = async (
     }
 }
 
-const getCategoryPemasukanMasjid = async (
-  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
-) => {
-  try {
-    const { categories } = await requestGetApi('/api/pemasukan/category/get', setIsLoading);
-    return categories;
-  } catch (err) {
-      console.error("Error: ", err);
-  }
-}
-
-const getPemasukanMasjid = async (
-  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
-) => {
-  try {
-    const { incomes, donations } = await requestGetApi('/api/pemasukan/get', setIsLoading);
-    return { incomes, donations };
-  } catch (err) {
-      console.error("Error: ", err);
-  }
-}
-
-const getReasonPengeluaranMasjid = async (
-  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
-) => {
-  try {
-    const { reasons } = await requestGetApi('/api/pengeluaran/reason/get', setIsLoading);
-    return reasons;
-  } catch (err) {
-      console.error("Error: ", err);
-  }
-}
-
-const getPengeluaranMasjid = async (
-  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
-) => {
-  try {
-    const { outcomes } = await requestGetApi('/api/pengeluaran/get', setIsLoading);
-    return outcomes;
-  } catch (err) {
-      console.error("Error: ", err);
-  }
-}
-
 const getLaporanMasjid = async (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
   try {
     const { reports } = await requestGetApi('/api/laporan', setIsLoading);
     return reports;
-  } catch (err) {
-      console.error("Error: ", err);
-  }
-}
-
-const getAsetMasjid = async (
-  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
-) => {
-  try {
-    const { assets } = await requestGetApi('/api/aset/get', setIsLoading);
-    return assets;
-  } catch (err) {
-      console.error("Error: ", err);
-  }
-}
-
-const getKegiatanMasjid = async (
-  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>, 
-  masjid_id: string | null
-) => {
-  try {
-    const { activity } = await requestGetApi(
-      masjid_id ? `/api/mosques/kegiatan/${masjid_id}` : '/api/kegiatan/get',
-      setIsLoading
-    );
-    return activity;
   } catch (err) {
       console.error("Error: ", err);
   }
@@ -170,34 +100,6 @@ const getDetailKegiatanMasjid = async (
   try {
     const { activity } = await requestGetApi(`/api/kegiatan/detail/${id}`, setIsLoading);
     return activity;
-  } catch (err) {
-    console.error("Error: ", err);
-  }
-}
-
-const getContentMasjid = async (
-  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>, 
-  masjid_id: string | null
-) => {
-  try {
-    const { contents } = await requestGetApi(
-      masjid_id ? `/api/mosques/konten/${masjid_id}` : '/api/konten/get',
-      setIsLoading
-    );
-    return contents;
-  } catch (err) {
-      console.error("Error: ", err);
-  }
-}
-
-
-const getDetailContentMasjid = async (
-  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>, 
-  id: number
-) => {
-  try {
-    const { content } = await requestGetApi(`/api/konten/detail/${id}`, setIsLoading);
-    return content;
   } catch (err) {
     console.error("Error: ", err);
   }
@@ -231,40 +133,6 @@ const getValidKasTransaction = async (
   );
 }
 
-const getPurposesBankAccountMosque = async (
-  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
-) => {
-  const { purposes } = await requestGetApi('/api/daftar-rekening-bank/purpose/get', setIsLoading);
-  return purposes;
-}
-
-const getBankAccountMosque = async (
-  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
-) => {
-  const { account_bank } = await requestGetApi('/api/daftar-rekening-bank/get', setIsLoading);
-  return account_bank;
-}
-
-const getMosqueTemplateDocuments = async (setIsLoading: React.Dispatch<React.SetStateAction<boolean>>) => {
-  const { templates } = await requestGetApi('/api/archive/template/get', setIsLoading);
-  return templates;
-}
-
-const getMosqueDocuments = async (setIsLoading: React.Dispatch<React.SetStateAction<boolean>>) => {
-  const { documents } = await requestGetApi('/api/archive/document/get', setIsLoading);
-  return documents;
-}
-
-const getDonationsList = async (masjid_id: string, setIsLoading: React.Dispatch<React.SetStateAction<boolean>>) => {
-  const { donations } = await requestGetApi(`/api/mosques/donation/get/${masjid_id}`, setIsLoading);
-  return donations;
-}
-
-const getDonation = async (masjid_id: string, donation_id: string, setIsLoading: React.Dispatch<React.SetStateAction<boolean>>) => {
-  const { account } = await requestGetApi(`/api/mosques/donation/get/${masjid_id}/detail/${donation_id}`, setIsLoading);
-  return account;
-}
-
 export {
     getMasjidList,
     getPrayerTimes,
@@ -273,22 +141,8 @@ export {
     getRecitations,
     getMasjid,
     getJamaahMasjid,
-    getCategoryPemasukanMasjid,
-    getPemasukanMasjid,
-    getReasonPengeluaranMasjid,
-    getPengeluaranMasjid,
     getLaporanMasjid,
-    getAsetMasjid,
-    getKegiatanMasjid,
     getDetailKegiatanMasjid,
     getDashboardData,
     getValidKasTransaction,
-    getPurposesBankAccountMosque,
-    getBankAccountMosque,
-    getMosqueTemplateDocuments,
-    getMosqueDocuments,
-    getDonationsList,
-    getDonation,
-    getContentMasjid,
-    getDetailContentMasjid
 }

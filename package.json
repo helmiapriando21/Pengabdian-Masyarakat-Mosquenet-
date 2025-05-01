@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.7.0",
     "@tiptap/extension-link": "^2.11.7",
     "@tiptap/extension-underline": "^2.11.7",
     "@tiptap/react": "^2.11.7",
@@ -23,6 +24,7 @@
     "react-calendar": "^5.1.0",
     "react-chartjs-2": "^5.3.0",
     "react-dom": "^19.0.0",
+    "react-redux": "^9.2.0",
     "sweetalert2": "^11.15.10"
   },
   "devDependencies": {

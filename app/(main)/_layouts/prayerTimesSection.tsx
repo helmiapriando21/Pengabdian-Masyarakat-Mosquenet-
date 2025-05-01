@@ -45,7 +45,7 @@ export default function PrayerTimesSection({ masjidId }: PrayerTimesSectionProps
 
     if(!isLoading && prayerTimes) 
         return (
-        <div className="flex flex-col gap-1 sm:gap-10 items-center justify-center bg-[#FFE98C] p-5">
+        <div className="flex flex-col gap-1 sm:gap-10 items-center justify-center bg-[#FFE98C] px-[0.9rem] py-3">
             <div className="flex items-center justify-center gap-3 sm:gap-10">
                 <PrayerTimesItem label="Imsak" value={prayerTimes.Imsak} after={prayerTimes.Fajr} />
                 <PrayerTimesItem label="Subuh" value={prayerTimes.Fajr} after={prayerTimes.Dhuhr} />

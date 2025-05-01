@@ -1,40 +1,34 @@
 "use client"
 
-import { getDetailContentMasjid } from "@/services/getData";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
-import { ListContent } from "@/interface/content";
+import { useEffect } from "react";
 import VisualContentShow from "@/app/components/visualContentShow";
 import Content from "@/app/components/content";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { fetchContent } from "@/thunks/contentThunks";
 
 export default function DetailContent() {
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [data, setData] = useState<ListContent>();
+  const dispatch = useAppDispatch();
+  const {content, loading} = useAppSelector((state) => state.contents);
   const params = useParams();
   const { id } = params;
 
-  const init = async () => {
-    const response = await getDetailContentMasjid(setIsLoading, Number(id));
-    setData(response);
-  }
-
+  
   useEffect(() => {
-    if(isLoading && !data) {
-      init();
-    }
-  }, [])
+    dispatch(fetchContent(Number(id)));
+  }, []);
 
-  if(!isLoading && data)
+  if(!loading && content)
     return (
       <div className="flex flex-col gap-10 w-full h-full p-10">
         <VisualContentShow 
-          visual_content={data.visual_content as string}
-          title={data.title} 
+          visual_content={content.visual_content as string}
+          title={content.title} 
         />
         <Content
-          title={data.title}
-          post_date={data.post_date}
-          contents={data.contents}
+          title={content.title}
+          post_date={content.post_date}
+          contents={content.contents}
         />
       </div>
     );

@@ -1,43 +1,41 @@
 "use client"
 
-import { getCategoryPemasukanMasjid } from "@/services/getData";
 import { useState, useEffect } from "react";
 import Select from "../../../../_components/select";
 import Input from "../../../../_components/input";
 import numberValidation from "@/validation/number-validation";
-import { useRouter } from "next/navigation";
-import { addPemasukan } from "@/services/postData";
 import { CreateIncome } from "@/interface/report";
-import { SelectType } from "@/interface/form";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { createIncome, fetchIncomes, fetchSources } from "@/thunks/incomeThunks";
+import notificationAlert from "@/services/notificationAlert";
 
 export default function CreatePemasukan() {
-  const [category, setCategory] = useState<SelectType[]>();
+  const dispatch = useAppDispatch();
+  const {sources, loading} = useAppSelector((state) => state.incomes);
   const [data, setData] = useState<CreateIncome>();
-  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isError, setIsError] = useState<boolean>(false);
-  const router = useRouter();
 
-  const init = async () => {
-    const data = await getCategoryPemasukanMasjid(setIsLoading);
-    setCategory(data);
-  }
+  useEffect(() => {
+    if(!loading && (!sources || sources.length === 0)) dispatch(fetchSources());
+  }, [dispatch, sources])
 
   const action = async () => {
     if(
       !numberValidation(data?.amount, "Besar Pemasukan") &&
       !numberValidation(data?.source_id, "Sumber Dana")
     ) {
-      await addPemasukan(data, router);
+      try {
+        await dispatch(createIncome(data!)).unwrap();
+        notificationAlert("Pemasukan berhasil ditambahkan!", "success", () => { dispatch(fetchIncomes()) });
+        setData(undefined);
+      } catch (e) {
+        notificationAlert('Pemasukan gagal ditambahkan!', 'error', () => {});
+      }
+
     } else setIsError(true);
   }
 
-  useEffect(() => {
-    if(isLoading && !category) {
-      init();
-    }
-  }, [])
-
-  if(!isLoading && category) 
+  if(!loading && sources && sources.length !== 0) 
     return (
       <div className="flex flex-col gap-3">
         <Select
@@ -47,7 +45,7 @@ export default function CreatePemasukan() {
           value={data}
           placeholder="Pilih Kategori Pemasukan"
           dataKey="source_id"
-          options={category} 
+          options={sources} 
           type={"number"}        
         />
         <Input

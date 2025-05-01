@@ -1,34 +1,45 @@
 "use client"
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import Input from "../../../_components/input";
 import basicValidation from "@/validation/basic-validation";
 import { Content } from "@/interface/content";
 import Select from "../../../_components/select";
-import { sendContents } from "@/services/postData";
 import contentTypeOption from "@/data/contentTypeOption";
-// import TextEditor from "./textEditor";
 import dynamic from "next/dynamic";
+import { useAppDispatch } from "@/store/hooks";
+import notificationAlert from "@/services/notificationAlert";
+import { createContent, fetchContents } from "@/thunks/contentThunks";
 
 const TextEditor = dynamic(() => import('./textEditor'), { ssr: false })
 
 export default function CreateContent() {
+  const dispatch = useAppDispatch();
   const [data, setData] = useState<Content>();
   const [isError, setIsError] = useState<boolean>(false);
   const [contentType, setContentType] = useState<{ type: string }>();
-  const router = useRouter();
 
   const action = async () => {
     if(
       !basicValidation(data?.title || '', 'Judul Konten') &&
       !basicValidation(data?.contents || '', 'Isi Konten')
     ) {
-      await sendContents(data!, router);
+      try {
+        await dispatch(createContent(data!)).unwrap();
+        notificationAlert("Konten Berhasil ditambahkan!", "success", () => { 
+          dispatch(fetchContents(null));
+        });
+        setData(undefined);
+        setContentType(undefined);
+        setIsError(false);
+      } catch (e) {
+        notificationAlert('Konten Gagal ditambahkan!', 'error', () => {});
+      }
     } else setIsError(true);
   }
 
   useEffect(() => {
+    if(!data) return;
     setData({
       ...data!,
       visual_content: contentType?.type === "Gambar" ? undefined : ""

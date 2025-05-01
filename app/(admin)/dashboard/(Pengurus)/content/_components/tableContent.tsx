@@ -1,43 +1,44 @@
 "use client"
 
 import Thead from "@/app/components/thead";
-import { getContentMasjid } from "@/services/getData";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import EditModal from "../../../_components/editModal";
-import { deleteContent } from "@/services/postData";
 import { useRouter } from "next/navigation";
 import EditContent from "./editContent";
 import { ListContent } from "@/interface/content";
 import confirmAlert from "@/services/confirmAlert";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { deleteContent, fetchContents } from "@/thunks/contentThunks";
+import notificationAlert from "@/services/notificationAlert";
 
 export default function TableContent() {
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [data, setData] = useState<ListContent[]>();
+  const dispatch = useAppDispatch();
+  const {contents, loading} = useAppSelector((state) => state.contents);
   const router = useRouter();
 
   const deleteAction = async (id: number) => {
     const deleteConfirmation = await confirmAlert("Apakah anda yakin ingin menghapus artikel ini?", 'Ya, saya yakin!', 'Tidak, tunggu dulu');
-    if(deleteConfirmation) await deleteContent(id, router)
+    if(deleteConfirmation) {
+      try {
+        await dispatch(deleteContent(id)).unwrap();
+        notificationAlert('Konten berhasil dihapus!', 'success', () => { dispatch(fetchContents(null)) });
+      } catch (e) {
+        notificationAlert('Konten gagal dihapus!', 'error', () => {})
+      }
+    }
   }
 
   useEffect(() => {
-    const init = async () => {
-      const data = await getContentMasjid(setIsLoading, null);
-      setData(data);
-    }
+    if(!loading && (!contents || contents.length === 0)) dispatch(fetchContents(null));
+  }, [loading, contents]);
 
-    if(isLoading && !data) {
-      init();
-    }
-  }, [isLoading]);
-
-  if(!isLoading && data)
+  if(!loading)
     return (
       <table className="rounded-lg overflow-hidden">
         <Thead labels={['Tanggal', "Judul", 'Aksi']} />
         <tbody>
           {
-            data.map((value: ListContent, index: number) => (
+            contents.map((value: ListContent, index: number) => (
               <tr key={index} className="bg-yellow-100 hover:bg-yellow-400">
                 <td className="px-4 py-2 min-w-32 text-center text-xs">
                   {

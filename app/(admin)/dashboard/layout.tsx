@@ -3,6 +3,8 @@
 import '../../globals.css';
 import NavBar from "@/app/components/navbar";
 import Sidebar from "./_layouts/sidebar";
+import { Provider } from 'react-redux';
+import { store } from '@/store';
 
 export default function RootLayout({
   children,
@@ -18,9 +20,11 @@ export default function RootLayout({
         <NavBar />
         <div className="flex w-screen h-full">
           <Sidebar />
-          <div className="h-full px-10 py-10 w-full">
-            {children}
-          </div>
+          <Provider store={store}>
+            <div className="h-full px-10 py-10 w-full">
+                {children}
+            </div>
+          </Provider>
         </div>
       </body>
     </html>

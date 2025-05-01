@@ -1,30 +1,26 @@
 "use client"
 
-import { getMosqueDocuments } from "@/services/getData";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { ArchiveDocuments } from "@/interface/archive";
 import TemplateItems from "./items";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { fetchDocuments } from "@/thunks/archiveThunks";
 
 export default function ListArchive() {
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [data, setData] = useState<ArchiveDocuments[]>();
+  const dispatch = useAppDispatch();
+  const {documents, loading} = useAppSelector((state) => state.archive);
 
   useEffect(() => {
-    const init = async () => {
-      const data = await getMosqueDocuments(setIsLoading);
-      setData(data);
+    if(!loading && (!documents || documents.length === 0)) {
+      dispatch(fetchDocuments());
     }
+  }, [dispatch, documents]);
 
-    if(isLoading && !data) {
-      init();
-    }
-  }, [isLoading]);
-
-  if(!isLoading && data)
+  if(!loading && documents && documents.length !== 0)
     return (
       <div className="flex flex-col w-full h-full">
         {
-          data.map((value: ArchiveDocuments, index: number) => (
+          documents.map((value: ArchiveDocuments, index: number) => (
             <TemplateItems key={index} data={value} />
           ))
         }

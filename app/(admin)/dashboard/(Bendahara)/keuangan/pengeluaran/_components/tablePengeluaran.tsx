@@ -1,32 +1,28 @@
 "use client"
 
 import Thead from "@/app/components/thead";
-import { getPengeluaranMasjid } from "@/services/getData";
 import { OutcomeData } from "@/interface/report";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { fetchOutcomes } from "@/thunks/outcomeThunks";
 
 export default function TablePengeluaran() {
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [data, setData] = useState<OutcomeData[]>();
+  const dispatch = useAppDispatch();
+  const {outcomes, loading} = useAppSelector((state) => state.outcomes);
 
   useEffect(() => {
-    const init = async () => {
-      const data = await getPengeluaranMasjid(setIsLoading);
-      setData(data);
+    if(!loading && (!outcomes || outcomes.length === 0)) {
+      dispatch(fetchOutcomes())
     }
+  }, [dispatch, outcomes, loading])
 
-    if(isLoading && !data) {
-      init();
-    }
-  }, [isLoading]);
-
-  if(!isLoading && data)
+  if(!loading && outcomes && outcomes.length !== 0)
     return (
       <table className="rounded-lg overflow-hidden">
         <Thead labels={['Keterangan', "Jumlah", 'Tanggal']} />
         <tbody>
           {
-            data.map((value: OutcomeData, index: number) => (
+            outcomes.map((value: OutcomeData, index: number) => (
               <tr key={index} className="bg-yellow-100 hover:bg-yellow-400">
                 <td className="px-4 py-2 min-w-32 text-center">{value.reason}</td>
                 <td className="px-4 py-2 min-w-32 text-center">{value.amount.toLocaleString('id-ID')}</td>

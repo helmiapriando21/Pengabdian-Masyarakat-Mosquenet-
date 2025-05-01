@@ -1,43 +1,43 @@
 "use client"
 
 import Thead from "@/app/components/thead";
-import { getAsetMasjid } from "@/services/getData";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import EditAset from "./editAset";
 import EditModal from "../../../_components/editModal";
-import { deleteAset } from "@/services/postData";
-import { useRouter } from "next/navigation";
 import { ListAset } from "@/interface/aset";
 import confirmAlert from "@/services/confirmAlert";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { deleteAsset, fetchAssets } from "@/thunks/assetThunks";
+import notificationAlert from "@/services/notificationAlert";
 
 export default function TableAset() {
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [data, setData] = useState<ListAset[]>();
-  const router = useRouter();
+  const dispatch = useAppDispatch();
+  const { items, loading } = useAppSelector((state) => state.assets);
 
   const deleteAction = async (id: number) => {
     const deleteConfirmation = await confirmAlert("Apakah anda yakin ingin menghapus aset ini?", 'Ya, saya yakin!', 'Tidak, tunggu dulu');
-    if(deleteConfirmation) await deleteAset(id, router)
+    if(deleteConfirmation){ 
+      try {
+        await dispatch(deleteAsset(id)).unwrap();
+        notificationAlert("Aset Berhasil dihapus!", "success", () => { dispatch(fetchAssets() )});
+      } catch (e) {
+        notificationAlert('Aset Gagal dihapus!', 'error', () => {});
+      }
+    }
   }
 
   useEffect(() => {
-    const init = async () => {
-      const data = await getAsetMasjid(setIsLoading);
-      setData(data);
-    }
+    if(!loading && (!items || items.length === 0))
+      dispatch(fetchAssets());
+  }, [dispatch, items]);
 
-    if(isLoading && !data) {
-      init();
-    }
-  }, [isLoading]);
-
-  if(!isLoading && data)
+  if(!loading)
     return (
       <table className="rounded-lg overflow-hidden">
         <Thead labels={['Nama', "Jumlah", 'Kondisi', "Aksi"]} />
         <tbody>
           {
-            data.map((value: ListAset, index: number) => (
+            items.map((value: ListAset, index: number) => (
               <tr key={index} className="bg-yellow-100 hover:bg-yellow-400">
                 <td className="px-4 py-2 min-w-32 text-center text-xs">{value.name}</td>
                 <td className="px-4 py-2 min-w-32 text-center text-xs">{Number(value.amount).toLocaleString('id-ID')} {value.unit}</td>

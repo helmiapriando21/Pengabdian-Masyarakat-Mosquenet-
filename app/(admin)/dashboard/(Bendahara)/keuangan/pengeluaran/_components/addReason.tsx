@@ -1,21 +1,28 @@
 "use client"
 
 import { useState } from "react";
-import { addReason } from "@/services/postData";
-import { useRouter } from "next/navigation";
 import Input from "../../../../_components/input";
 import { InformationReport } from "@/interface/report";
+import { useAppDispatch } from "@/store/hooks";
+import { addReason, fetchOutcomes, fetchReasons } from "@/thunks/outcomeThunks";
+import notificationAlert from "@/services/notificationAlert";
 
 export default function AddReason() {
   const [name, setName] = useState<InformationReport>();
   const [error, setError] = useState<string>("");
   const [isError, setIsError] = useState<boolean>(false);
-  const router = useRouter();
+  const dispatch = useAppDispatch();
 
   const sendReason = async () => {
     if(name && name.name && name.name !== "") {
-      await addReason(name.name, router);
-      setName(undefined);
+      try {
+        await dispatch(addReason(name.name)).unwrap();
+        notificationAlert("Keterangan pengeluaran berhasil ditambahkan!", "success", () => { dispatch(fetchReasons()) });
+        setName(undefined);
+      } catch (e) {
+        notificationAlert('Keterangan pengeluaran gagal ditambahkan!', 'error', () => {});
+      }
+
     } else {
       setError("Isi keterangan terlebih dahulu");
       setIsError(true);

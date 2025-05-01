@@ -1,12 +1,16 @@
+"use client"
+
 import type { Metadata } from "next";
 import "../globals.css";
 import NavBar from "../components/navbar";
 import ProgressBar from "./_components/progressBar";
+import { Provider } from "react-redux";
+import { store } from "@/store";
 
-export const metadata: Metadata = {
-  title: `Homepage | ${process.env.NEXT_PUBLIC_APP_NAME}`,
-  description: "",
-};
+// export const metadata: Metadata = {
+//   title: `Homepage | ${process.env.NEXT_PUBLIC_APP_NAME}`,
+//   description: "",
+// };
 
 export default function RootLayout({
   children,
@@ -21,7 +25,9 @@ export default function RootLayout({
       >
         <NavBar />
         <ProgressBar />
-        {children}
+        <Provider store={store}>
+          {children}
+        </Provider>
       </body>
     </html>
   );

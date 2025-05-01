@@ -1,27 +1,23 @@
 "use client"
 
-import { getContentMasjid } from "@/services/getData";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { ListContent } from "@/interface/content";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { fetchContents } from "@/thunks/contentThunks";
 
 interface ListKontenProps {
   masjid_id: string | null
 };
 
 export default function ListKonten({ masjid_id }: ListKontenProps) {
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [data, setData] = useState<ListContent[]>();
+  const dispatch = useAppDispatch();
+  const {contents, loading} = useAppSelector((state) => state.contents);
 
   useEffect(() => {
-    const init = async () => {
-      const data = await getContentMasjid(setIsLoading, masjid_id);
-      setData(data);
+    if((!contents || contents.length === 0) && !loading) {
+      dispatch(fetchContents(masjid_id));
     }
-
-    if(isLoading && !data) {
-      init();
-    }
-  }, [isLoading]);
+  }, [contents, loading, masjid_id, dispatch]);
 
   const getImageSource = (visual_content: string): string => {
     if (visual_content.includes("youtube")) {
@@ -32,11 +28,11 @@ export default function ListKonten({ masjid_id }: ListKontenProps) {
     else return visual_content;
   };  
 
-  if(!isLoading && data)
+  if(!loading && contents)
     return (
       <div className="flex flex-col">
         {
-          data.map((value: ListContent, index: number) => (
+          contents.map((value: ListContent, index: number) => (
             <div key={index} className="flex max-sm:flex-col h-max items-center border-[1px] border-black overflow-hidden">
               <img src={value.visual_content && typeof value.visual_content === "string" ? getImageSource(value.visual_content) : ""} className="w-full sm:w-52 h-52 sm:h-full bg-center" /> 
               <div className="flex flex-col gap-2 px-5 py-2">

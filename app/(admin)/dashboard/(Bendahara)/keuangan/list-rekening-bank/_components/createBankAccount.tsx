@@ -1,31 +1,21 @@
 "use client"
 
-import { getPurposesBankAccountMosque } from "@/services/getData";
 import { useState, useEffect } from "react";
 import Select from "../../../../_components/select";
 import Input from "../../../../_components/input";
 import numberValidation from "@/validation/number-validation";
-import { useRouter } from "next/navigation";
-import { addBankAccount } from "@/services/postData";
 import basicValidation from "@/validation/basic-validation";
 import listBank from "@/data/listBank";
 import { CreateBank } from "@/interface/bank";
-import { SelectType } from "@/interface/form";
-import Cookies from "js-cookie";
-import showAlert from "@/services/showAlert";
-import nProgress from "nprogress";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { createAccountBank, fetchAccountBank, fetchPurposesAccountBank } from "@/thunks/accountBankThunks";
+import notificationAlert from "@/services/notificationAlert";
 
 export default function CreateBankAccount() {
-  const [purposes, setPurposes] = useState<SelectType[]>();
+  const dispatch = useAppDispatch();
+  const {purposes, loading} = useAppSelector((state) => state.accountBank)
   const [data, setData] = useState<CreateBank>();
-  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isError, setIsError] = useState<boolean>(false);
-  const router = useRouter();
-
-  const init = async () => {
-    const data = await getPurposesBankAccountMosque(setIsLoading);
-    setPurposes(data);
-  }
 
   const action = async () => {
     if(
@@ -35,17 +25,24 @@ export default function CreateBankAccount() {
       !basicValidation(data?.email || '', "Email pemilik") &&
       !numberValidation(data?.purpose_id, "Tujuan rekening bank")
     ) {
-      await addBankAccount(data!, router);
+      try {
+        await dispatch(createAccountBank(data!)).unwrap();
+        notificationAlert("Rekening bank berhasil ditambahkan!", "success", () => { dispatch(fetchAccountBank()) });
+        setData(undefined);
+      } catch (e) {
+        notificationAlert('Rekening bank gagal ditambahkan!', 'error', () => {});
+      }
+
     } else setIsError(true);
   }
 
   useEffect(() => {
-    if(isLoading && !purposes) {
-      init();
+    if(!loading && (!purposes || purposes.length === 0)) {
+      dispatch(fetchPurposesAccountBank());
     }
-  }, [])
+  }, [dispatch, purposes])
 
-  if(!isLoading && purposes) 
+  if(!loading && purposes && purposes.length !== 0) 
     return (
       <div className="flex flex-col gap-3 h-full">
         <h1 className="font-bold text-black text-xl text-center">Tambah Rekening Bank</h1>

@@ -1,32 +1,30 @@
 "use client"
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import Input from "../../../_components/input";
 import basicValidation from "@/validation/basic-validation";
 import { getDetailKegiatanMasjid } from "@/services/getData";
 import { DetailActivity } from "@/interface/activity";
-import { editKegiatan } from "@/services/postData";
 import confirmAlert from "@/services/confirmAlert";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { fetchActivities, updateActivity } from "@/thunks/activityThunks";
+import notificationAlert from "@/services/notificationAlert";
 
 interface EditKegiatanProps {
   id: number
 }
 
 export default function EditKegiatan({ id }: EditKegiatanProps) {
+  const dispatch = useAppDispatch();
+  const {activity} = useAppSelector((state) => state.activities);
   const [data, setData] = useState<DetailActivity & { time: string }>();
   const [isError, setIsError] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [previousDocument, setPreviousDocument] = useState<string>();
   const [previousImage, setPreviousImage] = useState<string>();
-  const router = useRouter();
 
   const init = async () => {
     const response = await getDetailKegiatanMasjid(setIsLoading, Number(id));
-
-    const date = response.date;
-    response.date = new Date(date).toISOString().split("T")[0];
-    response.time = `${new Date(date).getUTCHours().toString().padStart(2, "0")}:${new Date(date).getUTCMinutes().toString().padStart(2, "0")}`;
 
     if(response.document) setPreviousDocument(response.document);
     if(response.image) setPreviousImage(response.image);
@@ -52,7 +50,12 @@ export default function EditKegiatan({ id }: EditKegiatanProps) {
         !basicValidation(data?.date || '', 'Tanggal kegiatan') &&
         !basicValidation(data?.time || '', 'Jam mulai kegiatan')
       ) {
-        await editKegiatan(data!, router);
+        try {
+          await dispatch(updateActivity(data!)).unwrap();
+          notificationAlert("Kegiatan Berhasil diubah!", "success", () => { dispatch(fetchActivities(null) )});
+        } catch (e) {
+          notificationAlert('Kegiatan Gagal diubah!', 'error', () => {});
+        }
       } else setIsError(true);
     }
   }

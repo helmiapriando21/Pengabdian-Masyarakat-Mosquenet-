@@ -1,52 +1,49 @@
 "use client"
 
-import { getDetailKegiatanMasjid } from "@/services/getData";
-import { DetailActivity } from "@/interface/activity";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { fetchActivity } from "@/thunks/activityThunks";
+import { clearActivity } from "@/store/activitySlice";
 
 export default function DetailKegiatan() {
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [data, setData] = useState<DetailActivity>();
+  const dispatch = useAppDispatch();
+  const {activity, loading} = useAppSelector((state) => state.activities);
   const params = useParams();
   const { id } = params;
 
-  const init = async () => {
-    const response = await getDetailKegiatanMasjid(setIsLoading, Number(id));
-    setData(response);
-  }
-
   useEffect(() => {
-    if(isLoading && !data) {
-      init();
-    }
-  }, [])
+      dispatch(fetchActivity(Number(id)));
+      return () => {
+        dispatch(clearActivity())
+      }
+    }, [dispatch])
 
-  if(!isLoading && data)
+  if(!loading && activity)
     return (
       <div className="flex flex-col gap-10 w-full h-full">
         <img 
-          src={`${process.env.NEXT_PUBLIC_API_STATIC_URL}/${data.image}`}
+          src={`${process.env.NEXT_PUBLIC_API_STATIC_URL}/${activity.image}`}
           className="w-[100rem] h-[30rem]"
         />
         <div className="flex flex-col gap-3">
-          <h1 className="font-bold text-black text-3xl text-center">{data.name}</h1>
+          <h1 className="font-bold text-black text-3xl text-center">{activity.name}</h1>
           <h4 className="font-bold text-black text-xl text-center">
             {
-              new Date(data.date).toLocaleDateString('id-ID', {
+              new Date(activity.date).toLocaleDateString('id-ID', {
                 weekday: 'long',
                 day: '2-digit',
                 month: 'long',
                 year: 'numeric'
               })
             }.
-            {new Date(data.date).getUTCHours().toString().padStart(2, '0')}:{new Date(data.date).getUTCMinutes().toString().padStart(2, '0')}
+            {new Date(activity.date).getUTCHours().toString().padStart(2, '0')}:{new Date(activity.date).getUTCMinutes().toString().padStart(2, '0')}
           </h4>
-          <h6 className="font-bold text-black text-lg text-center">PIC: {data.pic}</h6>
-          <p className="text-lg text-center">{data.description}</p>
-          <p className="font-semibold text-black text-md text-center">Address: {data.address}</p>
+          <h6 className="font-bold text-black text-lg text-center">PIC: {activity.pic}</h6>
+          <p className="text-lg text-center">{activity.description}</p>
+          <p className="font-semibold text-black text-md text-center">Address: {activity.address}</p>
           <a 
-            href={`${process.env.NEXT_PUBLIC_API_STATIC_URL}/${data.document}`}
+            href={`${process.env.NEXT_PUBLIC_API_STATIC_URL}/${activity.document}`}
             className="text-blue-400 underline-offset-2 underline text-center"
             download
           >

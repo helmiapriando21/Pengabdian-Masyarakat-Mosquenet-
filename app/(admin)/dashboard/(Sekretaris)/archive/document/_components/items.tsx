@@ -1,20 +1,28 @@
 import EditModal from "@/app/(admin)/dashboard/_components/editModal";
 import { ArchiveDocuments } from "@/interface/archive";
 import EditArchive from "./editArchive";
-import { useRouter } from "next/navigation";
-import { deleteDocument } from "@/services/postData";
 import confirmAlert from "@/services/confirmAlert";
+import { useAppDispatch } from "@/store/hooks";
+import { deleteDocument, fetchDocuments } from "@/thunks/archiveThunks";
+import notificationAlert from "@/services/notificationAlert";
 
 interface Items {
   data: ArchiveDocuments;
 }
 
 export default function Items({data}: Items) {
-  const router = useRouter();
+  const dispatch = useAppDispatch();
 
   const deleteAction = async () => {
     const deleteConfirmation = await confirmAlert("Apakah anda yakin ingin menghapus dokumen ini?", 'Ya, saya yakin!', 'Tidak, tunggu dulu');
-    if(deleteConfirmation) await deleteDocument(data.id, router)
+    if(deleteConfirmation) {
+      try {
+        await dispatch(deleteDocument(data.id)).unwrap();
+        notificationAlert("Dokumen Berhasil dihapus!", "success", () => { dispatch(fetchDocuments() )});
+      } catch (e) {
+        notificationAlert('Dokumen Gagal dihapus!', 'error', () => {});
+      }
+    }
   }
 
   return (

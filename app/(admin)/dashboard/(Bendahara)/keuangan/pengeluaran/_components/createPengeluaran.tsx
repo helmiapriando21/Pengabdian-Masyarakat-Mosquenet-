@@ -1,43 +1,41 @@
 "use client"
 
-import { getReasonPengeluaranMasjid } from "@/services/getData";
 import { useState, useEffect } from "react";
 import Select from "../../../../_components/select";
 import Input from "../../../../_components/input";
 import numberValidation from "@/validation/number-validation";
-import { useRouter } from "next/navigation";
-import { addPengeluaran } from "@/services/postData";
 import { CreateOutcome } from "@/interface/report";
-import { SelectType } from "@/interface/form";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { createOutcome, fetchOutcomes, fetchReasons } from "@/thunks/outcomeThunks";
+import notificationAlert from "@/services/notificationAlert";
 
 export default function CreatePengeluaran() {
-  const [reason, setReason] = useState<SelectType[]>();
+  const dispatch = useAppDispatch();
+  const {reasons, loading} = useAppSelector((state) => state.outcomes);
   const [data, setData] = useState<CreateOutcome>();
-  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isError, setIsError] = useState<boolean>(false);
-  const router = useRouter();
 
-  const init = async () => {
-    const data = await getReasonPengeluaranMasjid(setIsLoading);
-    setReason(data);
-  }
+  useEffect(() => {
+    if(!loading && (!reasons || reasons.length === 0)) dispatch(fetchReasons());
+  }, [dispatch, reasons])
 
   const action = async () => {
     if(
       !numberValidation(data?.amount, "Besar Pengeluaran") &&
       !numberValidation(data?.reason_id, "Keterangan pengeluaran")
     ) {
-      await addPengeluaran(data, router);
+      try {
+        await dispatch(createOutcome(data!)).unwrap();
+        notificationAlert("Pengeluaran berhasil ditambahkan!", "success", () => { dispatch(fetchOutcomes()) });
+        setData(undefined);
+      } catch (e) {
+        notificationAlert('Pengeluaran gagal ditambahkan!', 'error', () => {});
+      }
+
     } else setIsError(true);
   }
 
-  useEffect(() => {
-    if(isLoading && !reason) {
-      init();
-    }
-  }, [])
-
-  if(!isLoading && reason) 
+  if(!loading && reasons && reasons.length !== 0) 
     return (
       <div className="flex flex-col gap-3">
         <Select
@@ -47,7 +45,7 @@ export default function CreatePengeluaran() {
           value={data}
           placeholder="Pilih Keterangan Pengeluaran"
           dataKey="reason_id"
-          options={reason} 
+          options={reasons} 
           type={"number"}        
         />
         <Input

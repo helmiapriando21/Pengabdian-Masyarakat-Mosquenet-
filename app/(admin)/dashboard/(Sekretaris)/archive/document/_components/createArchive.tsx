@@ -1,17 +1,18 @@
 "use client"
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import Input from "../../../../_components/input";
 import basicValidation from "@/validation/basic-validation";
-import { ArchiveDocument, ArchiveTemplate } from "@/interface/archive";
+import { ArchiveDocument } from "@/interface/archive";
 import fileValidation from "@/validation/file-validation";
-import { saveDocument, saveTemplateDocument } from "@/services/postData";
+import { useAppDispatch } from "@/store/hooks";
+import { createDocument, fetchDocuments } from "@/thunks/archiveThunks";
+import notificationAlert from "@/services/notificationAlert";
 
 export default function CreateArchive() {
   const [data, setData] = useState<ArchiveDocument>();
   const [isError, setIsError] = useState<boolean>(false);
-  const router = useRouter();
+  const dispatch = useAppDispatch();
 
   const action = async () => {
     if(
@@ -23,7 +24,14 @@ export default function CreateArchive() {
         'PDF'
       )
     ) {
-      await saveDocument(data!, router);
+      try {
+        await dispatch(createDocument(data!)).unwrap();
+        notificationAlert("Dokumen Berhasil ditambahkan!", "success", () => { dispatch(fetchDocuments() )});
+        setData(undefined);
+        setIsError(false);
+      } catch (e) {
+        notificationAlert('Dokumen Gagal ditambahkan!', 'error', () => {});
+      }
     } else setIsError(true);
   }
   

@@ -29,15 +29,15 @@ export default function MosqueDetail () {
           <CalendarElement masjid_id={masjidId}/>
           <PrayerTimesSection masjidId={masjidId} />
         </div>
-        <div className="w-screen h-screen flex flex-col gap-3 items-center justify-center px-10 sm:px-20">
+        <div className="w-screen h-screen flex flex-col gap-3 items-center justify-center px-10 sm:px-20 mt-5">
           <h1 className="font-bold text-2xl">Acara atau Kegiatan yang akan berlangsung</h1>
           <ListKegiatan masjid_id={masjidId} />
         </div>
-        <div className="w-screen h-max min-h-screen flex flex-col gap-3 items-center justify-center px-10 sm:px-20">
+        <div className="w-screen h-max min-h-screen flex flex-col gap-3 items-center justify-center px-10 sm:px-20 mt-5">
           <h1 className="font-bold text-2xl">Donasi yang dapat anda berikan</h1>
           <DonationList masjid_id={masjidId} />
         </div>
-        <div className="w-screen h-max min-h-screen flex flex-col gap-3 items-center justify-center px-10 sm:px-20">
+        <div className="w-screen h-max min-h-screen flex flex-col gap-3 items-center justify-center px-10 sm:px-20 mt-5">
           <h1 className="font-bold text-2xl">Konten seputar Masjid</h1>
           <ListKonten masjid_id={masjidId} />
         </div>

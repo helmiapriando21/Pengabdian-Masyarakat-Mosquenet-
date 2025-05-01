@@ -1,17 +1,18 @@
 "use client"
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import Input from "../../../../_components/input";
 import basicValidation from "@/validation/basic-validation";
 import { ArchiveTemplate } from "@/interface/archive";
 import fileValidation from "@/validation/file-validation";
-import { saveTemplateDocument } from "@/services/postData";
+import { useAppDispatch } from "@/store/hooks";
+import { createTemplate, fetchTemplates } from "@/thunks/archiveThunks";
+import notificationAlert from "@/services/notificationAlert";
 
 export default function CreateTemplate() {
   const [data, setData] = useState<ArchiveTemplate>();
   const [isError, setIsError] = useState<boolean>(false);
-  const router = useRouter();
+  const dispatch = useAppDispatch()
 
   const action = async () => {
     if(
@@ -23,7 +24,14 @@ export default function CreateTemplate() {
         'DOCX'
       )
     ) {
-      await saveTemplateDocument(data!, router);
+      try {
+        await dispatch(createTemplate(data!)).unwrap();
+        notificationAlert("Template Dokumen Berhasil ditambahkan!", "success", () => { dispatch(fetchTemplates() )});
+        setData(undefined);
+        setIsError(false);
+      } catch (e) {
+        notificationAlert('Template Dokumen Gagal ditambahkan!', 'error', () => {});
+      }
     } else setIsError(true);
   }
   

@@ -1,31 +1,27 @@
 "use client"
 
 import { ListBank } from "@/interface/bank";
-import { getDonationsList } from "@/services/getData";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { fetchAccountBank } from "@/thunks/accountBankThunks";
 
 export default function DonationList({ masjid_id }: { masjid_id: string }) {
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [data, setData] = useState<ListBank[]>();
   const router = useRouter();
+  const dispatch = useAppDispatch();
+  const {accountBanks, loading} = useAppSelector((state) => state.accountBank);
 
   useEffect(() => {
-    const init = async () => {
-      const data = await getDonationsList(masjid_id, setIsLoading);
-      setData(data);
+    if(!loading && (!accountBanks || accountBanks.length === 0)) {
+      dispatch(fetchAccountBank(masjid_id));
     }
+  }, [dispatch, accountBanks]);
 
-    if(isLoading && !data) {
-      init();
-    }
-  }, [isLoading])
-
-  if(!isLoading && data)
+  if(!loading && accountBanks && accountBanks.length !== 0)
     return (
       <div className="flex flex-col gap-3 w-full h-full">
         {
-          data.map((value: ListBank, index: number) => (
+          accountBanks.map((value: ListBank, index: number) => (
             <div 
               key={index}
               onClick={() => {

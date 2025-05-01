@@ -1,19 +1,20 @@
 "use client"
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import Input from "../../../_components/input";
 import basicValidation from "@/validation/basic-validation";
 import numberValidation from "@/validation/number-validation";
 import Select from "../../../_components/select";
-import { addAset } from "@/services/postData";
 import { ListAset } from "@/interface/aset";
 import asetConditions from "@/data/asetConditions";
+import { useAppDispatch } from "@/store/hooks";
+import { createAssets, fetchAssets } from "@/thunks/assetThunks";
+import notificationAlert from "@/services/notificationAlert";
 
 export default function CreateAset() {
+  const dispatch = useAppDispatch();
   const [data, setData] = useState<ListAset>();
   const [isError, setIsError] = useState<boolean>(false);
-  const router = useRouter();
 
   const action = async () => {
     if(
@@ -22,7 +23,13 @@ export default function CreateAset() {
       !basicValidation(data?.condition || '', "Kondisi aset") &&
       !basicValidation(data?.unit || '', "Satuan aset")
     ) {
-      await addAset(data, router);
+      try {
+        await dispatch(createAssets(data!)).unwrap();
+        notificationAlert("Aset Berhasil ditambahkan!", "success", () => { dispatch(fetchAssets() )});
+        setData(undefined);
+      } catch (e) {
+        notificationAlert('Aset Gagal ditambahkan!', 'error', () => {});
+      }
     } else setIsError(true);
   }
   

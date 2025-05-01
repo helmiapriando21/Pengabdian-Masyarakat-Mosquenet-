@@ -2,24 +2,18 @@
 
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { getDonation } from "@/services/getData";
-import { ListBank } from "@/interface/bank";
 import DonationData from "./_components/donationData";
 import SendDonation from "./_components/sendDonation";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { fetchDonationBank } from "@/thunks/accountBankThunks";
+import { clearAccountBank } from "@/store/accountBankSlice";
 
 export default function MosqueDetail () {
   const params = useParams();
   const [masjidId, setMasjidId] = useState<string>();
   const [donationId, setDonationId] = useState<string>();
-  const [data, setData] = useState<ListBank>();
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-
-  const init = async () => {
-    if(masjidId && donationId) {
-      const account = await getDonation(masjidId, donationId, setIsLoading);
-      setData(account);
-    }
-  }
+  const dispatch = useAppDispatch();
+  const {accountBank, loading} = useAppSelector((state) => state.accountBank);
 
   useEffect(() => {
     if(params?.id && params?.donation_id) {
@@ -29,14 +23,19 @@ export default function MosqueDetail () {
   }, [params]);
 
   useEffect(() => {
-    init()
-  }, [masjidId, donationId])
+    if(masjidId && donationId && !loading && !accountBank)
+      dispatch(fetchDonationBank({masjid_id: masjidId, donation_id: donationId}));
 
-  if(masjidId && donationId && data && !isLoading)
+    return () => {
+      dispatch(clearAccountBank());
+    }
+  }, [masjidId, donationId, dispatch])
+
+  if(masjidId && donationId && accountBank && !loading)
     return (
       <div className="flex w-screen h-[calc(100vh-200px)] items-center justify-center">
-        <DonationData data={data} />
-        <SendDonation data={data} masjid_id={masjidId} donation_id={donationId} />
+        <DonationData data={accountBank} />
+        <SendDonation data={accountBank} masjid_id={masjidId} donation_id={donationId} />
       </div>
     );
 }

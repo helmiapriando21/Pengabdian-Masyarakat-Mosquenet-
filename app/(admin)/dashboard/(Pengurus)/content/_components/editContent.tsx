@@ -1,17 +1,17 @@
 "use client"
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import Input from "../../../_components/input";
 import basicValidation from "@/validation/basic-validation";
-import { getDetailContentMasjid } from "@/services/getData";
 import { ListContent } from "@/interface/content";
 import Select from "../../../_components/select";
-import { updateContents } from "@/services/postData";
 import contentTypeOption from "@/data/contentTypeOption";
 import { generateVisualContentImageURL } from "@/services/generateVisualContentURL";
 import dynamic from "next/dynamic";
 import confirmAlert from "@/services/confirmAlert";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { fetchContents, updateContent } from "@/thunks/contentThunks";
+import notificationAlert from "@/services/notificationAlert";
 
 const TextEditor = dynamic(() => import('./textEditor'), { ssr: false })
 
@@ -20,17 +20,18 @@ interface EditKontenProps {
 }
 
 export default function EditContent({ id }: EditKontenProps) {
+  const {contents, loading} = useAppSelector((state) => state.contents);
   const [data, setData] = useState<ListContent>();
   const [isError, setIsError] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const dispatch = useAppDispatch();
+  
   const [previousVisualContent, setPreviousVisualContent] = useState<string>();
   const [contentType, setContentType] = useState<{ type: string }>();
-  const router = useRouter();
 
   const init = async () => {
-    const response = await getDetailContentMasjid(setIsLoading, Number(id));
+    const response = contents.find(value => value.id === id);
 
-    if(response.visual_content) {
+    if(response && response.visual_content && typeof response.visual_content === 'string') {
       setPreviousVisualContent(response.visual_content);
       if(!response.visual_content.includes("https")) setContentType({ type: "file" });
       else setContentType({ type: "text" });
@@ -40,10 +41,14 @@ export default function EditContent({ id }: EditKontenProps) {
   }
 
   useEffect(() => {
-    if(isLoading && id) {
+    if(!contents || contents.length === 0)
+      dispatch(fetchContents(null));
+  }, [dispatch, contents]);
+
+  useEffect(() => {
+    if(contents && contents.length > 0)
       init();
-    }
-  }, [id])
+  }, [contents, id])
 
   const action = async () => {
     const confirm = await confirmAlert('Apakah konten ini ingin diubah?', 'Ya, benar.', 'Tidak');
@@ -52,12 +57,17 @@ export default function EditContent({ id }: EditKontenProps) {
         !basicValidation(data?.title || '', 'Nama kegiatan') &&
         !basicValidation(data?.contents || '', 'Deskripsi kegiatan')
       ) {
-        await updateContents(data!, router);
+        try {
+          await dispatch(updateContent(data!)).unwrap();
+          notificationAlert("Konten Berhasil diubah!", "success", () => { dispatch(fetchContents(null) )});
+        } catch (e) {
+          notificationAlert('Konten Gagal diubah!', 'error', () => {});
+        }
       } else setIsError(true);
     }
   }
   
-  if(!isLoading && data)
+  if(!loading && data)
     return (
       <div className="flex flex-col gap-3 h-full">
         <h1 className="font-bold text-black text-xl">Edit Konten</h1>

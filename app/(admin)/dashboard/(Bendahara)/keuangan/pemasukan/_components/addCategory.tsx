@@ -1,21 +1,28 @@
 "use client"
 
 import { useState } from "react";
-import { addCategory } from "@/services/postData";
-import { useRouter } from "next/navigation";
 import Input from "../../../../_components/input";
 import { InformationReport } from "@/interface/report";
+import { useAppDispatch } from "@/store/hooks";
+import { addSource, fetchIncomes } from "@/thunks/incomeThunks";
+import notificationAlert from "@/services/notificationAlert";
 
 export default function AddCategory() {
   const [name, setName] = useState<InformationReport>();
   const [error, setError] = useState<string>("");
   const [isError, setIsError] = useState<boolean>(false);
-  const router = useRouter();
+  const dispatch = useAppDispatch();
 
   const sendCategory = async () => {
     if(name && name.name && name.name !== "") {
-      await addCategory(name.name, router);
-      setName(undefined);
+      try {
+        await dispatch(addSource(name.name)).unwrap();
+        notificationAlert("Sumber pemasukan berhasil ditambahkan!", "success", () => { dispatch(fetchIncomes()) });
+        setName(undefined);
+      } catch (e) {
+        notificationAlert('Sumber pemasukan gagal ditambahkan!', 'error', () => {});
+      }
+
     } else {
       setError("Isi nama kategori terlebih dahulu");
       setIsError(true);

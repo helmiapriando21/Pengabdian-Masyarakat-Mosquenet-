@@ -1,24 +1,25 @@
 "use client"
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import Input from "../../../_components/input";
 import basicValidation from "@/validation/basic-validation";
 import numberValidation from "@/validation/number-validation";
 import Select from "../../../_components/select";
-import { editAset } from "@/services/postData";
 import { ListAset } from "@/interface/aset";
 import asetConditions from "@/data/asetConditions";
 import confirmAlert from "@/services/confirmAlert";
+import { useAppDispatch } from "@/store/hooks";
+import notificationAlert from "@/services/notificationAlert";
+import { fetchAssets, updateAsset } from "@/thunks/assetThunks";
 
 interface EditAsetProps {
   currentData: ListAset
 }
 
 export default function EditAset({ currentData }: EditAsetProps) {
+  const dispatch = useAppDispatch();
   const [data, setData] = useState<ListAset>(currentData);
   const [isError, setIsError] = useState<boolean>(false);
-  const router = useRouter();
 
   const action = async () => {
     const confirm = await confirmAlert('Apakah aset ini akan diubah?', 'Ya, benar', 'Tidak');
@@ -29,7 +30,12 @@ export default function EditAset({ currentData }: EditAsetProps) {
         !basicValidation(data.condition, "Kondisi aset") &&
         !basicValidation(data.unit, "Satuan aset")
       ) {
-        await editAset(data, currentData.id, router);
+        try {
+          await dispatch(updateAsset(data!)).unwrap();
+          notificationAlert("Aset Berhasil diubah!", "success", () => { dispatch(fetchAssets() )});
+        } catch (e) {
+          notificationAlert('Aset Gagal diubah!', 'error', () => {});
+        }
       } else setIsError(true);
     }
   }

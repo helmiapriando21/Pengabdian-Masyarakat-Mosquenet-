@@ -3,29 +3,23 @@
 import Calendar from 'react-calendar';
 import { useState, useEffect } from 'react';
 import CalendarLabel from './calendarLabel';
-import { getKegiatanMasjid } from '@/services/getData';
 import { ListActivities } from '@/interface/activity';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { fetchActivities } from '@/thunks/activityThunks';
 
 interface CalendarElementProps {
   masjid_id?: string | null
 };
 
 export default function CalendarElement({ masjid_id }: CalendarElementProps) {
-    const [event, setEvent] = useState<ListActivities[]>();
-    const [eventMonth, setEventMonth] = useState<ListActivities[]>();
-    const [isLoading, setIsLoading] = useState<boolean>(true);
-    const [now, setNow] = useState(new Date());
+  const dispatch = useAppDispatch();
+  const {activities, loading} = useAppSelector((state) => state.activities);
+  const [eventMonth, setEventMonth] = useState<ListActivities[]>();
+  const [now, setNow] = useState(new Date());
 
-    useEffect(() => {
-      const init = async () => {
-        const data = await getKegiatanMasjid(setIsLoading, masjid_id || null);
-        setEvent(data);
-      }
-  
-      if(isLoading) {
-        init();
-      }
-    }, [isLoading]);
+  useEffect(() => {
+    if(!activities || activities.length === 0) dispatch(fetchActivities(masjid_id!));
+  }, [dispatch])
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -45,8 +39,8 @@ export default function CalendarElement({ masjid_id }: CalendarElementProps) {
         ) {
             return defaultClass + "bg-[#EBBB20] text-white ";
         } else if(
-          event &&
-          event.find(value => (
+          activities &&
+          activities.find(value => (
             new Date(value.date).getFullYear() === date.getFullYear() &&
             new Date(value.date).getMonth() === date.getMonth() &&
             new Date(value.date).getDate() === date.getDate()
@@ -57,8 +51,8 @@ export default function CalendarElement({ masjid_id }: CalendarElementProps) {
     }
 
     const filterEventByMonth = (date: Date) => {
-      if(event) {
-        const filtered = event.filter(value => (
+      if(activities) {
+        const filtered = activities.filter(value => (
           new Date(value.date).getFullYear() === date.getFullYear() &&
           new Date(value.date).getMonth() === date.getMonth()
         ));
@@ -66,7 +60,7 @@ export default function CalendarElement({ masjid_id }: CalendarElementProps) {
       }
     }
 
-    if(!isLoading && event) 
+    if(!loading && activities) 
       return (
           <div className="flex flex-col gap-2 items-center justify-center p-5 bg-[#05934a8f] rounded-xl">
               <Calendar 

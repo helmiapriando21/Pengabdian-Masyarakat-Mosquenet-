@@ -1,13 +1,14 @@
 "use client"
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import Input from "../../../../_components/input";
 import basicValidation from "@/validation/basic-validation";
-import { changeTemplateDocument, editAset } from "@/services/postData";
 import { ArchiveTemplates } from "@/interface/archive";
 import fileValidation from "@/validation/file-validation";
 import confirmAlert from "@/services/confirmAlert";
+import { useAppDispatch } from "@/store/hooks";
+import { fetchTemplates, updateTemplate } from "@/thunks/archiveThunks";
+import notificationAlert from "@/services/notificationAlert";
 
 interface EditTemplatesProps {
   currentData: ArchiveTemplates
@@ -15,9 +16,9 @@ interface EditTemplatesProps {
 
 export default function EditTemplates({ currentData }: EditTemplatesProps) {
   const [data, setData] = useState<ArchiveTemplates>(currentData);
-  const [previousDocument, setPreviousDocument] = useState<string>(currentData.document as string);
+  const [previousDocument, _] = useState<string>(currentData.document as string);
   const [isError, setIsError] = useState<boolean>(false);
-  const router = useRouter();
+  const dispatch = useAppDispatch();
 
   const action = async () => {
     const confirm = await confirmAlert('Apakah dokumen ini akan diubah?', 'Ya, benar', 'Tidak');
@@ -31,7 +32,12 @@ export default function EditTemplates({ currentData }: EditTemplatesProps) {
           'DOCX'
         )
       ) {
-        await changeTemplateDocument(data, router);
+        try {
+          await dispatch(updateTemplate(data)).unwrap();
+          notificationAlert("Template Dokumen Berhasil diupdate!", "success", () => { dispatch(fetchTemplates() )});
+        } catch (e) {
+          notificationAlert('Template Dokumen Gagal diupdate!', 'error', () => {});
+        }
       } else setIsError(true);
     }
   }

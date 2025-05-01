@@ -3,31 +3,27 @@
 import { getKegiatanMasjid } from "@/services/getData";
 import { ListActivities } from "@/interface/activity";
 import { useState, useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { fetchActivities } from "@/thunks/activityThunks";
 
 interface ListKegiatanProps {
   masjid_id: string | null
 };
 
 export default function ListKegiatan({ masjid_id }: ListKegiatanProps) {
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [data, setData] = useState<ListActivities[]>();
+  const dispatch = useAppDispatch();
+  const {activities, loading} = useAppSelector((state) => state.activities);
 
   useEffect(() => {
-    const init = async () => {
-      const data = await getKegiatanMasjid(setIsLoading, masjid_id);
-      setData(data);
-    }
+    if(!activities || activities.length === 0)
+      dispatch(fetchActivities(masjid_id));
+  }, [dispatch, activities])
 
-    if(isLoading && !data) {
-      init();
-    }
-  }, [isLoading]);
-
-  if(!isLoading && data)
+  if(!loading && activities && activities.length !== 0)
     return (
       <div className="flex flex-col">
         {
-          data.map((value: ListActivities, index: number) => (
+          activities.map((value: ListActivities, index: number) => (
             <div key={index} className="flex max-sm:flex-col h-max items-center border-[1px] border-black overflow-hidden">
               { value.image && <img src={`${process.env.NEXT_PUBLIC_API_STATIC_URL}/${value.image}`} className="w-full sm:w-52 h-52 sm:h-full bg-center" /> }
               <div className="flex flex-col gap-2 px-5 py-2">

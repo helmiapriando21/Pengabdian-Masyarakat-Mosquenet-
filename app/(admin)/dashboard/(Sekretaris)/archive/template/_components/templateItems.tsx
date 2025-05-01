@@ -1,20 +1,28 @@
 import EditModal from "@/app/(admin)/dashboard/_components/editModal";
 import { ArchiveTemplates } from "@/interface/archive";
 import EditTemplates from "./editArchiveTemplate";
-import { useRouter } from "next/navigation";
-import { deleteTemplateDocument } from "@/services/postData";
 import confirmAlert from "@/services/confirmAlert";
+import { useAppDispatch } from "@/store/hooks";
+import { deleteTemplate, fetchTemplates } from "@/thunks/archiveThunks";
+import notificationAlert from "@/services/notificationAlert";
 
 interface TemplateItemsProps {
   data: ArchiveTemplates;
 }
 
 export default function TemplateItems({data}: TemplateItemsProps) {
-  const router = useRouter();
+  const dispatch = useAppDispatch();
 
   const deleteAction = async () => {
     const deleteConfirmation = await confirmAlert("Apakah anda yakin ingin menghapus template dokumen ini?", 'Ya, saya yakin!', 'Tidak, tunggu dulu');
-    if(deleteConfirmation) await deleteTemplateDocument(data.id, router)
+    if(deleteConfirmation) {
+      try {
+        await dispatch(deleteTemplate(data.id)).unwrap();
+        notificationAlert("Dokumen Berhasil dihapus!", "success", () => { dispatch(fetchTemplates() )});
+      } catch (e) {
+        notificationAlert('Dokumen Gagal dihapus!', 'error', () => {});
+      }
+    }
   }
 
   return (

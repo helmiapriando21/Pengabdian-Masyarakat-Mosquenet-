@@ -1,43 +1,46 @@
 "use client"
 
 import Thead from "@/app/components/thead";
-import { getKegiatanMasjid } from "@/services/getData";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import EditModal from "../../../_components/editModal";
-import { deleteKegiatan } from "@/services/postData";
 import { useRouter } from "next/navigation";
 import EditKegiatan from "./editKegiatan";
 import { ListActivities } from "@/interface/activity";
 import confirmAlert from "@/services/confirmAlert";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { deleteActivity, fetchActivities } from "@/thunks/activityThunks";
+import notificationAlert from "@/services/notificationAlert";
 
 export default function TableKegiatan() {
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [data, setData] = useState<ListActivities[]>();
+  const dispatch = useAppDispatch();
+  const {activities, loading} = useAppSelector((state) => state.activities)
   const router = useRouter();
 
   const deleteAction = async (id: number) => {
     const deleteConfirmation = await confirmAlert("Apakah anda yakin kegiatan ini dihapus?", "Ya, saya yakin!", 'Tidak, tunggu dulu!');
-    if(deleteConfirmation) await deleteKegiatan(id, router);
+    if(deleteConfirmation) {
+      try {
+        await dispatch(deleteActivity(id)).unwrap();
+        notificationAlert('Konten berhasil dihapus!', 'success', () => { dispatch(fetchActivities(null)) });
+      } catch (e) {
+        notificationAlert('Konten gagal dihapus!', 'error', () => {})
+      }
+    }
   }
 
   useEffect(() => {
-    const init = async () => {
-      const data = await getKegiatanMasjid(setIsLoading, null);
-      setData(data);
+    if(!loading && (!activities || activities.length === 0)) {
+      dispatch(fetchActivities(null));
     }
+  }, [loading, activities]);
 
-    if(isLoading && !data) {
-      init();
-    }
-  }, [isLoading]);
-
-  if(!isLoading && data)
+  if(!loading && activities)
     return (
       <table className="rounded-lg overflow-hidden">
         <Thead labels={['Tanggal', "Nama", 'Alamat', "Penanggungjawab", "Waktu mulai", "Aksi"]} />
         <tbody>
           {
-            data.map((value: ListActivities, index: number) => (
+            activities.map((value: ListActivities, index: number) => (
               <tr key={index} className="bg-yellow-100 hover:bg-yellow-400">
                 <td className="px-4 py-2 min-w-32 text-center text-xs">
                   {

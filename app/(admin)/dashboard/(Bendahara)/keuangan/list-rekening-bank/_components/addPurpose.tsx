@@ -1,21 +1,28 @@
 "use client"
 
 import { useState } from "react";
-import { addPurposeBankAccount } from "@/services/postData";
-import { useRouter } from "next/navigation";
 import Input from "../../../../_components/input";
 import { InformationReport } from "@/interface/report";
+import { useAppDispatch } from "@/store/hooks";
+import { addPurpose, fetchPurposesAccountBank } from "@/thunks/accountBankThunks";
+import notificationAlert from "@/services/notificationAlert";
 
 export default function AddPurpose() {
   const [name, setName] = useState<InformationReport>();
   const [error, setError] = useState<string>("");
   const [isError, setIsError] = useState<boolean>(false);
-  const router = useRouter();
+  const dispatch = useAppDispatch();
 
   const sendPurpose = async () => {
     if(name && name.name && name.name !== "") {
-      await addPurposeBankAccount(name.name, router);
-      setName(undefined);
+      try {
+        await dispatch(addPurpose(name.name)).unwrap();
+        notificationAlert("Tujuan rekening bank berhasil ditambahkan!", "success", () => { dispatch(fetchPurposesAccountBank()) });
+        setName(undefined);
+      } catch (e) {
+        notificationAlert('Tujuan rekening bank gagal ditambahkan!', 'error', () => {});
+      }
+
     } else {
       setError("Isi tujuan rekening bank terlebih dahulu");
       setIsError(true);

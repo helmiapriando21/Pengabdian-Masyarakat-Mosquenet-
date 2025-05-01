@@ -93,6 +93,11 @@ export default function TextEditor({ value, setValue, isError, error, dataKey }:
     setIsClient(true)
   }, [])
 
+  useEffect(() => {
+    if(editor && (!value || !value[dataKey])) 
+      editor.commands.setContent('');
+  }, [value, editor]);
+
   if (!isClient || !editor) return null;
   else return (
     <div className="p-4 border rounded-md w-full mx-auto flex flex-col gap-3">

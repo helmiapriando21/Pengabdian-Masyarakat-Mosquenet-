@@ -1,15 +1,16 @@
 "use client"
 
 import Thead from "@/app/components/thead";
-import { getPemasukanMasjid } from "@/services/getData";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { AdminDonationDisplay } from "@/interface/bank";
 import { verifyDonation } from "@/services/postData";
 import { useRouter } from "next/navigation";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { fetchIncomes } from "@/thunks/incomeThunks";
 
 export default function TableDonasi() {
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [donations, setDonations] = useState<AdminDonationDisplay[]>();
+  const dispatch = useAppDispatch();
+  const { donations, loading } = useAppSelector((state) => state.incomes);
   const router = useRouter();
 
   const verify = async (value: boolean, masjid_id: string, donation_id: string) => {
@@ -17,17 +18,12 @@ export default function TableDonasi() {
   }
 
   useEffect(() => {
-    const init = async () => {
-      const data = await getPemasukanMasjid(setIsLoading);
-      setDonations(data?.donations);
+    if(!loading && (!donations || donations.length === 0)) {
+      dispatch(fetchIncomes())
     }
+  }, [dispatch, donations, loading])
 
-    if(isLoading && !donations) {
-      init();
-    }
-  }, [isLoading]);
-
-  if(!isLoading && donations)
+  if(!loading && donations)
     return (
       <div className="flex flex-col gap-3">
         <h1 className="font-bold text-xl">Donasi</h1>

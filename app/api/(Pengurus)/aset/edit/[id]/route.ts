@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
   const userId = req.cookies.get('user-id');
   const urlParts = req.nextUrl.pathname.split("/");
   const id = urlParts[urlParts.length - 1];
-  const data = await req.json();
+  const data = await req.json(); 
     try {
       if(userId && id) {
         const response = await axios.put(

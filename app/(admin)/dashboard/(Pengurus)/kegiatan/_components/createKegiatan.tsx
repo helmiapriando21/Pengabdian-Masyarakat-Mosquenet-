@@ -1,17 +1,18 @@
 "use client"
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import Input from "../../../_components/input";
 import basicValidation from "@/validation/basic-validation";
 import { DetailActivity } from "@/interface/activity";
-import { createKegiatan } from "@/services/postData";
+import { useAppDispatch } from "@/store/hooks";
+import { createActivity, fetchActivities } from "@/thunks/activityThunks";
+import notificationAlert from "@/services/notificationAlert";
 
 
 export default function CreateKegiatan() {
+  const dispatch = useAppDispatch();
   const [data, setData] = useState<DetailActivity & { time: string }>();
   const [isError, setIsError] = useState<boolean>(false);
-  const router = useRouter();
 
   const action = async () => {
     if(
@@ -22,7 +23,16 @@ export default function CreateKegiatan() {
       !basicValidation(data?.date || '', 'Tanggal kegiatan') &&
       !basicValidation(data?.time || '', 'Jam mulai kegiatan')
     ) {
-      await createKegiatan(data!, router);
+      try {
+        await dispatch(createActivity(data!)).unwrap();
+        notificationAlert("Kegiatan Berhasil ditambahkan!", "success", () => { 
+          dispatch(fetchActivities(null));
+        });
+        setData(undefined);
+        setIsError(false);
+      } catch (e) {
+        notificationAlert('Kegiatan Gagal ditambahkan!', 'error', () => {});
+      }
     } else setIsError(true);
   }
   

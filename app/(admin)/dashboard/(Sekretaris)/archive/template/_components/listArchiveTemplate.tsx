@@ -1,30 +1,26 @@
 "use client"
 
-import { getMosqueTemplateDocuments } from "@/services/getData";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { ArchiveTemplates } from "@/interface/archive";
 import TemplateItems from "./templateItems";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { fetchTemplates } from "@/thunks/archiveThunks";
 
 export default function ListArchiveTemplate() {
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [data, setData] = useState<ArchiveTemplates[]>();
+  const dispatch = useAppDispatch();
+  const {templates, loading} = useAppSelector((state) => state.archive);
 
   useEffect(() => {
-    const init = async () => {
-      const data = await getMosqueTemplateDocuments(setIsLoading);
-      setData(data);
+    if(!loading && (!templates || templates.length === 0)) {
+      dispatch(fetchTemplates());
     }
+  }, [dispatch, templates]);
 
-    if(isLoading && !data) {
-      init();
-    }
-  }, [isLoading]);
-
-  if(!isLoading && data)
+  if(!loading && templates && templates.length !== 0)
     return (
       <div className="flex flex-col w-full h-full">
         {
-          data.map((value: ArchiveTemplates, index: number) => (
+          templates.map((value: ArchiveTemplates, index: number) => (
             <TemplateItems key={index} data={value} />
           ))
         }

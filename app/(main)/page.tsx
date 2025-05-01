@@ -65,14 +65,14 @@ export default function Home() {
         }
         {
           isLogin &&
-          <div className="w-screen h-max min-h-screen flex flex-col gap-3 items-center justify-center px-10 sm:px-20">
+          <div className="w-screen h-screen flex flex-col gap-3 items-center justify-center px-10 sm:px-20">
             <h1 className="font-bold text-2xl">Acara atau Kegiatan yang akan berlangsung</h1>
             <ListKegiatan masjid_id={null} />
           </div>
         }
         {
           isLogin &&
-          <div className="w-screen h-max min-h-screen flex flex-col gap-3 items-center justify-center px-10 sm:px-20">
+          <div className="w-screen h-screen flex flex-col gap-3 items-center justify-center px-10 sm:px-20">
             <h1 className="font-bold text-2xl">Konten seputar Masjid</h1>
             <ListKonten masjid_id={null} />
           </div>
