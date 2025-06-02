@@ -14,11 +14,11 @@ export default function ListKegiatan({ masjid_id }: ListKegiatanProps) {
   const {activities, loading} = useAppSelector((state) => state.activities);
 
   useEffect(() => {
-    if(!activities || activities.length === 0)
+    if(!activities)
       dispatch(fetchActivities(masjid_id));
   }, [dispatch, activities])
 
-  if(!loading && activities && activities.length !== 0)
+  if(!loading && activities && activities.length > 0)
     return (
       <div className="flex flex-col">
         {
@@ -47,4 +47,6 @@ export default function ListKegiatan({ masjid_id }: ListKegiatanProps) {
         }
       </div>
     );
+  else if(activities && activities.length === 0)
+    return <div>Belum ada kegiatan yang dijadwalkan. Tunggu beberapa saat lagi</div>
 }

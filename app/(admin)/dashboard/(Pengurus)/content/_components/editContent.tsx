@@ -29,7 +29,7 @@ export default function EditContent({ id }: EditKontenProps) {
   const [contentType, setContentType] = useState<{ type: string }>();
 
   const init = async () => {
-    const response = contents.find(value => value.id === id);
+    const response = contents?.find(value => value.id === id);
 
     if(response && response.visual_content && typeof response.visual_content === 'string') {
       setPreviousVisualContent(response.visual_content);

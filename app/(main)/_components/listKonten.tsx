@@ -14,7 +14,7 @@ export default function ListKonten({ masjid_id }: ListKontenProps) {
   const {contents, loading} = useAppSelector((state) => state.contents);
 
   useEffect(() => {
-    if((!contents || contents.length === 0) && !loading) {
+    if(!contents && !loading) {
       dispatch(fetchContents(masjid_id));
     }
   }, [contents, loading, masjid_id, dispatch]);
@@ -28,7 +28,7 @@ export default function ListKonten({ masjid_id }: ListKontenProps) {
     else return visual_content;
   };  
 
-  if(!loading && contents)
+  if(!loading && contents && contents.length > 0)
     return (
       <div className="flex flex-col">
         {
@@ -56,4 +56,6 @@ export default function ListKonten({ masjid_id }: ListKontenProps) {
         }
       </div>
     );
+  else if(contents && contents.length === 0)
+    return <div>Belum ada artikel yang ditambahkan. Nantikan kelanjutannya</div>
 }

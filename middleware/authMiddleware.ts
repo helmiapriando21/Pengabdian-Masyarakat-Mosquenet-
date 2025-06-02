@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { roleMiddleware } from './roleMiddleware';
+import { masterMiddleware } from './masterMiddleware';
 
 export async function authMiddleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -20,6 +21,8 @@ export async function authMiddleware(request: NextRequest) {
     } else {
       return roleMiddleware(request, 'Pengurus');
     }
+  } else if(pathname.startsWith('/master-dashboard')) {
+    return masterMiddleware(request);
   }
   return NextResponse.next();
 }

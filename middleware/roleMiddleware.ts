@@ -5,8 +5,11 @@ export function roleMiddleware(request: NextRequest, role: string) {
   const check = {
     isLogin: request.cookies.get('user-id') ? true : false,
     adminRole: request.cookies.get('admin-role')?.value,
-    adminStatus: request.cookies.get('admin-status')?.value === "true" ? true : false
+    adminStatus: request.cookies.get('admin-status')?.value === "true" ? true : false,
+    masterStatus: request.cookies.get('master-status')?.value === "true" ? true : false
   }
+
+  if(check && check.masterStatus) return NextResponse.redirect('/master-dashboard/main');
 
   if(check && role === 'Pengurus' && check.adminStatus && check.isLogin) {
     return NextResponse.next();

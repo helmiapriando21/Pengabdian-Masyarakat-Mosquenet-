@@ -1,25 +1,34 @@
 "use client"
 
-import { getLaporanMasjid } from "@/services/getData";
+import { getLaporanMasjid, getLaporanMasjidById } from "@/services/getData";
 import { useEffect, useState } from "react";
 import Thead from "@/app/components/thead";
 import { ReportData } from "@/interface/report";
+import { useParams } from "next/navigation";
 
 
 export default function Laporan() {
   const [reports, setReports] = useState<ReportData[]>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const params = useParams();
+  const [masjid_id, setMasjidId] = useState<string>();
 
-  const init = async () => {
-    const data = await getLaporanMasjid(setIsLoading);
+  const init = async (masjid_id: string) => {
+    const data = await getLaporanMasjidById(masjid_id, setIsLoading);
     setReports(data);
   }
 
   useEffect(() => {
-    if(isLoading && !reports) {
-      init();
+    if(params?.id) {
+      setMasjidId(params.id as string);
     }
-  }, [])
+  }, [params])
+
+  useEffect(() => {
+    if(isLoading && !reports && masjid_id) {
+      init(masjid_id);
+    }
+  }, [masjid_id])
   
   if(!isLoading && reports)
     return (

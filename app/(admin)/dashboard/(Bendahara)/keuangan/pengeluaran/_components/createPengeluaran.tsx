@@ -16,7 +16,7 @@ export default function CreatePengeluaran() {
   const [isError, setIsError] = useState<boolean>(false);
 
   useEffect(() => {
-    if(!loading && (!reasons || reasons.length === 0)) dispatch(fetchReasons());
+    if(!loading && !reasons) dispatch(fetchReasons());
   }, [dispatch, reasons])
 
   const action = async () => {
@@ -35,7 +35,7 @@ export default function CreatePengeluaran() {
     } else setIsError(true);
   }
 
-  if(!loading && reasons && reasons.length !== 0) 
+  if(!loading && reasons && reasons.length > 0) 
     return (
       <div className="flex flex-col gap-3">
         <Select
@@ -65,4 +65,6 @@ export default function CreatePengeluaran() {
         </button>
       </div>
     );
+  else if(reasons && reasons.length === 0)
+    return <div>Tambahkan keterangan pengeluaran terlebih dahulu</div>
 }

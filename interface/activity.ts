@@ -12,3 +12,11 @@ export type DetailActivity = ListActivities & {
   document?: string | File,
   video_documentation?: string
 }
+
+export type CreateActivity = DetailActivity & {
+  time: string,
+  outcomes?: {
+    reason: string;
+    amount: number;
+  }[] | string
+}

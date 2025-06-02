@@ -8,7 +8,7 @@ interface CheckboxProps {
 
 export default function Checkbox({ label, value, onChange }: CheckboxProps) {
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 items-center">
       <input 
         id={label} 
         type="checkbox" 

@@ -21,7 +21,7 @@ export default function Laporan() {
     }
   }, [])
   
-  if(!isLoading && reports)
+  if(!isLoading && reports && reports.length > 0)
     return (
       <div className="flex flex-col gap-3 w-full">
         <table className="rounded-lg overflow-hidden">
@@ -60,4 +60,6 @@ export default function Laporan() {
         </table>
       </div>
     );
+  else if(reports && reports.length === 0)
+    return <div>Belum ada tranaksi keuangan yang dilakukan</div>
 }

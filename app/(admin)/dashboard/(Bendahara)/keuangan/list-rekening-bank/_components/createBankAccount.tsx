@@ -37,12 +37,12 @@ export default function CreateBankAccount() {
   }
 
   useEffect(() => {
-    if(!loading && (!purposes || purposes.length === 0)) {
+    if(!loading && !purposes) {
       dispatch(fetchPurposesAccountBank());
     }
   }, [dispatch, purposes])
 
-  if(!loading && purposes && purposes.length !== 0) 
+  if(!loading && purposes && purposes.length > 0) 
     return (
       <div className="flex flex-col gap-3 h-full">
         <h1 className="font-bold text-black text-xl text-center">Tambah Rekening Bank</h1>
@@ -121,4 +121,6 @@ export default function CreateBankAccount() {
         </div>
       </div>
     );
+  else if(purposes && purposes.length === 0)
+    return <div>Belum ada tujuan rekening bank yang ditambahkan</div>
 }

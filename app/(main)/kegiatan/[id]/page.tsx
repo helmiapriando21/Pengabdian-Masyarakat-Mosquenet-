@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { fetchActivity } from "@/thunks/activityThunks";
 import { clearActivity } from "@/store/activitySlice";
+import Thead from "@/app/components/thead";
 
 export default function DetailKegiatan() {
   const dispatch = useAppDispatch();
@@ -49,6 +50,25 @@ export default function DetailKegiatan() {
           >
             Documents
           </a>
+          {
+            activity.outcomes && typeof activity.outcomes !== 'string' && 
+            <div className="flex flex-col gap-3 p-10">
+              <h1 className="font-bold text-black text-3xl">Pengeluaran</h1>
+              <table className="rounded-lg overflow-hidden">
+                <Thead labels={['Keterangan', "Jumlah"]} />
+                <tbody>
+                  {
+                    activity.outcomes.map((value: {reason: string, amount: number}, index: number) => (
+                      <tr key={index} className="bg-yellow-100 hover:bg-yellow-400">
+                        <td className="px-4 py-2 min-w-32 text-center">{value.reason}</td>
+                        <td className="px-4 py-2 min-w-32 text-center">{value.amount.toLocaleString('id-ID')}</td>
+                      </tr>
+                    ))
+                  }
+                </tbody>
+              </table>
+            </div>
+          }
         </div>
       </div>
     );

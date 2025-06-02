@@ -1,14 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 import notificationAlert from '@/services/notificationAlert';
-import { DetailActivity, ListActivities } from '@/interface/activity';
+import { CreateActivity, DetailActivity, ListActivities } from '@/interface/activity';
 import { createActivity, deleteActivity, fetchActivities, fetchActivity, updateActivity } from '@/thunks/activityThunks';
 
 
 const activitySlice = createSlice({
   name: 'contents',
   initialState: {
-    activities: [] as ListActivities[],
-    activity: null as DetailActivity & { time: string } | null,
+    activities: undefined as ListActivities[] | undefined,
+    activity: null as CreateActivity | null,
     loading: false,
     error: null as string | null,
     message: null as string | null

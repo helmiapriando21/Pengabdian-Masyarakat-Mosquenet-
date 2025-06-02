@@ -2,16 +2,21 @@ import { createSlice } from '@reduxjs/toolkit';
 import notificationAlert from '@/services/notificationAlert';
 import { IncomeData } from '@/interface/report';
 import { SelectType } from '@/interface/form';
-import { addSource, createIncome, fetchIncomes, fetchSources } from '@/thunks/incomeThunks';
+import { 
+  addSource, 
+  createIncome, 
+  fetchIncomes, 
+  fetchSources 
+} from '@/thunks/incomeThunks';
 import { AdminDonationDisplay } from '@/interface/bank';
 
 
 const incomeSlice = createSlice({
   name: 'incomes',
   initialState: {
-    incomes: [] as IncomeData[],
-    donations: [] as AdminDonationDisplay[],
-    sources: [] as SelectType[],
+    incomes: undefined as IncomeData[] | undefined,
+    donations: undefined as AdminDonationDisplay[] | undefined,
+    sources: undefined as SelectType[] | undefined,
     loading: false,
     error: null as string | null,
     message: null as string | null

@@ -32,7 +32,7 @@ export default function Login({setMenu}: LoginProps) {
                 });
                 const responseData = await response.json();
                 if(response.ok) {
-                    showAlert(responseData.message, router, "success", '/');
+                    showAlert(responseData.message, router, "success", responseData.redirect ? '/master-dashboard/main' : '/');
                 } else {
                     showAlert(responseData.error || "Terjadi kesalahan pada login, silahkan coba lagi!", router, "error", '/auth');
                 }

@@ -29,12 +29,12 @@ export default function TableKegiatan() {
   }
 
   useEffect(() => {
-    if(!loading && (!activities || activities.length === 0)) {
+    if(!loading && !activities) {
       dispatch(fetchActivities(null));
     }
   }, [loading, activities]);
 
-  if(!loading && activities)
+  if(!loading && activities && activities.length > 0)
     return (
       <table className="rounded-lg overflow-hidden">
         <Thead labels={['Tanggal', "Nama", 'Alamat', "Penanggungjawab", "Waktu mulai", "Aksi"]} />
@@ -89,4 +89,6 @@ export default function TableKegiatan() {
         </tbody>
       </table>
     );
+  else if(activities && activities.length === 0)
+    return <div>Belum ada kegiatan yang terdata</div>
 }

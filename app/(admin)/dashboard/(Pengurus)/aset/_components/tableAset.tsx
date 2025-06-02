@@ -27,11 +27,11 @@ export default function TableAset() {
   }
 
   useEffect(() => {
-    if(!loading && (!items || items.length === 0))
+    if(!loading && !items)
       dispatch(fetchAssets());
   }, [dispatch, items]);
 
-  if(!loading)
+  if(!loading && items && items.length > 0)
     return (
       <table className="rounded-lg overflow-hidden">
         <Thead labels={['Nama', "Jumlah", 'Kondisi', "Aksi"]} />
@@ -71,4 +71,6 @@ export default function TableAset() {
         </tbody>
       </table>
     );
+  else if(items && items.length === 0)
+    return <div>Belum ada aset yang terdata</div>
 }

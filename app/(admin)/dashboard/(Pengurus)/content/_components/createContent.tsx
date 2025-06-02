@@ -42,7 +42,7 @@ export default function CreateContent() {
     if(!data) return;
     setData({
       ...data!,
-      visual_content: contentType?.type === "Gambar" ? undefined : ""
+      visual_content: contentType?.type === "file" ? undefined : ""
     });
   }, [contentType])
   

@@ -11,12 +11,12 @@ export default function TableMosqueBank() {
   const {accountBanks, loading} = useAppSelector((state) => state.accountBank);
 
   useEffect(() => {
-    if(!loading && (!accountBanks || accountBanks.length === 0)) {
+    if(!loading && !accountBanks) {
       dispatch(fetchAccountBank(null))
     }
   }, [dispatch, accountBanks]);
 
-  if(!loading && accountBanks && accountBanks.length !== 0)
+  if(!loading && accountBanks && accountBanks.length > 0)
     return (
       <table className="rounded-lg overflow-hidden">
         <Thead labels={['Nama Pemilik', "Nama Panggilan Pemilik", "Email Pemilik", "Bank", "Nomor Rekening", "Tujuan"]} />
@@ -36,4 +36,6 @@ export default function TableMosqueBank() {
         </tbody>
       </table>
     );
+  else if(accountBanks && accountBanks.length === 0)
+    return <div>Belum ada rekening bank yang terdata</div>
 }

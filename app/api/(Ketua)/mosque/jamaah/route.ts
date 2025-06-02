@@ -9,7 +9,7 @@ export async function GET(req: NextRequest) {
     try {
         const userId = req.cookies.get('user-id');
         if(userId) {
-          const data = await axios.get(`${process.env.API_URL}/mosque/jamaah/${encodeURIComponent(userId.value)}`, {
+          const data = await axios.get(`${process.env.API_URL}/mosque/jamaah`, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': userId.value

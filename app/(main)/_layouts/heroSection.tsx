@@ -8,12 +8,14 @@ export default function HeroSection({ masjidId }: any) {
   const [isLogin, setIsLogin] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [mosqueName, setMosqueName] = useState<string>(process.env.NEXT_PUBLIC_APP_NAME || '');
+  const [masjidIdCookie, setMasjidIdCookie] = useState<string>();
   const [role, setRole] = useState<string>();
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
 
   useEffect(() => {
     const init = async () => {
       const response = await checkUser(setRole, setIsLogin);
+      setMasjidIdCookie(response.masjid_id);
       if(response.adminStatus)
         setIsAdmin(response.adminStatus);
 
@@ -51,6 +53,15 @@ export default function HeroSection({ masjidId }: any) {
                         >
                           Kelola Masjid
                         </a>
+            }
+            {
+              isLogin
+                && <a 
+                    className="text-sm sm:text-2xl mt-5 sm:mt-10 text-white justify-self-end w-max px-5 sm:px-20 py-1 sm:py-3 bg-[#72C299] rounded-3xl font-extrabold shadow-md" 
+                    href={`/masjid/${masjidIdCookie}`}
+                  >
+                    Lihat Masjid Domisili anda
+                  </a>
             }
           </div>
         </div>

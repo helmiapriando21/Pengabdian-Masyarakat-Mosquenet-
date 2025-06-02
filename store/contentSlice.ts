@@ -1,13 +1,19 @@
 import { createSlice } from '@reduxjs/toolkit';
 import notificationAlert from '@/services/notificationAlert';
 import { ListContent } from '@/interface/content';
-import { createContent, deleteContent, fetchContent, fetchContents, updateContent } from '@/thunks/contentThunks';
+import { 
+  createContent, 
+  deleteContent, 
+  fetchContent, 
+  fetchContents, 
+  updateContent
+} from '@/thunks/contentThunks';
 
 
 const contentSlice = createSlice({
   name: 'contents',
   initialState: {
-    contents: [] as ListContent[],
+    contents: undefined as ListContent[] | undefined,
     content: null as ListContent | null,
     loading: false,
     error: null as string | null,

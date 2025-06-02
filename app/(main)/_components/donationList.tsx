@@ -6,18 +6,18 @@ import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { fetchAccountBank } from "@/thunks/accountBankThunks";
 
-export default function DonationList({ masjid_id }: { masjid_id: string }) {
+export default function DonationList({ masjid_id }: { masjid_id: string | null }) {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const {accountBanks, loading} = useAppSelector((state) => state.accountBank);
 
   useEffect(() => {
-    if(!loading && (!accountBanks || accountBanks.length === 0)) {
+    if(!loading && !accountBanks) {
       dispatch(fetchAccountBank(masjid_id));
     }
   }, [dispatch, accountBanks]);
 
-  if(!loading && accountBanks && accountBanks.length !== 0)
+  if(!loading && accountBanks && accountBanks.length > 0)
     return (
       <div className="flex flex-col gap-3 w-full h-full">
         {
@@ -25,7 +25,7 @@ export default function DonationList({ masjid_id }: { masjid_id: string }) {
             <div 
               key={index}
               onClick={() => {
-                router.push(`/masjid/${masjid_id}/donation/${value.id}`)
+                router.push(`/masjid/${masjid_id || ''}/donation/${value.id}`)
               }}
               className="border-[1px] border-black rounded-lg bg-white hover:bg-gray-400 hover:text-white text-black min-w-full min-h-max px-3 py-1"
             >
@@ -35,4 +35,6 @@ export default function DonationList({ masjid_id }: { masjid_id: string }) {
         }
       </div>
     )
+  else if(accountBanks && accountBanks.length === 0)
+    return <div>Belum ada donasi yang dilakukan. Tunggu beberapa saat lagi</div>
 }

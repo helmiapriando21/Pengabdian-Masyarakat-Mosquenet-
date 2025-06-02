@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Input from "../../../_components/input";
 import basicValidation from "@/validation/basic-validation";
 import { getDetailKegiatanMasjid } from "@/services/getData";
-import { DetailActivity } from "@/interface/activity";
+import { CreateActivity, DetailActivity } from "@/interface/activity";
 import confirmAlert from "@/services/confirmAlert";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { fetchActivities, updateActivity } from "@/thunks/activityThunks";
@@ -16,21 +16,24 @@ interface EditKegiatanProps {
 
 export default function EditKegiatan({ id }: EditKegiatanProps) {
   const dispatch = useAppDispatch();
-  const {activity} = useAppSelector((state) => state.activities);
-  const [data, setData] = useState<DetailActivity & { time: string }>();
+  const [data, setData] = useState<CreateActivity>();
   const [isError, setIsError] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [outcomes, setOutcomes] = useState<{reason: string, amount: number}[]>([])
   const [previousDocument, setPreviousDocument] = useState<string>();
   const [previousImage, setPreviousImage] = useState<string>();
 
   const init = async () => {
     const response = await getDetailKegiatanMasjid(setIsLoading, Number(id));
 
-    if(response.document) setPreviousDocument(response.document);
-    if(response.image) setPreviousImage(response.image);
-
-    const { document, image, ...rest } = response;
-    setData(rest);
+    if(response) {
+      if(response.document) setPreviousDocument(response.document);
+      if(response.image) setPreviousImage(response.image);
+  
+      const { document, image, ...rest } = response;
+      setData(rest);
+      setOutcomes(rest.outcomes);
+    }
   }
 
   useEffect(() => {
@@ -51,7 +54,12 @@ export default function EditKegiatan({ id }: EditKegiatanProps) {
         !basicValidation(data?.time || '', 'Jam mulai kegiatan')
       ) {
         try {
-          await dispatch(updateActivity(data!)).unwrap();
+          await dispatch(updateActivity({
+            ...data!,
+            ...(outcomes.length > 0 
+            ? {outcomes: JSON.stringify(outcomes.filter((value: {reason: string, amount: number}) => value.reason !== '' || value.amount !== 0 ))}
+            : {}
+          )})).unwrap();
           notificationAlert("Kegiatan Berhasil diubah!", "success", () => { dispatch(fetchActivities(null) )});
         } catch (e) {
           notificationAlert('Kegiatan Gagal diubah!', 'error', () => {});
@@ -65,6 +73,7 @@ export default function EditKegiatan({ id }: EditKegiatanProps) {
       <div className="flex flex-col gap-3 h-full">
         <h1 className="font-bold text-black text-xl">Edit Kegiatan</h1>
         <div className="flex flex-col gap-3 overflow-scroll h-full px-10">
+          <p className="text-start">Nama Kegiatan : </p>
           <Input 
             isError={isError}
             setValue={setData}
@@ -74,6 +83,7 @@ export default function EditKegiatan({ id }: EditKegiatanProps) {
             type="text"
             error={basicValidation(data.name, 'Nama kegiatan')}
           />
+          <p className="text-start">Deskripsi Kegiatan : </p>
           <Input 
             isError={isError}
             setValue={setData}
@@ -83,6 +93,7 @@ export default function EditKegiatan({ id }: EditKegiatanProps) {
             type="text"
             error={basicValidation(data.description, 'Deskripsi kegiatan')}
           />
+          <p className="text-start">Penanggung Jawab : </p>
           <Input 
             isError={isError}
             setValue={setData}
@@ -92,6 +103,7 @@ export default function EditKegiatan({ id }: EditKegiatanProps) {
             type="text"
             error={basicValidation(data.pic, 'Penanggungjawab kegiatan')}
           />
+          <p className="text-start">Alamat Kegiatan :</p>
           <Input 
             isError={isError}
             setValue={setData}
@@ -101,6 +113,7 @@ export default function EditKegiatan({ id }: EditKegiatanProps) {
             type="text"
             error={basicValidation(data.address, 'Alamat kegiatan')}
           />
+          <p className="text-start">Tanggal Pelaksanaan Kegiatan :</p>
           <Input 
             isError={isError}
             setValue={setData}
@@ -110,6 +123,7 @@ export default function EditKegiatan({ id }: EditKegiatanProps) {
             type="date"
             error={basicValidation(data.date, 'Tanggal kegiatan')}
           />
+          <p className="text-start">Jam Pelaksanaan Kegiatan : </p>
           <Input 
             isError={isError}
             setValue={setData}
@@ -119,6 +133,7 @@ export default function EditKegiatan({ id }: EditKegiatanProps) {
             type="time"
             error={basicValidation(data.time, 'Jam mulai kegiatan')}
           />
+          <p className="text-start">Dokumen Pelaksanaan Kegiatan : </p>
           <div className="flex flex-col gap-1">
             <Input 
               isError={false}
@@ -140,6 +155,7 @@ export default function EditKegiatan({ id }: EditKegiatanProps) {
                 </a>
             }
           </div>
+          <p className="text-start">Gambar Kegiatan : </p>
           <div className="flex flex-col gap-1">
             <Input 
               isError={false}
@@ -168,6 +184,47 @@ export default function EditKegiatan({ id }: EditKegiatanProps) {
             type="text"
             error={""}
           />
+          {
+            outcomes && outcomes.map((value: {reason: string, amount: number}, index: number) => (
+              <div className="flex gap-3" key={index} >
+                <input
+                  placeholder="Tambahkan keterangan pengeluaran"
+                  value={value.reason}
+                  type="text"
+                  className="w-full border-[1px] border-black px-3 py-1 rounded-lg"
+                  onChange={(e) => {
+                    const data = [...outcomes];
+                    data[index] = {...data[index], reason: String(e.target.value)}
+                    setOutcomes(data);
+                  }}
+                />
+                <input 
+                  placeholder="Tambahkan jumlah pengeluaran"
+                  value={value.amount}
+                  type="number"
+                  className="w-full border-[1px] border-black px-3 py-1 rounded-lg"
+                  onChange={(e) => {
+                    const data = [...outcomes];
+                    data[index] = {...data[index], amount: Number(e.target.value)}
+                    setOutcomes(data);
+                  }}
+                />
+                <button
+                  className="border-black border-[1px] rounded-full px-2 py-2"
+                  onClick={() => {
+                    const deleteOutcome = outcomes.filter((_, i: number) => i !== index);
+                    setOutcomes(deleteOutcome);
+                  }}
+                >x</button>
+              </div>
+            ))
+          }
+          <button
+            className="border-black border-[1px] rounded-md px-2 py-1"
+            onClick={() => {
+              setOutcomes(prev => [...(prev || []), {reason: '', amount: 0}])
+            }}
+          >Tambah Pengeluaran +</button>
           <button
             className="bg-green-600 rounded-lg px-3 py-1 text-white"
             onClick={action}

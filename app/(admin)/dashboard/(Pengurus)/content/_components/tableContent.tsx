@@ -29,10 +29,10 @@ export default function TableContent() {
   }
 
   useEffect(() => {
-    if(!loading && (!contents || contents.length === 0)) dispatch(fetchContents(null));
+    if(!loading && !contents) dispatch(fetchContents(null));
   }, [loading, contents]);
 
-  if(!loading)
+  if(!loading && contents && contents.length > 0)
     return (
       <table className="rounded-lg overflow-hidden">
         <Thead labels={['Tanggal', "Judul", 'Aksi']} />
@@ -84,4 +84,6 @@ export default function TableContent() {
         </tbody>
       </table>
     );
+  else if(contents && contents.length === 0)
+    return <div>Belum ada artikel yang ditambahkan</div>
 }

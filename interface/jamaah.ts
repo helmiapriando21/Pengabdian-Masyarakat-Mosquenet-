@@ -6,5 +6,6 @@ export type Admin = {
 export type Jamaah = {
   admin: Admin,
   email: string,
-  name: string
+  name: string, 
+  isVerifiedByAdmin: boolean
 };

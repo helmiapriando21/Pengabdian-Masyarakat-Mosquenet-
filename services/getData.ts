@@ -7,6 +7,7 @@ const getJamaahMasjid = async (
 ) => {
   try {
     const data = await requestGetApi('/api/mosque/jamaah', setIsLoading);
+    console.log(data);
     return data;
   } catch (err) {
     console.error("Error: ", err);
@@ -93,6 +94,18 @@ const getLaporanMasjid = async (
   }
 }
 
+const getLaporanMasjidById = async (
+  masjid_id: string,
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+) => {
+  try {
+    const { reports } = await requestGetApi(`/api/mosques/laporan/${masjid_id}`, setIsLoading)
+    return reports;
+  } catch (err) {
+    console.error("Error: ", err);
+  }
+}
+
 const getDetailKegiatanMasjid = async (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>, 
   id: number
@@ -145,4 +158,5 @@ export {
     getDetailKegiatanMasjid,
     getDashboardData,
     getValidKasTransaction,
+    getLaporanMasjidById
 }

@@ -18,12 +18,12 @@ export default function TableDonasi() {
   }
 
   useEffect(() => {
-    if(!loading && (!donations || donations.length === 0)) {
+    if(!loading && !donations) {
       dispatch(fetchIncomes())
     }
   }, [dispatch, donations, loading])
 
-  if(!loading && donations)
+  if(!loading && donations && donations.length > 0)
     return (
       <div className="flex flex-col gap-3">
         <h1 className="font-bold text-xl">Donasi</h1>
@@ -58,4 +58,6 @@ export default function TableDonasi() {
         </table>
       </div>
     );
+  else if(donations && donations.length === 0)
+    return <div>Belum ada donasi yang dilakukan</div>
 }

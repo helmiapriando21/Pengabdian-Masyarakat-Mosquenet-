@@ -21,9 +21,11 @@ export async function POST(req: NextRequest) {
         cookieStore.set('admin-role', response.data.user.admin.role);
         cookieStore.set('master-status', response.data.user.master.status);
         cookieStore.set('user-id', response.data.user.id);
+        cookieStore.set('masjid-id', response.data.user.masjid_id);
     
         return new Response(JSON.stringify({
-            message: response.data.message
+            message: response.data.message,
+            redirect: response.data.user.master.status
         }), {
             status: response.data.status,
             headers: { "Content-Type": "application/json" },

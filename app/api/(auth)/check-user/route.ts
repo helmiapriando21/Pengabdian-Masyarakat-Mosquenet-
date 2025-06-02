@@ -8,8 +8,9 @@ import { NextRequest } from "next/server";
 export async function GET(req: NextRequest) {
     try {
         const userId = req.cookies.get('user-id');
+        const masjidId = req.cookies.get('masjid-id');
         
-        if( !userId ) {
+        if( !userId || !masjidId ) {
             return new Response(JSON.stringify({
                 isLogin: false,
             }), {
@@ -26,7 +27,8 @@ export async function GET(req: NextRequest) {
                 isLogin: true,
                 adminStatus: data.data.admin.status,
                 adminRole: data.data.admin.role, 
-                masterStatus: data.data.master.status
+                masterStatus: data.data.master.status,
+                masjid_id: masjidId.value
             }), {
                 status: 200,
                 headers: { "Content-Type": "application/json" },

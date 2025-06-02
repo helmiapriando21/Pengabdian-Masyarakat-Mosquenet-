@@ -19,6 +19,17 @@ const updateRole = async (email: string, role: string) => {
   }
 };
 
+const verifyUser = async (email: string, verify: boolean) => {
+  const data = await postDataOnly(
+    '/api/user/verify',
+    { email, verify }
+  )
+  if(!data.ok) {
+    const jsonData = await data.json();
+    alert(jsonData.error);
+  }
+}
+
 const createKasPayment = async (amount: number) => {
   const response = await postDataOnly('/api/payment-kas', { amount: amount });
   const responseData = await response.json();
@@ -58,6 +69,7 @@ const verifyDonation = async (verified: boolean, masjid_id: string, donation_id:
 
 export {
   updateRole,
+  verifyUser,
   createKasPayment,
   sendCritics,
   sendDonation,

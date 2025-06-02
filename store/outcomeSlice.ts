@@ -1,16 +1,20 @@
 import { createSlice } from '@reduxjs/toolkit';
 import notificationAlert from '@/services/notificationAlert';
-import { IncomeData, OutcomeData } from '@/interface/report';
+import { OutcomeData } from '@/interface/report';
 import { SelectType } from '@/interface/form';
-import { AdminDonationDisplay } from '@/interface/bank';
-import { addReason, createOutcome, fetchOutcomes, fetchReasons } from '@/thunks/outcomeThunks';
+import { 
+  addReason, 
+  createOutcome, 
+  fetchOutcomes, 
+  fetchReasons 
+} from '@/thunks/outcomeThunks';
 
 
 const incomeSlice = createSlice({
   name: 'incomes',
   initialState: {
-    outcomes: [] as OutcomeData[],
-    reasons: [] as SelectType[],
+    outcomes: undefined as OutcomeData[] | undefined,
+    reasons: undefined as SelectType[] | undefined,
     loading: false,
     error: null as string | null,
     message: null as string | null
@@ -30,6 +34,7 @@ const incomeSlice = createSlice({
       })
       .addCase(fetchOutcomes.fulfilled, (state, action) => {
         state.loading = false;
+        console.log(action.payload);
         state.outcomes = action.payload;
       })
       .addCase(fetchOutcomes.rejected, (state, action) => {

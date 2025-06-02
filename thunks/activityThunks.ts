@@ -1,10 +1,8 @@
-import { ListAset } from '@/interface/aset';
-import { Content, ListContent } from '@/interface/content';
 import generateFormData from '@/services/generateFormData';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import nProgress from 'nprogress';
 import Cookies from 'js-cookie';
-import { DetailActivity } from '@/interface/activity';
+import { CreateActivity, DetailActivity } from '@/interface/activity';
 
 export const fetchActivities = createAsyncThunk(
   'activities/fetchActivities',
@@ -39,9 +37,9 @@ export const fetchActivity = createAsyncThunk(
   }
 );
 
-export const createActivity = createAsyncThunk<{message: string}, DetailActivity & { time: string }>(
+export const createActivity = createAsyncThunk<{message: string}, CreateActivity>(
   'activity/createActivity',
-  async (newContent: DetailActivity & { time: string }, { rejectWithValue }) => {
+  async (newContent: CreateActivity, { rejectWithValue }) => {
     try {
       const formData: FormData = generateFormData(newContent);
       const userId = Cookies.get('user-id');
@@ -55,7 +53,6 @@ export const createActivity = createAsyncThunk<{message: string}, DetailActivity
         }
       });
       const data = await response.json();
-      console.log(data);
       nProgress.done();
 
       if(!response.ok) return rejectWithValue(data.error || 'Gagal menambahkan kegiatan');
@@ -67,9 +64,9 @@ export const createActivity = createAsyncThunk<{message: string}, DetailActivity
   }
 );
 
-export const updateActivity = createAsyncThunk<{message: string}, DetailActivity & { time: string }>(
+export const updateActivity = createAsyncThunk<{message: string}, CreateActivity>(
   'activities/updateActivity',
-  async (newContent: DetailActivity & { time: string }, { rejectWithValue }) => {
+  async (newContent: CreateActivity, { rejectWithValue }) => {
     try {
       const {id, ...postData} = newContent;
       const formData: FormData = generateFormData(postData);

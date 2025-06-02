@@ -16,8 +16,8 @@ import {
 const archiveSlice = createSlice({
   name: 'contents',
   initialState: {
-    documents: [] as ArchiveDocuments[],
-    templates: [] as ArchiveTemplates[],
+    documents: undefined as ArchiveDocuments[] | undefined,
+    templates: undefined as ArchiveTemplates[] | undefined,
     loading: false,
     error: null as string | null,
     message: null as string | null

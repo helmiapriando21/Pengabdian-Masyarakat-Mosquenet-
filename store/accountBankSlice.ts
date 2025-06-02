@@ -8,9 +8,9 @@ import notificationAlert from '@/services/notificationAlert';
 const accountBankSlice = createSlice({
   name: 'incomes',
   initialState: {
-    accountBanks: [] as ListBank[],
+    accountBanks: undefined as ListBank[] | undefined,
     accountBank: null as ListBank | null,
-    purposes: [] as SelectType[],
+    purposes: undefined as SelectType[] | undefined,
     loading: false,
     error: null as string | null,
     message: null as string | null

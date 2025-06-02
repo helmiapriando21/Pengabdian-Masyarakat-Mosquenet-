@@ -4,7 +4,7 @@ import { useState } from "react";
 import Input from "../../../../_components/input";
 import { InformationReport } from "@/interface/report";
 import { useAppDispatch } from "@/store/hooks";
-import { addSource, fetchIncomes } from "@/thunks/incomeThunks";
+import { addSource, fetchIncomes, fetchSources } from "@/thunks/incomeThunks";
 import notificationAlert from "@/services/notificationAlert";
 
 export default function AddCategory() {
@@ -17,7 +17,7 @@ export default function AddCategory() {
     if(name && name.name && name.name !== "") {
       try {
         await dispatch(addSource(name.name)).unwrap();
-        notificationAlert("Sumber pemasukan berhasil ditambahkan!", "success", () => { dispatch(fetchIncomes()) });
+        notificationAlert("Sumber pemasukan berhasil ditambahkan!", "success", () => { dispatch(fetchSources()) });
         setName(undefined);
       } catch (e) {
         notificationAlert('Sumber pemasukan gagal ditambahkan!', 'error', () => {});

@@ -6,6 +6,9 @@ import incomeReducer from './incomeSlice';
 import outcomeReducer from './outcomeSlice';
 import accountBankReducer from './accountBankSlice';
 import archiveReducer from './archiveSlice';
+import configReducer from './configurationSlice';
+import feedbackReducer from './feedbackSlice';
+import mosqueReducer from './mosqueSlice';
 
 export const store = configureStore({
   reducer: {
@@ -15,7 +18,10 @@ export const store = configureStore({
     'incomes': incomeReducer,
     'outcomes': outcomeReducer,
     'accountBank': accountBankReducer,
-    'archive': archiveReducer
+    'archive': archiveReducer,
+    'config': configReducer,
+    'feedback': feedbackReducer,
+    'mosque': mosqueReducer
   }
 });
 

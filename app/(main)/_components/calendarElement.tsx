@@ -18,7 +18,7 @@ export default function CalendarElement({ masjid_id }: CalendarElementProps) {
   const [now, setNow] = useState(new Date());
 
   useEffect(() => {
-    if(!activities || activities.length === 0) dispatch(fetchActivities(masjid_id!));
+    if(!activities) dispatch(fetchActivities(masjid_id!));
   }, [dispatch])
 
     useEffect(() => {
@@ -51,7 +51,7 @@ export default function CalendarElement({ masjid_id }: CalendarElementProps) {
     }
 
     const filterEventByMonth = (date: Date) => {
-      if(activities) {
+      if(activities && activities.length > 0) {
         const filtered = activities.filter(value => (
           new Date(value.date).getFullYear() === date.getFullYear() &&
           new Date(value.date).getMonth() === date.getMonth()

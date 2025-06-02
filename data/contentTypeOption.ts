@@ -7,11 +7,7 @@ const contentTypeOption: SelectType[] = [
   },
   {
     id: "text",
-    name: "Gambar - Tautan Link"
-  },
-  {
-    id: "text",
-    name: "Video"
+    name: "Gambar / Video - Tautan Link"
   }
 ];
 

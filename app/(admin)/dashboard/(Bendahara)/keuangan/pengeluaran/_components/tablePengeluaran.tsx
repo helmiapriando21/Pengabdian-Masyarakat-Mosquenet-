@@ -11,12 +11,12 @@ export default function TablePengeluaran() {
   const {outcomes, loading} = useAppSelector((state) => state.outcomes);
 
   useEffect(() => {
-    if(!loading && (!outcomes || outcomes.length === 0)) {
+    if(!loading && !outcomes) {
       dispatch(fetchOutcomes())
     }
   }, [dispatch, outcomes, loading])
 
-  if(!loading && outcomes && outcomes.length !== 0)
+  if(!loading && outcomes && outcomes.length > 0)
     return (
       <table className="rounded-lg overflow-hidden">
         <Thead labels={['Keterangan', "Jumlah", 'Tanggal']} />
@@ -36,4 +36,6 @@ export default function TablePengeluaran() {
         </tbody>
       </table>
     );
+  else if(outcomes && outcomes.length === 0)
+    return <div>Belum ada pengeluaran yang terdata</div>
 }

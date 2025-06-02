@@ -11,12 +11,12 @@ export default function TablePemasukan() {
   const {incomes, loading} = useAppSelector((state) => state.incomes);
 
   useEffect(() => {
-    if(!loading && (!incomes || incomes.length === 0)) {
+    if(!loading && !incomes) {
       dispatch(fetchIncomes())
     }
   }, [dispatch, incomes, loading])
 
-  if(!loading && incomes && incomes.length !== 0)
+  if(!loading && incomes && incomes.length > 0)
     return (
       <div className="flex flex-col gap-3">
         <h1 className="font-bold text-xl">Pemasukan</h1>
@@ -39,4 +39,6 @@ export default function TablePemasukan() {
         </table>
       </div>
     );
+  else if(incomes && incomes.length === 0)
+    return <div>Belum ada pemasukan yang terdata</div>
 }

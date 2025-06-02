@@ -10,7 +10,7 @@ export async function GET(req: NextRequest) {
   const donation_id = urlParts[urlParts.length - 1];
   const masjid_id = urlParts[urlParts.length - 3];
     try {
-      if(donation_id && masjid_id) {
+      if(masjid_id && donation_id) {
         const response = await axios.get(
           `${process.env.API_URL}/mosque/donations/${masjid_id}/get/${donation_id}`,
           {

@@ -2,9 +2,9 @@
 
 import { getJamaahMasjid } from "@/services/getData";
 import { useEffect, useState } from "react"
-import Checkbox from "./_components/checkbox";
-import Thead from "../../../../components/thead";
-import { updateRole } from "@/services/postData";
+import Checkbox from "../../../_components/checkbox";
+import Thead from "../../../../../components/thead";
+import { updateRole, verifyUser } from "@/services/postData";
 import { Jamaah } from "@/interface/jamaah";
 import confirmAlert from "@/services/confirmAlert";
 
@@ -23,6 +23,14 @@ export default function Account() {
       await updateRole(email, role);
       await init();
       window.dispatchEvent(new Event('user-updated'));
+    }
+  }
+
+  const verify = async (email: string, verify: boolean) => {
+    const isAction = await confirmAlert(verify ? "Apakah anda ingin membatalkan verifikasi masyarakat ini?" : "Apakah anda ingin verifikasi masyarakat ini?", 'Ya, tolong dilakukan!', 'Tidak, jangan dilakukan!');
+    if(isAction) {
+      await verifyUser(email, !verify);
+      await init();
     }
   }
 
@@ -45,7 +53,7 @@ export default function Account() {
                 <td className="px-4 py-2 min-w-32 text-center">{value.email}</td>
                 <td className="px-4 py-2 min-w-32 text-center flex gap-3">
                   {
-                    value.admin.status
+                    value.isVerifiedByAdmin && value.admin.status
                       && <div className="flex gap-3">
                           <Checkbox 
                             label="Ketua" 
@@ -93,17 +101,34 @@ export default function Account() {
                           />
                     </div>
                   }
-                  <Checkbox
-                    label="Pengurus"
-                    value={value.admin.status ? value.admin.role : "Jamaah"}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      if(e.target.checked) {
-                        action(value.email, "Pengurus")
-                      } else {
-                        action(value.email, "Jamaah")
-                      }
-                    }}
-                  />
+                  {
+                    value.isVerifiedByAdmin && <Checkbox
+                      label="Pengurus"
+                      value={value.admin.status ? value.admin.role : "Jamaah"}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        if(e.target.checked) {
+                          action(value.email, "Pengurus")
+                        } else {
+                          action(value.email, "Jamaah")
+                        }
+                      }}
+                    />
+                  }
+                  {
+                    value.isVerifiedByAdmin 
+                      ? <button
+                          className="w-max h-max px-3 py-1 flex items-center justify-center bg-red-600 font-bold text-white rounded-lg"
+                          onClick={() => {
+                            verify(value.email, value.isVerifiedByAdmin)
+                          }}
+                        >Batalkan verifikasi</button>
+                      : <button
+                          className="w-max h-max px-3 py-1 flex items-center justify-center bg-green-600 font-bold text-white rounded-lg"
+                          onClick={() => {
+                            verify(value.email, value.isVerifiedByAdmin)
+                          }}
+                        >Verifikasi</button>
+                  }
                 </td>
               </tr>
             );

@@ -7,7 +7,7 @@ import notificationAlert from '@/services/notificationAlert';
 const assetSlice = createSlice({
   name: 'assets',
   initialState: {
-    items: [] as ListAset[],
+    items: undefined as ListAset[] | undefined,
     loading: false,
     error: null as string | null,
     message: null as string | null
