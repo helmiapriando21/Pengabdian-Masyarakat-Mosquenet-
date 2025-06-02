@@ -7,6 +7,7 @@ import { CreateActivity } from "@/interface/activity";
 import { useAppDispatch } from "@/store/hooks";
 import { createActivity, fetchActivities } from "@/thunks/activityThunks";
 import notificationAlert from "@/services/notificationAlert";
+import { fetchOutcomes } from "@/thunks/outcomeThunks";
 
 
 export default function CreateKegiatan() {
@@ -33,6 +34,7 @@ export default function CreateKegiatan() {
           )})).unwrap();
         notificationAlert("Kegiatan Berhasil ditambahkan!", "success", () => { 
           dispatch(fetchActivities(null));
+          dispatch(fetchOutcomes())
         });
         setData(undefined);
         setIsError(false);

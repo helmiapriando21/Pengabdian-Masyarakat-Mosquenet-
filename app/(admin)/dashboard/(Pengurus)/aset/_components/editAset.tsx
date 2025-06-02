@@ -11,6 +11,7 @@ import confirmAlert from "@/services/confirmAlert";
 import { useAppDispatch } from "@/store/hooks";
 import notificationAlert from "@/services/notificationAlert";
 import { fetchAssets, updateAsset } from "@/thunks/assetThunks";
+import { fetchOutcomes } from "@/thunks/outcomeThunks";
 
 interface EditAsetProps {
   currentData: ListAset
@@ -32,7 +33,10 @@ export default function EditAset({ currentData }: EditAsetProps) {
       ) {
         try {
           await dispatch(updateAsset(data!)).unwrap();
-          notificationAlert("Aset Berhasil diubah!", "success", () => { dispatch(fetchAssets() )});
+          notificationAlert("Aset Berhasil diubah!", "success", () => { 
+            dispatch(fetchAssets());
+            dispatch(fetchOutcomes())
+          });
         } catch (e) {
           notificationAlert('Aset Gagal diubah!', 'error', () => {});
         }

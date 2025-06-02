@@ -9,6 +9,7 @@ import confirmAlert from "@/services/confirmAlert";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { fetchActivities, updateActivity } from "@/thunks/activityThunks";
 import notificationAlert from "@/services/notificationAlert";
+import { fetchOutcomes } from "@/thunks/outcomeThunks";
 
 interface EditKegiatanProps {
   id: number
@@ -60,7 +61,10 @@ export default function EditKegiatan({ id }: EditKegiatanProps) {
             ? {outcomes: JSON.stringify(outcomes.filter((value: {reason: string, amount: number}) => value.reason !== '' || value.amount !== 0 ))}
             : {}
           )})).unwrap();
-          notificationAlert("Kegiatan Berhasil diubah!", "success", () => { dispatch(fetchActivities(null) )});
+          notificationAlert("Kegiatan Berhasil diubah!", "success", () => { 
+            dispatch(fetchActivities(null));
+            dispatch(fetchOutcomes())
+          });
         } catch (e) {
           notificationAlert('Kegiatan Gagal diubah!', 'error', () => {});
         }

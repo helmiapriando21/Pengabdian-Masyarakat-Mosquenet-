@@ -10,6 +10,7 @@ import asetConditions from "@/data/asetConditions";
 import { useAppDispatch } from "@/store/hooks";
 import { createAssets, fetchAssets } from "@/thunks/assetThunks";
 import notificationAlert from "@/services/notificationAlert";
+import { fetchOutcomes } from "@/thunks/outcomeThunks";
 
 export default function CreateAset() {
   const dispatch = useAppDispatch();
@@ -25,7 +26,10 @@ export default function CreateAset() {
     ) {
       try {
         await dispatch(createAssets(data!)).unwrap();
-        notificationAlert("Aset Berhasil ditambahkan!", "success", () => { dispatch(fetchAssets() )});
+        notificationAlert("Aset Berhasil ditambahkan!", "success", () => { 
+          dispatch(fetchAssets());
+          dispatch(fetchOutcomes())
+        });
         setData(undefined);
       } catch (e) {
         notificationAlert('Aset Gagal ditambahkan!', 'error', () => {});
