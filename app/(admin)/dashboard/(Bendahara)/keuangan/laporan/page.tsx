@@ -1,34 +1,30 @@
 "use client"
 
-import { getLaporanMasjid } from "@/services/getData";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Thead from "../../../../../components/thead";
 import { ReportData } from "@/interface/report";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { fetchDashboard } from "@/action/dashboardAction";
 
 
 export default function Laporan() {
-  const [reports, setReports] = useState<ReportData[]>();
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-
-  const init = async () => {
-    const data = await getLaporanMasjid(setIsLoading);
-    setReports(data);
-  }
+  const dispatch = useAppDispatch();
+  const {report, loading} = useAppSelector((state) => state.dashboard);
 
   useEffect(() => {
-    if(isLoading && !reports) {
-      init();
+    if(!loading && !report) {
+      dispatch(fetchDashboard());
     }
-  }, [])
+  }, [dispatch, report, loading])
   
-  if(!isLoading && reports && reports.length > 0)
+  if(!loading && report && report.length > 0)
     return (
       <div className="flex flex-col gap-3 w-full">
         <table className="rounded-lg overflow-hidden">
           <Thead labels={['Tanggal', "Sumber Pemasukan/Keterangan Pengeluaran", 'Jumlah']} />
           <tbody>
             {
-              reports.map((value: ReportData, index: number) => (
+              report.map((value: ReportData, index: number) => (
                 <tr key={index} className="bg-yellow-100 hover:bg-yellow-400">
                   <td className="px-4 py-2 min-w-32 text-center">
                     {new Date(value.date).toLocaleDateString('id-ID', { weekday: 'long' })},{" "}
@@ -45,7 +41,7 @@ export default function Laporan() {
               <td colSpan={2} className="text-center font-bold p-2">Total</td>
               <td className="text-center font-bold p-2">
                 {
-                  reports.reduce((acc, curr) => {
+                  report.reduce((acc, curr) => {
                     if(curr.type === "Pemasukan") {
                       acc.amount += curr.amount;
                     } else {
@@ -60,6 +56,6 @@ export default function Laporan() {
         </table>
       </div>
     );
-  else if(reports && reports.length === 0)
+  else if(report && report.length === 0)
     return <div>Belum ada tranaksi keuangan yang dilakukan</div>
 }

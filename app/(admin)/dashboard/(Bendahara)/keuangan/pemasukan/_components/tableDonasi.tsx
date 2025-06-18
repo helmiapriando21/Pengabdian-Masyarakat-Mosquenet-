@@ -6,7 +6,8 @@ import { AdminDonationDisplay } from "@/interface/bank";
 import { verifyDonation } from "@/services/postData";
 import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { fetchIncomes } from "@/thunks/incomeThunks";
+import { fetchIncomes } from "@/action/incomeAction";
+import { fetchDashboard } from "@/action/dashboardAction";
 
 export default function TableDonasi() {
   const dispatch = useAppDispatch();
@@ -15,6 +16,8 @@ export default function TableDonasi() {
 
   const verify = async (value: boolean, masjid_id: string, donation_id: string) => {
     await verifyDonation(value, masjid_id, donation_id, router);
+    dispatch(fetchIncomes());
+    dispatch(fetchDashboard());
   }
 
   useEffect(() => {

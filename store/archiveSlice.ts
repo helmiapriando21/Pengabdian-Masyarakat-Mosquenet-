@@ -10,7 +10,7 @@ import {
   fetchTemplates, 
   updateDocument, 
   updateTemplate 
-} from '@/thunks/archiveThunks';
+} from '@/action/archiveAction';
 
 
 const archiveSlice = createSlice({

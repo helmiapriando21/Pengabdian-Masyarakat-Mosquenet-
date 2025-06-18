@@ -7,7 +7,7 @@ import {
   createOutcome, 
   fetchOutcomes, 
   fetchReasons 
-} from '@/thunks/outcomeThunks';
+} from '@/action/outcomeAction';
 
 
 const incomeSlice = createSlice({

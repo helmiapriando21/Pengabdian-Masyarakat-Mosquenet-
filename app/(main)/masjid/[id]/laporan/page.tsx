@@ -1,22 +1,18 @@
 "use client"
 
-import { getLaporanMasjid, getLaporanMasjidById } from "@/services/getData";
 import { useEffect, useState } from "react";
 import Thead from "@/app/components/thead";
 import { ReportData } from "@/interface/report";
 import { useParams } from "next/navigation";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { fetchReport } from "@/action/dashboardAction";
 
 
 export default function Laporan() {
-  const [reports, setReports] = useState<ReportData[]>();
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const {report, loading} = useAppSelector((state) => state.dashboard);
+  const dispatch = useAppDispatch();
   const params = useParams();
   const [masjid_id, setMasjidId] = useState<string>();
-
-  const init = async (masjid_id: string) => {
-    const data = await getLaporanMasjidById(masjid_id, setIsLoading);
-    setReports(data);
-  }
 
   useEffect(() => {
     if(params?.id) {
@@ -25,12 +21,12 @@ export default function Laporan() {
   }, [params])
 
   useEffect(() => {
-    if(isLoading && !reports && masjid_id) {
-      init(masjid_id);
+    if(!loading && !report && masjid_id) {
+      dispatch(fetchReport(masjid_id));
     }
-  }, [masjid_id])
+  }, [masjid_id, dispatchEvent, loading, report])
   
-  if(!isLoading && reports)
+  if(!loading && report)
     return (
       <div className="flex flex-col gap-5 px-12 w-screen h-[calc(100vh-100px)] items-center justify-center">
         <h1 className="self-start justify-self-start font-bold text-4xl">Laporan Keuangan Masjid</h1>
@@ -38,7 +34,7 @@ export default function Laporan() {
           <Thead labels={['Tanggal', "Sumber Pemasukan/Keterangan Pengeluaran", 'Jumlah']} />
           <tbody>
             {
-              reports.map((value: ReportData, index: number) => (
+              report.map((value: ReportData, index: number) => (
                 <tr 
                   key={index} 
                   className="bg-yellow-100 hover:bg-yellow-400"
@@ -58,7 +54,7 @@ export default function Laporan() {
               <td colSpan={2} className="text-center font-bold p-2">Total</td>
               <td className="text-center font-bold p-2">
                 {
-                  Number(reports.reduce((acc, curr) => {
+                  Number(report.reduce((acc, curr) => {
                     if(curr.type === "Pemasukan") acc.amount += curr.amount;
                     else acc.amount -= curr.amount;
                     return acc;

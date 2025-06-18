@@ -3,10 +3,9 @@
 import { useParams } from "next/navigation";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { fetchActivity } from "@/thunks/activityThunks";
+import { fetchActivity } from "@/action/activityAction";
 import { clearActivity } from "@/store/activitySlice";
 import Thead from "@/app/components/thead";
-import { OutcomeData } from "@/interface/report";
 
 export default function DetailKegiatan() {
   const dispatch = useAppDispatch();

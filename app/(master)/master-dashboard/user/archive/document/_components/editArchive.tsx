@@ -7,7 +7,7 @@ import { ArchiveDocuments } from "@/interface/archive";
 import fileValidation from "@/validation/file-validation";
 import confirmAlert from "@/services/confirmAlert";
 import { useAppDispatch } from "@/store/hooks";
-import { fetchDocuments, updateDocument } from "@/thunks/archiveThunks";
+import { fetchDocuments, updateDocument } from "@/action/archiveAction";
 import notificationAlert from "@/services/notificationAlert";
 
 interface EditDocumentProps {

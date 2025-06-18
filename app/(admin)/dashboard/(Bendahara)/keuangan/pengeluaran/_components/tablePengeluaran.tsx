@@ -4,7 +4,7 @@ import Thead from "@/app/components/thead";
 import { OutcomeData } from "@/interface/report";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { fetchOutcomes } from "@/thunks/outcomeThunks";
+import { fetchOutcomes } from "@/action/outcomeAction";
 
 export default function TablePengeluaran() {
   const dispatch = useAppDispatch();

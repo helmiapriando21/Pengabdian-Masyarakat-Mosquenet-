@@ -8,7 +8,7 @@ import basicValidation from "@/validation/basic-validation";
 import listBank from "@/data/listBank";
 import { CreateBank } from "@/interface/bank";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { createAccountBank, fetchAccountBank, fetchPurposesAccountBank } from "@/thunks/accountBankThunks";
+import { createAccountBank, fetchAccountBank, fetchPurposesAccountBank } from "@/action/accountBankAction";
 import notificationAlert from "@/services/notificationAlert";
 
 export default function CreateBankAccount() {

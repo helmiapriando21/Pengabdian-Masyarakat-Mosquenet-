@@ -4,7 +4,7 @@ import Thead from "@/app/components/thead";
 import { ListBank } from "@/interface/bank";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { fetchAccountBank } from "@/thunks/accountBankThunks";
+import { fetchAccountBank } from "@/action/accountBankAction";
 
 export default function TableMosqueBank() {
   const dispatch = useAppDispatch();

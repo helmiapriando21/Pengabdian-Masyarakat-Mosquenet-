@@ -10,7 +10,7 @@ import { generateVisualContentImageURL } from "@/services/generateVisualContentU
 import dynamic from "next/dynamic";
 import confirmAlert from "@/services/confirmAlert";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { fetchContents, updateContent } from "@/thunks/contentThunks";
+import { fetchContents, updateContent } from "@/action/contentAction";
 import notificationAlert from "@/services/notificationAlert";
 
 const TextEditor = dynamic(() => import('./textEditor'), { ssr: false })

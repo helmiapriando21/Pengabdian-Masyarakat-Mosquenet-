@@ -3,7 +3,7 @@ import { ArchiveTemplates } from "@/interface/archive";
 import EditTemplates from "./editArchiveTemplate";
 import confirmAlert from "@/services/confirmAlert";
 import { useAppDispatch } from "@/store/hooks";
-import { deleteTemplate, fetchTemplates } from "@/thunks/archiveThunks";
+import { deleteTemplate, fetchTemplates } from "@/action/archiveAction";
 import notificationAlert from "@/services/notificationAlert";
 
 interface TemplateItemsProps {

@@ -4,7 +4,7 @@ import { useState } from "react";
 import Input from "../../../../_components/input";
 import { InformationReport } from "@/interface/report";
 import { useAppDispatch } from "@/store/hooks";
-import { addReason, fetchOutcomes, fetchReasons } from "@/thunks/outcomeThunks";
+import { addReason, fetchOutcomes, fetchReasons } from "@/action/outcomeAction";
 import notificationAlert from "@/services/notificationAlert";
 
 export default function AddReason() {

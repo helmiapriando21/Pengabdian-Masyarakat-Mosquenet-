@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import CalendarLabel from './calendarLabel';
 import { ListActivities } from '@/interface/activity';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { fetchActivities } from '@/thunks/activityThunks';
+import { fetchActivities } from '@/action/activityAction';
 
 interface CalendarElementProps {
   masjid_id?: string | null

@@ -7,7 +7,7 @@ import {
   createIncome, 
   fetchIncomes, 
   fetchSources 
-} from '@/thunks/incomeThunks';
+} from '@/action/incomeAction';
 import { AdminDonationDisplay } from '@/interface/bank';
 
 

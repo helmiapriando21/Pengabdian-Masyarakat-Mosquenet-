@@ -30,12 +30,6 @@ const verifyUser = async (email: string, verify: boolean) => {
   }
 }
 
-const createKasPayment = async (amount: number) => {
-  const response = await postDataOnly('/api/payment-kas', { amount: amount });
-  const responseData = await response.json();
-  return responseData.payment;
-}
-
 const sendCritics = async (data: { message: string }, router: AppRouterInstance) => {
   await postDataWithRedirectServices(
     '/api/critics-suggestion',
@@ -70,7 +64,6 @@ const verifyDonation = async (verified: boolean, masjid_id: string, donation_id:
 export {
   updateRole,
   verifyUser,
-  createKasPayment,
   sendCritics,
   sendDonation,
   verifyDonation,

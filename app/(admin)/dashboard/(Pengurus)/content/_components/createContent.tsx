@@ -9,7 +9,7 @@ import contentTypeOption from "@/data/contentTypeOption";
 import dynamic from "next/dynamic";
 import { useAppDispatch } from "@/store/hooks";
 import notificationAlert from "@/services/notificationAlert";
-import { createContent, fetchContents } from "@/thunks/contentThunks";
+import { createContent, fetchContents } from "@/action/contentAction";
 
 const TextEditor = dynamic(() => import('./textEditor'), { ssr: false })
 

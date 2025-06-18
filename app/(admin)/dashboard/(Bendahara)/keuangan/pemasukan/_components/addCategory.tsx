@@ -4,7 +4,7 @@ import { useState } from "react";
 import Input from "../../../../_components/input";
 import { InformationReport } from "@/interface/report";
 import { useAppDispatch } from "@/store/hooks";
-import { addSource, fetchIncomes, fetchSources } from "@/thunks/incomeThunks";
+import { addSource, fetchSources } from "@/action/incomeAction";
 import notificationAlert from "@/services/notificationAlert";
 
 export default function AddCategory() {

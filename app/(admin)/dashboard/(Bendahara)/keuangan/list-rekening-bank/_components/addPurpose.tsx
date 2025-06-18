@@ -4,7 +4,7 @@ import { useState } from "react";
 import Input from "../../../../_components/input";
 import { InformationReport } from "@/interface/report";
 import { useAppDispatch } from "@/store/hooks";
-import { addPurpose, fetchPurposesAccountBank } from "@/thunks/accountBankThunks";
+import { addPurpose, fetchPurposesAccountBank } from "@/action/accountBankAction";
 import notificationAlert from "@/services/notificationAlert";
 
 export default function AddPurpose() {

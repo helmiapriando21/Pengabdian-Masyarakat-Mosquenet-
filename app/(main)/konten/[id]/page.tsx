@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import VisualContentShow from "@/app/components/visualContentShow";
 import Content from "@/app/components/content";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { fetchContent } from "@/thunks/contentThunks";
+import { fetchContent } from "@/action/contentAction";
 
 export default function DetailContent() {
   const dispatch = useAppDispatch();

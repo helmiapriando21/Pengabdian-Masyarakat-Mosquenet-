@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { ArchiveDocuments } from "@/interface/archive";
 import TemplateItems from "./items";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { fetchDocuments } from "@/thunks/archiveThunks";
+import { fetchDocuments } from "@/action/archiveAction";
 
 export default function ListArchive() {
   const dispatch = useAppDispatch();

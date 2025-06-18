@@ -3,7 +3,7 @@
 import { ListActivities } from "@/interface/activity";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { fetchActivities } from "@/thunks/activityThunks";
+import { fetchActivities } from "@/action/activityAction";
 
 interface ListKegiatanProps {
   masjid_id: string | null

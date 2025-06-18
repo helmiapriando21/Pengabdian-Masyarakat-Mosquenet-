@@ -6,7 +6,7 @@ import basicValidation from "@/validation/basic-validation";
 import { ArchiveDocument } from "@/interface/archive";
 import fileValidation from "@/validation/file-validation";
 import { useAppDispatch } from "@/store/hooks";
-import { createDocument, fetchDocuments } from "@/thunks/archiveThunks";
+import { createDocument, fetchDocuments } from "@/action/archiveAction";
 import notificationAlert from "@/services/notificationAlert";
 
 export default function CreateArchive() {

@@ -10,8 +10,9 @@ import asetConditions from "@/data/asetConditions";
 import confirmAlert from "@/services/confirmAlert";
 import { useAppDispatch } from "@/store/hooks";
 import notificationAlert from "@/services/notificationAlert";
-import { fetchAssets, updateAsset } from "@/thunks/assetThunks";
-import { fetchOutcomes } from "@/thunks/outcomeThunks";
+import { fetchAssets, updateAsset } from "@/action/assetAction";
+import { fetchOutcomes } from "@/action/outcomeAction";
+import { fetchDashboard } from "@/action/dashboardAction";
 
 interface EditAsetProps {
   currentData: ListAset
@@ -35,7 +36,8 @@ export default function EditAset({ currentData }: EditAsetProps) {
           await dispatch(updateAsset(data!)).unwrap();
           notificationAlert("Aset Berhasil diubah!", "success", () => { 
             dispatch(fetchAssets());
-            dispatch(fetchOutcomes())
+            dispatch(fetchOutcomes());
+            dispatch(fetchDashboard());
           });
         } catch (e) {
           notificationAlert('Aset Gagal diubah!', 'error', () => {});

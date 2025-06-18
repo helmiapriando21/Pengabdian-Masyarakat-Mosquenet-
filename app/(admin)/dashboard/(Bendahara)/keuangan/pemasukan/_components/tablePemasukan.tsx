@@ -4,7 +4,7 @@ import Thead from "@/app/components/thead";
 import { IncomeData } from "@/interface/report";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { fetchIncomes } from "@/thunks/incomeThunks";
+import { fetchIncomes } from "@/action/incomeAction";
 
 export default function TablePemasukan() {
   const dispatch = useAppDispatch();

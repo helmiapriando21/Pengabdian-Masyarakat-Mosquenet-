@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import notificationAlert from '@/services/notificationAlert';
 import { Configuration } from '@/interface/configuration';
-import { changeConfiguration, fetchConfiguration } from '@/thunks/configurationThunks';
+import { changeConfiguration, fetchConfiguration } from '@/action/configurationAction';
 
 
 const configurationSlice = createSlice({

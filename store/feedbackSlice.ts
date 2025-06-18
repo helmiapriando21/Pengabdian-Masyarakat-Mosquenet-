@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import notificationAlert from '@/services/notificationAlert';
-import { fetchFeedback } from '@/thunks/feedbackThunks';
+import { fetchFeedback } from '@/action/feedbackAction';
 
 
 const feedbackSlice = createSlice({

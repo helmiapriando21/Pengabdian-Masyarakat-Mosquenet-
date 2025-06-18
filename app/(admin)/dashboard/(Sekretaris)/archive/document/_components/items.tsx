@@ -3,7 +3,7 @@ import { ArchiveDocuments } from "@/interface/archive";
 import EditArchive from "./editArchive";
 import confirmAlert from "@/services/confirmAlert";
 import { useAppDispatch } from "@/store/hooks";
-import { deleteDocument, fetchDocuments } from "@/thunks/archiveThunks";
+import { deleteDocument, fetchDocuments } from "@/action/archiveAction";
 import notificationAlert from "@/services/notificationAlert";
 
 interface Items {

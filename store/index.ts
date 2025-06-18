@@ -9,6 +9,7 @@ import archiveReducer from './archiveSlice';
 import configReducer from './configurationSlice';
 import feedbackReducer from './feedbackSlice';
 import mosqueReducer from './mosqueSlice';
+import dashboardReducer from './dashboardSlice';
 
 export const store = configureStore({
   reducer: {
@@ -21,7 +22,8 @@ export const store = configureStore({
     'archive': archiveReducer,
     'config': configReducer,
     'feedback': feedbackReducer,
-    'mosque': mosqueReducer
+    'mosque': mosqueReducer,
+    'dashboard': dashboardReducer
   }
 });
 

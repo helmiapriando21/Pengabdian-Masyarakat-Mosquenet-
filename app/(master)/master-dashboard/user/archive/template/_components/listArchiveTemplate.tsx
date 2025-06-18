@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { ArchiveTemplates } from "@/interface/archive";
 import TemplateItems from "./templateItems";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { fetchTemplates } from "@/thunks/archiveThunks";
+import { fetchTemplates } from "@/action/archiveAction";
 
 export default function ListArchiveTemplate() {
   const dispatch = useAppDispatch();

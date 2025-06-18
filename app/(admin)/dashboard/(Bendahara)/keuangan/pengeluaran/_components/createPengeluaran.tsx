@@ -6,8 +6,9 @@ import Input from "../../../../_components/input";
 import numberValidation from "@/validation/number-validation";
 import { CreateOutcome } from "@/interface/report";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { createOutcome, fetchOutcomes, fetchReasons } from "@/thunks/outcomeThunks";
+import { createOutcome, fetchOutcomes, fetchReasons } from "@/action/outcomeAction";
 import notificationAlert from "@/services/notificationAlert";
+import { fetchDashboard } from "@/action/dashboardAction";
 
 export default function CreatePengeluaran() {
   const dispatch = useAppDispatch();
@@ -26,7 +27,10 @@ export default function CreatePengeluaran() {
     ) {
       try {
         await dispatch(createOutcome(data!)).unwrap();
-        notificationAlert("Pengeluaran berhasil ditambahkan!", "success", () => { dispatch(fetchOutcomes()) });
+        notificationAlert("Pengeluaran berhasil ditambahkan!", "success", () => { 
+          dispatch(fetchOutcomes());
+          dispatch(fetchDashboard());
+        });
         setData(undefined);
       } catch (e) {
         notificationAlert('Pengeluaran gagal ditambahkan!', 'error', () => {});

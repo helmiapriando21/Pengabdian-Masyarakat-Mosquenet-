@@ -10,15 +10,15 @@ import { useEffect, useState } from "react";
 import ListKegiatan from "../../_components/listKegiatan";
 import DonationList from "../../_components/donationList";
 import ListKonten from "../../_components/listKonten";
-import { ReportData } from "@/interface/report";
-import { getLaporanMasjidById } from "@/services/getData";
 import LineGraph from "@/app/(admin)/dashboard/_components/lineGraph";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { fetchReport } from "@/action/dashboardAction";
 
 export default function MosqueDetail () {
   const params = useParams();
   const [masjidId, setMasjidId] = useState<string>();
-  const [report, setReport] = useState<ReportData[]>();
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const {report, loading} = useAppSelector((state) => state.dashboard);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if(params?.id) {
@@ -27,19 +27,16 @@ export default function MosqueDetail () {
   }, [params]);
 
   const init = async () => {
-    if(isLoading && masjidId) {
-      const data = await getLaporanMasjidById(masjidId, setIsLoading);
-      if(data) {
-        setReport(data);
-      }
+    if(!loading && masjidId && !report) {
+      dispatch(fetchReport(masjidId));
     }
   }
   
   useEffect(() => {
     init();
-  }, [masjidId, isLoading])
+  }, [dispatch, masjidId, loading, report])
 
-  if(masjidId && !isLoading && report)
+  if(masjidId && !loading && report)
     return (
       <div className="flex flex-col">
         <HeroSection masjidId={masjidId} />

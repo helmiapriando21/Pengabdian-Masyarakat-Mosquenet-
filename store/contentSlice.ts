@@ -7,7 +7,7 @@ import {
   fetchContent, 
   fetchContents, 
   updateContent
-} from '@/thunks/contentThunks';
+} from '@/action/contentAction';
 
 
 const contentSlice = createSlice({

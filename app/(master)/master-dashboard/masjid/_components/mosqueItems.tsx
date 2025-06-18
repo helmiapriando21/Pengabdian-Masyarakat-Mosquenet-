@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { ListMosque } from "@/interface/mosque";
-import { fetchMosques } from "@/thunks/mosqueThunks";
+import { fetchMosques } from "@/action/mosqueAction";
 import Items from "./items";
 
 export default function MosqueItems() {

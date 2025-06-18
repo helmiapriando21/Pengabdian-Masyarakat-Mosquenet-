@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import FeedbacksItems from "./items";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { fetchFeedback } from "@/thunks/feedbackThunks";
+import { fetchFeedback } from "@/action/feedbackAction";
 
 export default function ListFeedbacks() {
   const dispatch = useAppDispatch();

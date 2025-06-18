@@ -3,7 +3,7 @@
 import { useEffect } from "react"
 import confirmAlert from "@/services/confirmAlert";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { changeConfiguration, fetchConfiguration } from "@/thunks/configurationThunks";
+import { changeConfiguration, fetchConfiguration } from "@/action/configurationAction";
 import notificationAlert from "@/services/notificationAlert";
 
 interface ConfigurationFormProps {

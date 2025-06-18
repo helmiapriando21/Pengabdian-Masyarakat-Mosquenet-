@@ -3,19 +3,19 @@
 import { useEffect, useState } from "react";
 import Input from "../../../_components/input";
 import basicValidation from "@/validation/basic-validation";
-import { getDetailKegiatanMasjid } from "@/services/getData";
-import { CreateActivity, DetailActivity } from "@/interface/activity";
+import { CreateActivity } from "@/interface/activity";
 import confirmAlert from "@/services/confirmAlert";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { fetchActivities, updateActivity } from "@/thunks/activityThunks";
+import { useAppDispatch } from "@/store/hooks";
+import { fetchActivities, updateActivity } from "@/action/activityAction";
 import notificationAlert from "@/services/notificationAlert";
-import { fetchOutcomes } from "@/thunks/outcomeThunks";
+import { fetchOutcomes } from "@/action/outcomeAction";
+import { fetchDashboard } from "@/action/dashboardAction";
 
 interface EditKegiatanProps {
-  id: number
+  currentData: CreateActivity
 }
 
-export default function EditKegiatan({ id }: EditKegiatanProps) {
+export default function EditKegiatan({ currentData }: EditKegiatanProps) {
   const dispatch = useAppDispatch();
   const [data, setData] = useState<CreateActivity>();
   const [isError, setIsError] = useState<boolean>(false);
@@ -25,23 +25,24 @@ export default function EditKegiatan({ id }: EditKegiatanProps) {
   const [previousImage, setPreviousImage] = useState<string>();
 
   const init = async () => {
-    const response = await getDetailKegiatanMasjid(setIsLoading, Number(id));
+    
+    if(currentData.document) setPreviousDocument(currentData.document as string);
+    if(currentData.image) setPreviousImage(currentData.image as string);
 
-    if(response) {
-      if(response.document) setPreviousDocument(response.document);
-      if(response.image) setPreviousImage(response.image);
-  
-      const { document, image, ...rest } = response;
-      setData(rest);
-      setOutcomes(rest.outcomes);
-    }
+    const { document, image, date, ...rest } = currentData;
+    const time = `${new Date(date).getUTCHours().toString().padStart(2, '0')}:${new Date(date).getUTCMinutes().toString().padStart(2, '0')}`;
+    const formattedDate = date.split("T")[0];
+    setData({...rest, time: time, date: formattedDate});
+    if(rest.outcomes && typeof rest.outcomes !== "string") setOutcomes(rest.outcomes);
+
+    setIsLoading(false);
   }
 
   useEffect(() => {
-    if(isLoading && id) {
+    if(isLoading && currentData) {
       init();
     }
-  }, [id])
+  }, [currentData]);
 
   const action = async () => {
     const confirm = await confirmAlert('Apakah kegiatan ini akan diubah?', 'Ya, benar', 'Tidak');
@@ -63,7 +64,8 @@ export default function EditKegiatan({ id }: EditKegiatanProps) {
           )})).unwrap();
           notificationAlert("Kegiatan Berhasil diubah!", "success", () => { 
             dispatch(fetchActivities(null));
-            dispatch(fetchOutcomes())
+            dispatch(fetchOutcomes());
+            dispatch(fetchDashboard());
           });
         } catch (e) {
           notificationAlert('Kegiatan Gagal diubah!', 'error', () => {});

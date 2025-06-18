@@ -6,7 +6,7 @@ import basicValidation from "@/validation/basic-validation";
 import { ArchiveTemplate } from "@/interface/archive";
 import fileValidation from "@/validation/file-validation";
 import { useAppDispatch } from "@/store/hooks";
-import { createTemplate, fetchTemplates } from "@/thunks/archiveThunks";
+import { createTemplate, fetchTemplates } from "@/action/archiveAction";
 import notificationAlert from "@/services/notificationAlert";
 
 export default function CreateTemplate() {

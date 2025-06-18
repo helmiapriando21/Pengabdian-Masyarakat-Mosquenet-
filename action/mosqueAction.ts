@@ -1,4 +1,3 @@
-import { ListAset } from '@/interface/aset';
 import { ListMosque } from '@/interface/mosque';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import nProgress from 'nprogress';

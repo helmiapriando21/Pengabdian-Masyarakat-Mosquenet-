@@ -6,7 +6,7 @@ import GroupButton from "../_components/groupButton"
 import SidebarButton from "../_components/sidebarButton";
 import checkUser from "@/services/checkUser";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { fetchConfiguration } from "@/thunks/configurationThunks";
+import { fetchConfiguration } from "@/action/configurationAction";
 
 export default function Sidebar() {
   const pathname = usePathname();

@@ -8,20 +8,13 @@ import PrayerTimesSection from "./_layouts/prayerTimesSection";
 import DescribeSection from "./_layouts/describeSection";
 import CalendarElement from "./_components/calendarElement";
 import { useState, useEffect } from 'react';
-import { getDashboardData } from "@/services/getData";
-import LineGraph from "../(admin)/dashboard/_components/lineGraph";
-import ListKegiatan from "./_components/listKegiatan";
-import { ReportData } from "@/interface/report";
 import { useRouter } from 'next/navigation';
 import CardNavigation from "./_components/cardNavigation";
-import ListKonten from "./_components/listKonten";
-import DonationList from "./_components/donationList";
 
 export default function Home() {
   const [isLogin, setIsLogin] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [role, setRole] = useState<string>();
-  const [report, setReport] = useState<ReportData[]>();
   const router = useRouter();
 
   useEffect(() => {
@@ -29,15 +22,8 @@ export default function Home() {
   }, [isLogin])
 
   const init = async () => {
-    const check = await checkUser(setRole, setIsLogin);
-    if(check.isLogin) {
-      const data = await getDashboardData(setIsLoading);
-      if(data) {
-        setReport(data.report);
-      }
-    } else {
-      setIsLoading(false);
-    }
+    await checkUser(setRole, setIsLogin);
+    setIsLoading(false);
   }
 
   if(!isLoading)

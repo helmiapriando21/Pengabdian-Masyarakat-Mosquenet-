@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { ListMosque } from '@/interface/mosque';
-import { fetchMosques, verifyMosque } from '@/thunks/mosqueThunks';
+import { fetchMosques, verifyMosque } from '@/action/mosqueAction';
 import notificationAlert from '@/services/notificationAlert';
 
 

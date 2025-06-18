@@ -5,10 +5,10 @@ import { useEffect } from "react";
 import EditModal from "../../../_components/editModal";
 import { useRouter } from "next/navigation";
 import EditKegiatan from "./editKegiatan";
-import { ListActivities } from "@/interface/activity";
+import { CreateActivity, ListActivities } from "@/interface/activity";
 import confirmAlert from "@/services/confirmAlert";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { deleteActivity, fetchActivities } from "@/thunks/activityThunks";
+import { deleteActivity, fetchActivities } from "@/action/activityAction";
 import notificationAlert from "@/services/notificationAlert";
 
 export default function TableKegiatan() {
@@ -40,7 +40,7 @@ export default function TableKegiatan() {
         <Thead labels={['Tanggal', "Nama", 'Alamat', "Penanggungjawab", "Waktu mulai", "Aksi"]} />
         <tbody>
           {
-            activities.map((value: ListActivities, index: number) => (
+            activities.map((value: ListActivities | CreateActivity, index: number) => (
               <tr key={index} className="bg-yellow-100 hover:bg-yellow-400">
                 <td className="px-4 py-2 min-w-32 text-center text-xs">
                   {
@@ -79,7 +79,7 @@ export default function TableKegiatan() {
                       </button>
                     </div>
                     <EditModal>
-                      <EditKegiatan id={value.id} />
+                      <EditKegiatan currentData={value as CreateActivity} />
                     </EditModal>
                   </div>
                 </td>

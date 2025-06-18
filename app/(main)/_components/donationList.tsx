@@ -4,7 +4,7 @@ import { ListBank } from "@/interface/bank";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { fetchAccountBank } from "@/thunks/accountBankThunks";
+import { fetchAccountBank } from "@/action/accountBankAction";
 
 export default function DonationList({ masjid_id }: { masjid_id: string | null }) {
   const router = useRouter();

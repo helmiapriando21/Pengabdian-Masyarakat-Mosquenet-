@@ -6,8 +6,9 @@ import Input from "../../../../_components/input";
 import numberValidation from "@/validation/number-validation";
 import { CreateIncome } from "@/interface/report";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { createIncome, fetchIncomes, fetchSources } from "@/thunks/incomeThunks";
+import { createIncome, fetchIncomes, fetchSources } from "@/action/incomeAction";
 import notificationAlert from "@/services/notificationAlert";
+import { fetchDashboard } from "@/action/dashboardAction";
 
 export default function CreatePemasukan() {
   const dispatch = useAppDispatch();
@@ -26,7 +27,10 @@ export default function CreatePemasukan() {
     ) {
       try {
         await dispatch(createIncome(data!)).unwrap();
-        notificationAlert("Pemasukan berhasil ditambahkan!", "success", () => { dispatch(fetchIncomes()) });
+        notificationAlert("Pemasukan berhasil ditambahkan!", "success", () => { 
+          dispatch(fetchIncomes());
+          dispatch(fetchDashboard());
+        });
         setData(undefined);
       } catch (e) {
         notificationAlert('Pemasukan gagal ditambahkan!', 'error', () => {});

@@ -8,7 +8,7 @@ import EditContent from "./editContent";
 import { ListContent } from "@/interface/content";
 import confirmAlert from "@/services/confirmAlert";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { deleteContent, fetchContents } from "@/thunks/contentThunks";
+import { deleteContent, fetchContents } from "@/action/contentAction";
 import notificationAlert from "@/services/notificationAlert";
 
 export default function TableContent() {

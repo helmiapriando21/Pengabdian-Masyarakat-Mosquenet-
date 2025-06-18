@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { ListContent } from "@/interface/content";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { fetchContents } from "@/thunks/contentThunks";
+import { fetchContents } from "@/action/contentAction";
 
 interface ListKontenProps {
   masjid_id: string | null

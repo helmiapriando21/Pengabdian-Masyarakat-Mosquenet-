@@ -7,7 +7,7 @@ import { ArchiveTemplates } from "@/interface/archive";
 import fileValidation from "@/validation/file-validation";
 import confirmAlert from "@/services/confirmAlert";
 import { useAppDispatch } from "@/store/hooks";
-import { fetchTemplates, updateTemplate } from "@/thunks/archiveThunks";
+import { fetchTemplates, updateTemplate } from "@/action/archiveAction";
 import notificationAlert from "@/services/notificationAlert";
 
 interface EditTemplatesProps {

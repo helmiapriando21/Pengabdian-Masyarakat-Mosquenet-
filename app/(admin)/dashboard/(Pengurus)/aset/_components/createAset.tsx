@@ -8,9 +8,10 @@ import Select from "../../../_components/select";
 import { ListAset } from "@/interface/aset";
 import asetConditions from "@/data/asetConditions";
 import { useAppDispatch } from "@/store/hooks";
-import { createAssets, fetchAssets } from "@/thunks/assetThunks";
+import { createAssets, fetchAssets } from "@/action/assetAction";
 import notificationAlert from "@/services/notificationAlert";
-import { fetchOutcomes } from "@/thunks/outcomeThunks";
+import { fetchOutcomes } from "@/action/outcomeAction";
+import { fetchDashboard } from "@/action/dashboardAction";
 
 export default function CreateAset() {
   const dispatch = useAppDispatch();
@@ -28,7 +29,8 @@ export default function CreateAset() {
         await dispatch(createAssets(data!)).unwrap();
         notificationAlert("Aset Berhasil ditambahkan!", "success", () => { 
           dispatch(fetchAssets());
-          dispatch(fetchOutcomes())
+          dispatch(fetchOutcomes());
+          dispatch(fetchDashboard());
         });
         setData(undefined);
       } catch (e) {

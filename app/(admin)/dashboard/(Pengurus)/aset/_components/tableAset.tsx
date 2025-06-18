@@ -7,7 +7,7 @@ import EditModal from "../../../_components/editModal";
 import { ListAset } from "@/interface/aset";
 import confirmAlert from "@/services/confirmAlert";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { deleteAsset, fetchAssets } from "@/thunks/assetThunks";
+import { deleteAsset, fetchAssets } from "@/action/assetAction";
 import notificationAlert from "@/services/notificationAlert";
 
 export default function TableAset() {

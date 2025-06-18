@@ -2,7 +2,7 @@
 
 import { useEffect } from "react"
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { fetchConfiguration } from "@/thunks/configurationThunks";
+import { fetchConfiguration } from "@/action/configurationAction";
 import ConfigurationForm from "./components/configurationForm";
 
 export default function Configuration() {

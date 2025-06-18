@@ -5,9 +5,10 @@ import Input from "../../../_components/input";
 import basicValidation from "@/validation/basic-validation";
 import { CreateActivity } from "@/interface/activity";
 import { useAppDispatch } from "@/store/hooks";
-import { createActivity, fetchActivities } from "@/thunks/activityThunks";
+import { createActivity, fetchActivities } from "@/action/activityAction";
 import notificationAlert from "@/services/notificationAlert";
-import { fetchOutcomes } from "@/thunks/outcomeThunks";
+import { fetchOutcomes } from "@/action/outcomeAction";
+import { fetchDashboard } from "@/action/dashboardAction";
 
 
 export default function CreateKegiatan() {
@@ -34,7 +35,8 @@ export default function CreateKegiatan() {
           )})).unwrap();
         notificationAlert("Kegiatan Berhasil ditambahkan!", "success", () => { 
           dispatch(fetchActivities(null));
-          dispatch(fetchOutcomes())
+          dispatch(fetchOutcomes());
+          dispatch(fetchDashboard());
         });
         setData(undefined);
         setIsError(false);

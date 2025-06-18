@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import DonationData from "./_components/donationData";
 import SendDonation from "./_components/sendDonation";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { fetchDonationBank } from "@/thunks/accountBankThunks";
+import { fetchDonationBank } from "@/action/accountBankAction";
 import { clearAccountBank } from "@/store/accountBankSlice";
 
 export default function MosqueDetail () {

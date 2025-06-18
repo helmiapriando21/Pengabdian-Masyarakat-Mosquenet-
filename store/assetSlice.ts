@@ -1,6 +1,6 @@
 import { ListAset } from '@/interface/aset';
 import { createSlice } from '@reduxjs/toolkit';
-import { createAssets, deleteAsset, fetchAssets, updateAsset } from '@/thunks/assetThunks';
+import { createAssets, deleteAsset, fetchAssets, updateAsset } from '@/action/assetAction';
 import notificationAlert from '@/services/notificationAlert';
 
 

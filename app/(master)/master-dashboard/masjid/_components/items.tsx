@@ -1,6 +1,6 @@
 import { useAppDispatch } from "@/store/hooks";
 import { ListMosque } from "@/interface/mosque";
-import { fetchMosques, verifyMosque } from "@/thunks/mosqueThunks";
+import { fetchMosques, verifyMosque } from "@/action/mosqueAction";
 import notificationAlert from "@/services/notificationAlert";
 import confirmAlert from "@/services/confirmAlert";
 

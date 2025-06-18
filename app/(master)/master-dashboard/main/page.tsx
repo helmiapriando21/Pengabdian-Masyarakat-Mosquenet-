@@ -1,11 +1,9 @@
 "use client"
 
 import LineGraph from "@/app/(admin)/dashboard/_components/lineGraph";
-import { getDashboardData } from "@/services/getData";
 import { useState, useEffect } from "react";
 import BarGraph from "../_components/barGraph";
 import Modal from "../_components/modal";
-import KasPayment from "./_components/kasPayment";
 import { ReportData } from "@/interface/report";
 import { AsetDashboard } from "@/interface/aset";
 

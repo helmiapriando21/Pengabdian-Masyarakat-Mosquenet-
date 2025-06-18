@@ -1,13 +1,11 @@
-import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import React from "react";
-import { postDataWithRedirectServices, requestGetApi } from "./api";
+import { requestGetApi } from "./api";
 
 const getJamaahMasjid = async (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
   try {
     const data = await requestGetApi('/api/mosque/jamaah', setIsLoading);
-    console.log(data);
     return data;
   } catch (err) {
     console.error("Error: ", err);
@@ -83,69 +81,6 @@ const getMasjid = async (
     }
 }
 
-const getLaporanMasjid = async (
-  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
-) => {
-  try {
-    const { reports } = await requestGetApi('/api/laporan', setIsLoading);
-    return reports;
-  } catch (err) {
-      console.error("Error: ", err);
-  }
-}
-
-const getLaporanMasjidById = async (
-  masjid_id: string,
-  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
-) => {
-  try {
-    const { reports } = await requestGetApi(`/api/mosques/laporan/${masjid_id}`, setIsLoading)
-    return reports;
-  } catch (err) {
-    console.error("Error: ", err);
-  }
-}
-
-const getDetailKegiatanMasjid = async (
-  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>, 
-  id: number
-) => {
-  try {
-    const { activity } = await requestGetApi(`/api/kegiatan/detail/${id}`, setIsLoading);
-    return activity;
-  } catch (err) {
-    console.error("Error: ", err);
-  }
-}
-
-const getDashboardData = async (
-  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
-) => {
-  try {
-    const data = await requestGetApi('/api/dashboard', setIsLoading);
-    return {
-      report: data.report,
-      pemasukan: data.pemasukan,
-      pengeluaran: data.pengeluaran,
-      aset: data.aset
-    };
-  } catch (err) {
-      console.error("Error: ", err);
-  }
-}
-
-const getValidKasTransaction = async (
-  id: number, 
-  router: AppRouterInstance
-) => {
-  await postDataWithRedirectServices(
-    `/api/check-payment-kas/${id}`,
-    {},
-    router,
-    "Pembayaran belum terverifikasi, harap tunggu."
-  );
-}
-
 export {
     getMasjidList,
     getPrayerTimes,
@@ -154,9 +89,4 @@ export {
     getRecitations,
     getMasjid,
     getJamaahMasjid,
-    getLaporanMasjid,
-    getDetailKegiatanMasjid,
-    getDashboardData,
-    getValidKasTransaction,
-    getLaporanMasjidById
 }

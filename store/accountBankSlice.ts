@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { SelectType } from '@/interface/form';
 import { ListBank } from '@/interface/bank';
-import { addPurpose, createAccountBank, fetchAccountBank, fetchDonationBank, fetchPurposesAccountBank } from '@/thunks/accountBankThunks';
+import { addPurpose, createAccountBank, fetchAccountBank, fetchDonationBank, fetchPurposesAccountBank } from '@/action/accountBankAction';
 import notificationAlert from '@/services/notificationAlert';
 
 
