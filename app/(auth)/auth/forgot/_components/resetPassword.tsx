@@ -22,7 +22,7 @@ export default function ResetPassword({setMenu}: ResetPasswordProps) {
         try {
             nProgress.start();
             if( 
-              !passwordValidation(data?.password || '', 'password')
+              !passwordValidation(data?.password || '')
               && data?.password === data?.confirmPassword
             ) {
                 const response = await fetch("/api/forgot/reset-password", {
@@ -56,7 +56,7 @@ export default function ResetPassword({setMenu}: ResetPasswordProps) {
                   placeholder="password"
                   type="password"
                   isError={isError}
-                  message={passwordValidation(data?.password || '', 'password')}
+                  message={passwordValidation(data?.password || '')}
                 />
                 <Input
                   label="Konfirmasi Password"
@@ -66,7 +66,7 @@ export default function ResetPassword({setMenu}: ResetPasswordProps) {
                   placeholder="Konfirmasi Password"
                   type="password"
                   isError={isError}
-                  message={isError && !passwordValidation(data?.password || '', 'password') && data?.password !== data?.confirmPassword && "Pastikan password dan konfirmasi password sama"}
+                  message={isError && !passwordValidation(data?.password || '') && data?.password !== data?.confirmPassword && "Pastikan password dan konfirmasi password sama"}
                 />
                 <RedirectSolution 
                   question="Sudah punya akun?" 

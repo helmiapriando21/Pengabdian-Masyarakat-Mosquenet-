@@ -52,9 +52,9 @@ export default function Jamaah({ setMenu, setIsChoose, setSelectedRegisterMenu }
             nProgress.start();
             if(
                 !emailValidation(data?.email || '', 'alamat email') && 
-                !telpValidation(data?.telp || '', 'nomor handphone') && 
+                !telpValidation(data?.telp || '') && 
                 !basicValidation(data?.name || '', 'nama') && 
-                !passwordValidation(data?.password || '', 'password') &&
+                !passwordValidation(data?.password || '') &&
                 !numberValidation(data?.mosque_id, 'domisili')
             ) {
                 const response = await fetch("/api/register", {
@@ -102,7 +102,7 @@ export default function Jamaah({ setMenu, setIsChoose, setSelectedRegisterMenu }
                   type="tel"
                   placeholder="Nomor Telepon"
                   isError={isError}
-                  message={telpValidation(data?.telp || '', 'nomor handphone')}
+                  message={telpValidation(data?.telp || '')}
                 />
                 <Input
                   label={'Nama'}
@@ -132,7 +132,7 @@ export default function Jamaah({ setMenu, setIsChoose, setSelectedRegisterMenu }
                   placeholder="password"
                   type="password"
                   isError={isError}
-                  message={passwordValidation(data?.password || '', 'password')}
+                  message={passwordValidation(data?.password || '')}
                 />
             </div>
             <div className="flex flex-col gap-3">

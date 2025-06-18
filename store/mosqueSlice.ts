@@ -45,18 +45,6 @@ const mosqueSlice = createSlice({
         state.error = action.payload as string;
         notificationAlert(action.payload as string, 'error', () => {});
       })
-      // .addCase(deleteAsset.pending, (state) => {
-      //   state.loading = true;
-      // })
-      // .addCase(deleteAsset.fulfilled, (state, action) => {
-      //   state.loading = false;
-      //   state.message = action.payload.message;
-      // })
-      // .addCase(deleteAsset.rejected, (state, action) => {
-      //   state.loading = false;
-      //   state.error = action.payload as string;
-      //   notificationAlert(action.payload as string, 'error', () => {});
-      // })
   }
 });
 

@@ -62,9 +62,9 @@ export default function Masjid({ setMenu, setIsChoose, setSelectedRegisterMenu }
             nProgress.start();
             if(
                 !emailValidation(data?.email || '', 'alamat email') && 
-                !telpValidation(data?.telp || '', 'nomor handphone') && 
+                !telpValidation(data?.telp || '') && 
                 !basicValidation(data?.name || '', 'nama') && 
-                !passwordValidation(data?.password || '', 'password') &&
+                !passwordValidation(data?.password || '') &&
                 !numberValidation(mosqueData?.province_id, 'provinsi masjid') &&
                 !numberValidation(mosqueData?.cityorregency_id, 'kabupaten/kota masjid') &&
                 !numberValidation(mosqueData?.subdistrict_id, 'kecamatan masjid') &&
@@ -119,7 +119,7 @@ export default function Masjid({ setMenu, setIsChoose, setSelectedRegisterMenu }
                   type="tel"
                   placeholder="Nomor Telpon"
                   isError={isError}
-                  message={telpValidation(data?.telp || "", 'nomor handphone')}
+                  message={telpValidation(data?.telp || "")}
                 />
                 <Input
                   label="Nama Admin"
@@ -209,7 +209,7 @@ export default function Masjid({ setMenu, setIsChoose, setSelectedRegisterMenu }
                   placeholder="password"
                   type="password"
                   isError={isError}
-                  message={passwordValidation(data?.password || "", 'password')}
+                  message={passwordValidation(data?.password || "")}
                 />
             </div>
             <div className="flex flex-col gap-3">

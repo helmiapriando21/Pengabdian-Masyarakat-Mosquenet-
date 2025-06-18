@@ -14,14 +14,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`bg-white text-black`}
-      >
-        <NavBar />
-        <ProgressBar />
-        {children}
-      </body>
-    </html>
+    <>
+      <NavBar />
+      <ProgressBar />
+      {children}
+    </>
+    // <html lang="en">
+    //   <body
+    //     className={`bg-white text-black`}
+    //   >
+    //   </body>
+    // </html>
   );
 }

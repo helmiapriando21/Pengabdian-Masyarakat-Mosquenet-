@@ -28,7 +28,6 @@ const configurationSlice = createSlice({
       .addCase(fetchConfiguration.fulfilled, (state, action) => {
         state.loading = false;
         state.configuration = action.payload;
-        console.log(action.payload);
       })
       .addCase(fetchConfiguration.rejected, (state, action) => {
         state.loading = false;

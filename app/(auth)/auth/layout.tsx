@@ -15,10 +15,7 @@ export default function AuthLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body
-        className={`bg-white text-black`}
-      >
+    <>
         <ProgressBar />
         <div className="flex flex-col items-center justify-center w-screen h-screen bg-[#FFE98C] relative">
           <Image 
@@ -39,7 +36,12 @@ export default function AuthLayout({
             </div>
           </div>
         </div>
-      </body>
-    </html>
+    </>
+    // <html lang="en">
+    //   <body
+    //     className={`bg-white text-black`}
+    //   >
+    //   </body>
+    // </html>
   );
 }

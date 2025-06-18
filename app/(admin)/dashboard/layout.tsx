@@ -13,20 +13,22 @@ export default function RootLayout({
 }>) {
 
   return (
-    <html lang="en">
-      <body
-        className={`bg-white text-black min-h-screen`}
-      >
-        <NavBar />
-        <div className="flex w-screen h-full">
-          <Provider store={store}>
-          <Sidebar />
-            <div className="h-full px-10 py-10 w-full">
-                {children}
-            </div>
-          </Provider>
-        </div>
-      </body>
-    </html>
+    <>
+      <NavBar />
+      <div className="flex w-screen h-full">
+        <Provider store={store}>
+        <Sidebar />
+          <div className="h-full px-10 py-10 w-full">
+              {children}
+          </div>
+        </Provider>
+      </div>
+    </>
+    // <html lang="en">
+    //   <body
+    //     className={`bg-white text-black min-h-screen`}
+    //   >
+    //   </body>
+    // </html>
   );
 }

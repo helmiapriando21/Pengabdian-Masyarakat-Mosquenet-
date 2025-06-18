@@ -1,4 +1,4 @@
-const telpValidation = (value: string, label: string) => {
+const telpValidation = (value: string) => {
     if(value === '') {
         return "Tambahkan Nomor Handphone";
     } else if(!/^(\+62|62|0)8[1-9][0-9]{6,11}$/.test(value)) {

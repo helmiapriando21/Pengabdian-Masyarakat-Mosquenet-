@@ -24,7 +24,7 @@ export default function Login({setMenu}: LoginProps) {
             nProgress.start();
             if(
                 !emailValidation(data?.email || '', 'alamat email') && 
-                !passwordValidation(data?.password || '', 'password')
+                !passwordValidation(data?.password || '')
             ) {
                 const response = await fetch("/api/login", {
                     method: 'POST',
@@ -66,7 +66,7 @@ export default function Login({setMenu}: LoginProps) {
                   placeholder="password"
                   type="password"
                   isError={isError}
-                  message={passwordValidation(data?.password || '', 'password')}
+                  message={passwordValidation(data?.password || '')}
                 />
                 <RedirectSolution
                   question="Lupa Password?"
