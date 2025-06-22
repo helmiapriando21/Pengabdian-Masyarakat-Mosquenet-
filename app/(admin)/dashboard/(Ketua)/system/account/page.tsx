@@ -1,47 +1,55 @@
 "use client"
 
-import { getJamaahMasjid } from "@/services/getData";
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import Checkbox from "../../../_components/checkbox";
 import Thead from "../../../../../components/thead";
-import { updateRole, verifyUser } from "@/services/postData";
 import { Jamaah } from "@/interface/jamaah";
 import confirmAlert from "@/services/confirmAlert";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { fetchJamaah, updateRole, verifyJamaah } from "@/action/jamaahAction";
+import notificationAlert from "@/services/notificationAlert";
 
 export default function Account() {
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [jamaah, setJamaah] = useState<Jamaah[]>();
+  const dispatch = useAppDispatch();
+  const {jamaah, loading} = useAppSelector((state) => state.jamaah);
 
   const init = async () => {
-    const requestJamaah = await getJamaahMasjid(setIsLoading);
-    setJamaah(requestJamaah.jamaah);
+    dispatch(fetchJamaah());
   }
 
   const action = async (email: string, role: string) => {
     const isAction = await confirmAlert("Apakah anda ingin role ini diubah?", 'Ya, tolong diubah!', 'Tidak, jangan diubah');
     if(isAction) {
-      await updateRole(email, role);
-      await init();
-      window.dispatchEvent(new Event('user-updated'));
+      try {
+        dispatch(updateRole({ email, role })).unwrap();
+        notificationAlert("Role berhasil diubah!", "success", () => { dispatch(fetchJamaah()) });
+        window.dispatchEvent(new Event('user-updated'));
+      } catch (e) {
+        notificationAlert('Role gagal diubah!', "error", () => {});
+      }
     }
   }
 
   const verify = async (email: string, verify: boolean) => {
     const isAction = await confirmAlert(verify ? "Apakah anda ingin membatalkan verifikasi masyarakat ini?" : "Apakah anda ingin verifikasi masyarakat ini?", 'Ya, tolong dilakukan!', 'Tidak, jangan dilakukan!');
     if(isAction) {
-      await verifyUser(email, !verify);
-      await init();
+      try {
+        dispatch(verifyJamaah({ email, verify })).unwrap();
+        notificationAlert("Jamaah berhasil diverifikasi!", "success", () => { dispatch(fetchJamaah()) });
+      } catch (e) {
+        notificationAlert('Jamaah gagal diverifikasi!', "error", () => {});
+      }
     }
   }
 
   useEffect(() => {
-    if(isLoading) {
+    if(!loading && !jamaah) {
       init();
     }
   }, [])
 
 
-  if(!isLoading) 
+  if(!loading && jamaah) 
     return (
       <table className="rounded-lg overflow-hidden">
         <Thead labels={['Nama', 'Email', 'Status']} />
@@ -115,19 +123,13 @@ export default function Account() {
                     />
                   }
                   {
-                    value.isVerifiedByAdmin 
-                      ? <button
-                          className="w-max h-max px-3 py-1 flex items-center justify-center bg-red-600 font-bold text-white rounded-lg"
-                          onClick={() => {
-                            verify(value.email, value.isVerifiedByAdmin)
-                          }}
-                        >Batalkan verifikasi</button>
-                      : <button
+                    !value.isVerifiedByAdmin 
+                      && <button
                           className="w-max h-max px-3 py-1 flex items-center justify-center bg-green-600 font-bold text-white rounded-lg"
                           onClick={() => {
                             verify(value.email, value.isVerifiedByAdmin)
                           }}
-                        >Verifikasi</button>
+                         >Verifikasi</button>
                   }
                 </td>
               </tr>

@@ -5,7 +5,7 @@ import { createActivity, deleteActivity, fetchActivities, fetchActivity, updateA
 
 
 const activitySlice = createSlice({
-  name: 'contents',
+  name: 'activity',
   initialState: {
     activities: undefined as ListActivities[] |  CreateActivity[] | undefined,
     activity: null as CreateActivity | null,

@@ -19,6 +19,7 @@ export default function PrivacyPolicy() {
         <li>Data hanya digunakan untuk keperluan administrasi masjid.</li>
         <li>Hanya pengurus yang berwenang dapat mengakses data keuangan dan aset.</li>
         <li>Data tidak akan dibagikan kepada pihak ketiga tanpa izin.</li>
+        <li>Data yang diberikan (email) akan digunakan untuk memberikan notifikasi kegiatan atau artikel yang dikirim oleh masjid domisili yang terdaftar dan berkaitan dengan email bersangkutan.</li>
       </ul>
       <h2 className="text-xl font-semibold mt-4">3. Keamanan Data</h2>
       <ul className="list-disc ml-6">

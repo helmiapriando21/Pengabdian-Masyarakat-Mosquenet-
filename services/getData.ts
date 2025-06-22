@@ -1,17 +1,6 @@
 import React from "react";
 import { requestGetApi } from "./api";
 
-const getJamaahMasjid = async (
-  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
-) => {
-  try {
-    const data = await requestGetApi('/api/mosque/jamaah', setIsLoading);
-    return data;
-  } catch (err) {
-    console.error("Error: ", err);
-  }
-}
-
 const getMasjidList = async (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>> | null
 ) => {
@@ -88,5 +77,4 @@ export {
     getSurah,
     getRecitations,
     getMasjid,
-    getJamaahMasjid,
 }

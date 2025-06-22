@@ -10,6 +10,7 @@ import configReducer from './configurationSlice';
 import feedbackReducer from './feedbackSlice';
 import mosqueReducer from './mosqueSlice';
 import dashboardReducer from './dashboardSlice';
+import jamaahReducer from './jamaahSlice';
 
 export const store = configureStore({
   reducer: {
@@ -23,7 +24,8 @@ export const store = configureStore({
     'config': configReducer,
     'feedback': feedbackReducer,
     'mosque': mosqueReducer,
-    'dashboard': dashboardReducer
+    'dashboard': dashboardReducer,
+    'jamaah': jamaahReducer
   }
 });
 

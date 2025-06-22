@@ -1,34 +1,7 @@
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { Donation } from "@/interface/bank";
-import { postDataOnly, postDataWithRedirectServices } from "./api";
+import { postDataWithRedirectServices } from "./api";
 import generateFormData from "./generateFormData";
-import { Animal } from "@/interface/qurban";
-
-const updateRole = async (email: string, role: string) => {
-  const data = await postDataOnly(
-    '/api/user/update-role',
-    {
-      email: email,
-      role: role
-    }
-  )
-
-  if(!data.ok) {
-    const jsonData = await data.json();
-    alert(jsonData.error);
-  }
-};
-
-const verifyUser = async (email: string, verify: boolean) => {
-  const data = await postDataOnly(
-    '/api/user/verify',
-    { email, verify }
-  )
-  if(!data.ok) {
-    const jsonData = await data.json();
-    alert(jsonData.error);
-  }
-}
 
 const sendCritics = async (data: { message: string }, router: AppRouterInstance) => {
   await postDataWithRedirectServices(
@@ -62,8 +35,6 @@ const verifyDonation = async (verified: boolean, masjid_id: string, donation_id:
 }
 
 export {
-  updateRole,
-  verifyUser,
   sendCritics,
   sendDonation,
   verifyDonation,
