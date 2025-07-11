@@ -34,7 +34,7 @@ export default function Account() {
     const isAction = await confirmAlert(verify ? "Apakah anda ingin membatalkan verifikasi masyarakat ini?" : "Apakah anda ingin verifikasi masyarakat ini?", 'Ya, tolong dilakukan!', 'Tidak, jangan dilakukan!');
     if(isAction) {
       try {
-        dispatch(verifyJamaah({ email, verify })).unwrap();
+        dispatch(verifyJamaah({ email, verify : verify ? false : true }));
         notificationAlert("Jamaah berhasil diverifikasi!", "success", () => { dispatch(fetchJamaah()) });
       } catch (e) {
         notificationAlert('Jamaah gagal diverifikasi!', "error", () => {});

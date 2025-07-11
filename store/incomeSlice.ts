@@ -5,8 +5,10 @@ import { SelectType } from '@/interface/form';
 import { 
   addSource, 
   createIncome, 
+  deleteIncome, 
   fetchIncomes, 
-  fetchSources 
+  fetchSources, 
+  updateIncome
 } from '@/action/incomeAction';
 import { AdminDonationDisplay } from '@/interface/bank';
 
@@ -74,6 +76,30 @@ const incomeSlice = createSlice({
         state.message = action.payload.message;
       })
       .addCase(createIncome.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+        notificationAlert(action.payload as string, 'error', () => {});
+      })
+      .addCase(updateIncome.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateIncome.fulfilled, (state, action) => {
+        state.loading = false;
+        state.message = action.payload.message;
+      })
+      .addCase(updateIncome.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+        notificationAlert(action.payload as string, 'error', () => {});
+      })
+      .addCase(deleteIncome.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(deleteIncome.fulfilled, (state, action) => {
+        state.loading = false;
+        state.message = action.payload.message;
+      })
+      .addCase(deleteIncome.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
         notificationAlert(action.payload as string, 'error', () => {});

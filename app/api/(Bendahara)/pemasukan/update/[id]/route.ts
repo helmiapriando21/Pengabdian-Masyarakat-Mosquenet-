@@ -4,30 +4,24 @@
 
 import { NextRequest } from "next/server";
 import axios from "axios";
-import { cookies } from "next/headers";
 
 export async function POST(req: NextRequest) {
+  const userId = req.cookies.get('user-id');
+  const urlParts = req.nextUrl.pathname.split("/");
+  const id = urlParts[urlParts.length - 1];
   const data = await req.json();
-  const cookieStore = await cookies();
-  const userId = req.cookies.get("user-id")
     try {
-      if(userId) {
-        const response = await axios.post(
-          `${process.env.API_URL}/user/verification`, 
-          {
-            email: data.email,
-            verify: data.verify
-          },
+      if(userId && id) {
+        const response = await axios.put(
+          `${process.env.API_URL}/transaction/pemasukan/${id}`,
+          data,
           {
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': userId.value
-            },
+              'Content-Type': 'application/json',
+              'Authorization': userId.value
+            }
           }
         );
-
-        console.log(response.data);
-  
         return new Response(JSON.stringify({
           message: response.data.message
         }), {
@@ -36,13 +30,14 @@ export async function POST(req: NextRequest) {
         });
       } else {
         return new Response(JSON.stringify({
-          message: "Akses Ilegal!"
+          message: "Akses illegal!"
         }), {
-          status: 401,
+          status: 400,
           headers: { "Content-Type": "application/json" }
         });
       }
     } catch (error: any) {
+        console.error("Fetch error:", error);
         return new Response(JSON.stringify({ error: error.response.data.message || error.message, }), {
             status: 500,
             headers: { "Content-Type": "application/json" },

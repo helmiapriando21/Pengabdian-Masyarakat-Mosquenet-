@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { SelectType } from '@/interface/form';
 import { ListBank } from '@/interface/bank';
-import { addPurpose, createAccountBank, fetchAccountBank, fetchDonationBank, fetchPurposesAccountBank } from '@/action/accountBankAction';
+import { addPurpose, createAccountBank, deleteAccountBank, fetchAccountBank, fetchDonationBank, fetchPurposesAccountBank, updateAccountBank } from '@/action/accountBankAction';
 import notificationAlert from '@/services/notificationAlert';
 
 
@@ -81,6 +81,30 @@ const accountBankSlice = createSlice({
         state.message = action.payload.message;
       })
       .addCase(createAccountBank.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+        notificationAlert(action.payload as string, 'error', () => {});
+      })
+      .addCase(updateAccountBank.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateAccountBank.fulfilled, (state, action) => {
+        state.loading = false;
+        state.message = action.payload.message;
+      })
+      .addCase(updateAccountBank.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+        notificationAlert(action.payload as string, 'error', () => {});
+      })
+      .addCase(deleteAccountBank.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(deleteAccountBank.fulfilled, (state, action) => {
+        state.loading = false;
+        state.message = action.payload.message;
+      })
+      .addCase(deleteAccountBank.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
         notificationAlert(action.payload as string, 'error', () => {});

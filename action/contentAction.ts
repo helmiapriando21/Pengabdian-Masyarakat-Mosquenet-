@@ -8,6 +8,7 @@ export const fetchContents = createAsyncThunk(
   'contents/fetchContents',
   async (masjid_id: string | null, { rejectWithValue }) => {
     try {
+      console.log("jalan");
       nProgress.start();
       const endPoint = masjid_id ? `/api/mosques/konten/${masjid_id}` : '/api/konten/get';
       const response = await fetch(endPoint);
@@ -43,7 +44,6 @@ export const createContent = createAsyncThunk<{message: string}, Content>(
     try {
       const formData: FormData = generateFormData(newContent);
       const userId = Cookies.get('user-id');
-
       nProgress.start();
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/content`, {
         method: 'POST',

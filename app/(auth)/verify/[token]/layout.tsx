@@ -19,11 +19,5 @@ export default function RootLayout({
       <ProgressBar />
       {children}
     </>
-    // <html lang="en">
-    //   <body
-    //     className={`bg-white text-black`}
-    //   >
-    //   </body>
-    // </html>
   );
 }

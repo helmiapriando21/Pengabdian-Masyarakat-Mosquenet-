@@ -6,11 +6,13 @@ import {
   addReason, 
   createOutcome, 
   fetchOutcomes, 
-  fetchReasons 
+  fetchReasons,
+  deleteOutcome,
+  updateOutcome
 } from '@/action/outcomeAction';
 
 
-const incomeSlice = createSlice({
+const outcomeSlice = createSlice({
   name: 'incomes',
   initialState: {
     outcomes: undefined as OutcomeData[] | undefined,
@@ -76,8 +78,32 @@ const incomeSlice = createSlice({
         state.error = action.payload as string;
         notificationAlert(action.payload as string, 'error', () => {});
       })
+      .addCase(updateOutcome.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateOutcome.fulfilled, (state, action) => {
+        state.loading = false;
+        state.message = action.payload.message;
+      })
+      .addCase(updateOutcome.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+        notificationAlert(action.payload as string, 'error', () => {});
+      })
+      .addCase(deleteOutcome.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(deleteOutcome.fulfilled, (state, action) => {
+        state.loading = false;
+        state.message = action.payload.message;
+      })
+      .addCase(deleteOutcome.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+        notificationAlert(action.payload as string, 'error', () => {});
+      })
   }
 });
 
-export const { clearMessage, clearError } = incomeSlice.actions;
-export default incomeSlice.reducer;
+export const { clearMessage, clearError } = outcomeSlice.actions;
+export default outcomeSlice.reducer;

@@ -23,10 +23,12 @@ export type CreateOutcome = {
 
 export type IncomeData = MainTransaction & {
   source: string,
-  source_id: number
+  source_id: number,
+  id: number
 }
 
 export type OutcomeData = MainTransaction & {
   reason: string,
-  reason_id: number
+  reason_id: number,
+  id: number
 };

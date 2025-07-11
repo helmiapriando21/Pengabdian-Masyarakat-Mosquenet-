@@ -77,3 +77,46 @@ export const createIncome = createAsyncThunk<{message: string}, CreateIncome>(
     }
   }
 );
+
+export const updateIncome = createAsyncThunk<{message: string}, {id: Number, newIncome: CreateIncome | {amount: number, source_id: number | undefined}}>(
+  'incomes/updateIncome',
+  async (params: {id: Number, newIncome: CreateIncome | {amount: number, source_id: number | undefined}}, { rejectWithValue }) => {
+    try {
+      nProgress.start();
+      const response = await fetch(`/api/pemasukan/update/${params.id}`, {
+        method: 'POST',
+        body: JSON.stringify(params.newIncome),
+        headers: { 'Content-Type': 'application/json' }
+      });
+      const data = await response.json();
+      nProgress.done();
+
+      if(!response.ok) return rejectWithValue(data.error || 'Gagal merubah pemasukan');
+      return { message: data.message };
+    } catch (err) {
+      nProgress.done();
+      return rejectWithValue('Terjadi kesalahan dalam menambahkan pemasukan.');
+    }
+  }
+);
+
+export const deleteIncome = createAsyncThunk<{message: string}, Number>(
+  'incomes/deleteIncome',
+  async (id: Number, { rejectWithValue }) => {
+    try {
+      nProgress.start();
+      const response = await fetch(`/api/pemasukan/delete/${id}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+      });
+      const data = await response.json();
+      nProgress.done();
+
+      if(!response.ok) return rejectWithValue(data.error || 'Gagal menghapus pemasukan');
+      return { message: data.message };
+    } catch (err) {
+      nProgress.done();
+      return rejectWithValue('Terjadi kesalahan dalam menambahkan pemasukan.');
+    }
+  }
+);

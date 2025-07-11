@@ -103,3 +103,52 @@ export const createAccountBank = createAsyncThunk<{message: string}, CreateBank>
     }
   }
 );
+
+export const updateAccountBank = createAsyncThunk<{message: string}, CreateBank & {id: number}>(
+  'accountBank/updateAccountBank',
+  async (newAccount: CreateBank & {id: number}, { rejectWithValue }) => {
+    try {
+      const {id, image, ...sendData} = newAccount;
+      const formData: FormData = generateFormData(image instanceof File ? {...sendData, image} : sendData);
+      const userId = Cookies.get('user-id');
+
+      nProgress.start();
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/transaction/account-bank/${id}`, {
+        method: 'PUT',
+        body: formData,
+        headers: { 
+          "Authorization": `${userId}`
+        }
+      });
+      const data = await response.json();
+      nProgress.done();
+
+      if(!response.ok) return rejectWithValue(data.error || 'Gagal mengubah rekening bank');
+      return { message: data.message };
+    } catch (err) {
+      nProgress.done();
+      return rejectWithValue('Terjadi kesalahan dalam mengubah rekening bank.');
+    }
+  }
+);
+
+export const deleteAccountBank = createAsyncThunk<{message: string}, number>(
+  'accountBank/deleteAccount',
+  async (id: number, { rejectWithValue }) => {
+    try {
+      nProgress.start();
+      const response = await fetch(`/api/daftar-rekening-bank/delete/${id}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+      });
+      const data = await response.json();
+      nProgress.done();
+
+      if(!response.ok) return rejectWithValue(data.error || 'Gagal menghapus rekening bank');
+      return { message: data.message };
+    } catch (err) {
+      nProgress.done();
+      return rejectWithValue('Terjadi kesalahan dalam menghapus rekening bank.');
+    }
+  }
+);

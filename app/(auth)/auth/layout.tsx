@@ -37,11 +37,5 @@ export default function AuthLayout({
           </div>
         </div>
     </>
-    // <html lang="en">
-    //   <body
-    //     className={`bg-white text-black`}
-    //   >
-    //   </body>
-    // </html>
   );
 }

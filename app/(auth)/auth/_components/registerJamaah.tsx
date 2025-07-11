@@ -10,11 +10,13 @@ import emailValidation from "@/validation/email-validation";
 import telpValidation from "@/validation/telp-validation";
 import basicValidation from "@/validation/basic-validation";
 import passwordValidation from "@/validation/password-validation";
-import { getMasjidList } from "@/services/getData";
 import RedirectSolution from "./redirectSolution";
 import { UserData } from "@/interface/auth";
 import { SelectType } from "@/interface/form";
 import numberValidation from "@/validation/number-validation";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { fetchMosques } from "@/action/mosqueAction";
+import { ListMosque } from "@/interface/mosque";
 
 interface JamaahProps {
   setMenu: React.Dispatch<React.SetStateAction<string>>,
@@ -23,29 +25,23 @@ interface JamaahProps {
 }
 
 export default function Jamaah({ setMenu, setIsChoose, setSelectedRegisterMenu }: JamaahProps) {
-    const [isLoading, setIsLoading] = useState<boolean>(true);
     const [data, setData] = useState<UserData>();
     const [mosqueOption, setMosqueOption] = useState<SelectType[]>([]);
     const [isError, setIsError] = useState<boolean>(false);
     const router = useRouter();
+    const dispatch = useAppDispatch();
+    const {mosques, loading} = useAppSelector((state) => state.mosque);
     
     useEffect(() => {
-        const initData = async () => {
-            const data = await getMasjidList(setIsLoading);
-            setMosqueOption(data.map((value: {
-              id: number, 
-              name: string, 
-              location: string
-            }) => ({
-                id: value.id,
-                name: `${value.name}. ${value.location}`
-            })));
+        if(!loading && !mosques) {
+          dispatch(fetchMosques('/api/mosques/list'));
+        } else if (mosques) {
+          setMosqueOption(mosques.map((value: ListMosque) => ({
+            id: value.id,
+            name: `${value.name}. ${value.location}`
+          })));
         }
-    
-        if(isLoading) {
-            initData();
-        }
-    }, [isLoading]);
+    }, [loading, dispatch, mosques]);
 
     const handleClick = async () => {
         try {
@@ -65,7 +61,6 @@ export default function Jamaah({ setMenu, setIsChoose, setSelectedRegisterMenu }
                     })
                 });
                 const responseData = await response.json();
-                console.log(response);
                 if(response.ok) {
                     showAlert(responseData.message, router, "success", '/auth');
                     setData(undefined);
@@ -81,7 +76,7 @@ export default function Jamaah({ setMenu, setIsChoose, setSelectedRegisterMenu }
         }
     }
 
-    if(!isLoading) return (
+    if(!loading && mosques) return (
         <>
             <div className="flex flex-col gap-2 overflow-scroll">
                 <Input

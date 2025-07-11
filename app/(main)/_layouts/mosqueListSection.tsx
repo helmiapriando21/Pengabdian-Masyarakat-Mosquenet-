@@ -1,27 +1,23 @@
 "use client"
 
-import { getMasjidList } from "@/services/getData";
 import { ListMosque } from "@/interface/mosque";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { fetchMosques } from "@/action/mosqueAction";
 
 export default function MosqueListSection() {
-    const [isLoading, setIsLoading] = useState<boolean>(true);
-    const [mosques, setMosques] = useState<ListMosque[]>();
+    const dispatch = useAppDispatch();
+    const {mosques, loading} = useAppSelector((state) => state.mosque);
     const router = useRouter();
 
     useEffect(() => {
-        const init = async () => {
-          const data = await getMasjidList(setIsLoading);
-          setMosques(data);
-        }
-
-        if(isLoading) 
-          init();
-    }, [])
+        if(!loading && !mosques) 
+          dispatch(fetchMosques('/api/mosques/list'));
+    }, [dispatch, loading, mosques])
 
 
-    if(!isLoading && mosques) return (
+    if(!loading && mosques && mosques.length > 0) return (
       <div className="bg-white w-screen h-screen max-sm:items-center max-sm:flex sm:h-max p-4 sm:p-16">
         <div className="flex items-center justify-center w-full h-max bg-[#FFF59C] sm:p-8 rounded-3xl">
             <table>
