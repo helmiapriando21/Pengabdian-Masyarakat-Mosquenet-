@@ -11,7 +11,7 @@ export default function ListArchiveTemplate() {
   const {templates, loading} = useAppSelector((state) => state.archive);
 
   useEffect(() => {
-    if(!loading && (!templates || templates.length === 0)) {
+    if(!loading && !templates) {
       dispatch(fetchTemplates());
     }
   }, [dispatch, templates]);

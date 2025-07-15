@@ -11,7 +11,7 @@ export default function ListArchive() {
   const {documents, loading} = useAppSelector((state) => state.archive);
 
   useEffect(() => {
-    if(!loading && (!documents || documents.length === 0)) {
+    if(!loading && !documents) {
       dispatch(fetchDocuments());
     }
   }, [dispatch, documents]);
