@@ -25,11 +25,14 @@ export default function DetailKegiatan() {
   if(!loading && activity)
     return (
       <div className="flex flex-col gap-10 w-full h-full">
-        <img 
-          src={`${process.env.NEXT_PUBLIC_API_STATIC_URL}/${activity.image}`}
-          className="w-[100rem] h-[30rem]"
-          alt={`Representasi Kegiatan ${activity.name}`}
-        />
+        {
+          activity.image &&
+          <img 
+            src={`${process.env.NEXT_PUBLIC_API_STATIC_URL}/${activity.image}`}
+            className="w-[100rem] h-[30rem]"
+            alt={`Representasi Kegiatan ${activity.name}`}
+          />
+        }
         <div className="flex flex-col gap-3">
           <h1 className="font-bold text-black text-3xl text-center">{activity.name}</h1>
           <h4 className="font-bold text-black text-xl text-center">

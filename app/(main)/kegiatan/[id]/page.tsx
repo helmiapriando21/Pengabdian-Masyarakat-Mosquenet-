@@ -22,11 +22,11 @@ export default function DetailKegiatan() {
 
   if(!loading && activity)
     return (
-      <div className="flex flex-col gap-10 w-full h-full">
+      <div className="flex flex-col gap-10 w-full h-full ">
         {
           activity.image && <img 
             src={`${process.env.NEXT_PUBLIC_API_STATIC_URL}/${activity.image}`}
-            className="w-[100rem] h-[30rem]"
+            className="w-[100rem] h-[30rem] self-center"
           />
         }
         <div className="flex flex-col gap-3 mt-10">

@@ -29,7 +29,8 @@ export default function DonationList({ masjid_id }: { masjid_id: string | null }
               }}
               className="border-[1px] border-black rounded-lg bg-white hover:bg-gray-400 hover:text-white text-black min-w-full min-h-max px-3 py-1"
             >
-              <h1>{value.purpose}</h1>
+              <h1>{value.purpose}</h1> 
+              <h1>Bank : {value.bank.toUpperCase()}</h1>
             </div>
           ))
         }
