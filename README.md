@@ -1,7 +1,3 @@
-Oke 👍 aku buatin draft **README.md** untuk aplikasi Next.js kamu. Bisa kamu pakai sebagai template dan sesuaikan nama project + fitur aplikasinya.
-
----
-
 # 📘 Next.js App
 
 Aplikasi ini dibangun menggunakan [Next.js](https://nextjs.org/) sebagai framework React modern untuk pengembangan web dengan dukungan **SSR (Server-Side Rendering)**, **SSG (Static Site Generation)**, dan **API Routes**.
@@ -90,11 +86,3 @@ Di dalam `package.json`:
 - [react-chartjs-2](https://react-chartjs-2.js.org/) + [Chart.js](https://www.chartjs.org/) (opsional)
 
 ---
-
-## 📝 Lisensi
-
-Project ini menggunakan lisensi **MIT** – silakan gunakan dan modifikasi sesuai kebutuhan.
-
----
-
-Mau aku bikinin versi README yang lebih **spesifik sesuai aplikasi Next.js kamu** (misalnya untuk project **Waste-Food**, **Sisa Makan**, atau yang lain)?
