@@ -35,8 +35,8 @@ Aplikasi ini dibangun menggunakan [Next.js](https://nextjs.org/) sebagai framewo
 1. **Clone repo**
 
    ```bash
-   git clone https://github.com/username/nama-project.git
-   cd nama-project
+   git clone https://github.com/helmiapriando21/Pengabdian-Masyarakat-Mosquenet-.git frontend
+   cd frontend
    ```
 
 2. **Install dependencies**
