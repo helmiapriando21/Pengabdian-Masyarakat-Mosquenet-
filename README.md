@@ -1,36 +1,100 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Oke 👍 aku buatin draft **README.md** untuk aplikasi Next.js kamu. Bisa kamu pakai sebagai template dan sesuaikan nama project + fitur aplikasinya.
 
-## Getting Started
+---
 
-First, run the development server:
+# 📘 Next.js App
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+Aplikasi ini dibangun menggunakan [Next.js](https://nextjs.org/) sebagai framework React modern untuk pengembangan web dengan dukungan **SSR (Server-Side Rendering)**, **SSG (Static Site Generation)**, dan **API Routes**.
+
+---
+
+## 🚀 Fitur Utama
+
+- ⚡️ Fast Refresh untuk pengembangan cepat
+- 📦 Routing berbasis file (Pages / App Router)
+- 🔒 API Routes bawaan Next.js
+- 🎨 Styled dengan Tailwind CSS (opsional, kalau kamu pakai)
+- 📊 Integrasi dengan Chart.js / react-chartjs-2 (opsional, kalau ada)
+
+---
+
+## 📂 Struktur Folder
+
+```
+.
+├── public/             # Asset statis
+├── src/ atau pages/    # Halaman Next.js
+│   ├── index.tsx       # Halaman utama
+│   ├── api/            # API Routes
+├── components/         # Reusable components
+├── styles/             # Global CSS / Tailwind
+├── package.json
+└── next.config.js
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🛠️ Instalasi & Menjalankan
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. **Clone repo**
 
-## Learn More
+   ```bash
+   git clone https://github.com/username/nama-project.git
+   cd nama-project
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+2. **Install dependencies**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+   ```bash
+   npm install
+   # atau
+   yarn install
+   # atau
+   pnpm install
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+3. **Jalankan development server**
 
-## Deploy on Vercel
+   ```bash
+   npm run dev
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   Buka [http://localhost:3000](http://localhost:3000) di browser.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+4. **Build untuk production**
+
+   ```bash
+   npm run build
+   npm start
+   ```
+
+---
+
+## ⚙️ Script yang tersedia
+
+Di dalam `package.json`:
+
+- `dev` → Menjalankan Next.js development mode
+- `build` → Build aplikasi untuk production
+- `start` → Menjalankan hasil build production
+- `lint` → Menjalankan linter (ESLint)
+
+---
+
+## 📦 Dependencies utama
+
+- [Next.js](https://nextjs.org/)
+- [React](https://react.dev/)
+- [TypeScript](https://www.typescriptlang.org/) (opsional)
+- [Tailwind CSS](https://tailwindcss.com/) (opsional)
+- [react-chartjs-2](https://react-chartjs-2.js.org/) + [Chart.js](https://www.chartjs.org/) (opsional)
+
+---
+
+## 📝 Lisensi
+
+Project ini menggunakan lisensi **MIT** – silakan gunakan dan modifikasi sesuai kebutuhan.
+
+---
+
+Mau aku bikinin versi README yang lebih **spesifik sesuai aplikasi Next.js kamu** (misalnya untuk project **Waste-Food**, **Sisa Makan**, atau yang lain)?
