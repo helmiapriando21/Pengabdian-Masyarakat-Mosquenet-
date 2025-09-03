@@ -1,7 +1,7 @@
 const DASHBOARD_CONTENT = {
   FEATURE_LIST: [
     {
-      title: "Dashbaord",
+      title: "Dashboard",
       url: "/v2/dashboard",
     },
     {
@@ -10,22 +10,22 @@ const DASHBOARD_CONTENT = {
       submenus: [
         {
           title: "Manajemen Akun",
-          url: "/v2/dashboard/system-management/account",
+          url: "/v2/system-management/account",
         },
-        { title: "Pengaturan", url: "/v2/dashboard/system-management/setting" },
+        { title: "Pengaturan", url: "/v2/system-management/setting" },
       ],
     },
     {
       title: "Manajemen Aset",
-      url: "/v2/dashboard/aset-management",
+      url: "/v2/aset-management",
     },
     {
       title: "Manajemen Kegiatan",
-      url: "/v2/dashboard/activity-management",
+      url: "/v2/activity-management",
     },
     {
       title: "Manajemen Konten",
-      url: "/v2/dashboard/content-management",
+      url: "/v2/content-management",
     },
   ],
   DATA_KEUANGAN: [

@@ -2,14 +2,76 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import PrimaryButton from "@/app/components/PrimaryButton";
 import IMG from "@/content/img";
 import { FaChevronLeft } from "react-icons/fa";
-import { useRouter } from "next/navigation";
+import nProgress from "nprogress";
+import showAlert from "@/services/showAlert"; // Pastikan ada seperti di project lama
+import emailValidation from "@/validation/email-validation";
+import passwordValidation from "@/validation/password-validation";
 
 const LoginPage = () => {
-  const route = useRouter();
+  const router = useRouter();
+
+  // State untuk form
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isError, setIsError] = useState(false);
+
+  const handleLogin = async () => {
+    try {
+      nProgress.start();
+
+      // validasi input
+      const emailMsg = emailValidation(email, "email");
+      const passMsg = passwordValidation(password);
+
+      if (!emailMsg && !passMsg) {
+        // Kirim ke API
+        const response = await fetch("/api/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
+        });
+
+        const responseData = await response.json();
+
+        if (response.ok) {
+          showAlert(
+            responseData.message,
+            router,
+            "success",
+            responseData.redirect ? "/v2/dashboard" : "/"
+          );
+        } else {
+          showAlert(
+            responseData.error ||
+              "Terjadi kesalahan pada login, silahkan coba lagi!",
+            router,
+            "error",
+            "/v2/login"
+          );
+        }
+      } else {
+        setIsError(true);
+        showAlert("Email atau password tidak valid", router, "error", "/v2/login");
+      }
+    } catch (err) {
+      console.log("Error:", err);
+      showAlert(
+        "Terjadi kesalahan pada login, silahkan coba lagi!",
+        router,
+        "error",
+        "/v2/login"
+      );
+    } finally {
+      nProgress.done();
+    }
+  };
 
   return (
     <div
@@ -38,15 +100,23 @@ const LoginPage = () => {
           {/* Email Input */}
           <input
             type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             placeholder="Email"
-            className="w-full max-w-[400px] border border-gray-300 rounded px-4 py-2"
+            className={`w-full max-w-[400px] border ${
+              isError ? "border-red-500" : "border-gray-300"
+            } rounded px-4 py-2`}
           />
 
           {/* Password Input */}
           <input
             type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             placeholder="Password"
-            className="w-full max-w-[400px] border border-gray-300 rounded px-4 py-2"
+            className={`w-full max-w-[400px] border ${
+              isError ? "border-red-500" : "border-gray-300"
+            } rounded px-4 py-2`}
           />
 
           {/* Lupa password */}
@@ -63,9 +133,7 @@ const LoginPage = () => {
           {/* Login Button */}
           <PrimaryButton
             className="w-full max-w-[400px]"
-            onClick={() => {
-              route.push("/v2/dashboard");
-            }}
+            onClick={handleLogin}
           >
             Login
           </PrimaryButton>
