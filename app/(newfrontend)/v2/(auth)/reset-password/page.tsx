@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import PrimaryButton from "@/components/PrimaryButton";
+import PrimaryButton from "@/app/components/PrimaryButton";
 import { useRouter } from "next/navigation";
 import IMG from "@/content/img";
 import { FaChevronLeft } from "react-icons/fa6";
