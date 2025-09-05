@@ -10,14 +10,14 @@ export default function ProfilePage() {
   const handleLogout = () => {
     // Tambahkan logika logout di sini
     console.log("Logout clicked");
-    router.push("/login");
+    router.push("/v2");
   };
 
   return (
     <div className="relative min-h-screen flex items-center justify-center">
       {/* Background */}
       <Image
-        src="/img/background-masjid.jpg" // ganti dengan gambar background yang sesuai
+        src={IMG.BG_PROFILE}
         alt="Masjid Background"
         fill
         className="object-cover -z-10"
@@ -26,16 +26,16 @@ export default function ProfilePage() {
 
       {/* Card Profil */}
       <div className="bg-white rounded-2xl shadow-lg w-[90%] max-w-md p-6 flex flex-col items-center space-y-4">
-        {/* Back Button */}
-        <button
-          className="absolute top-6 left-6 text-gray-700 text-2xl"
-          onClick={() => router.back()}
-        >
-          ←
-        </button>
-
         {/* Content */}
         <div className="flex flex-col h-full items-center justify-center gap-4">
+          {/* Back Button */}
+          <button
+            className="self-start text-gray-700 text-2xl"
+            onClick={() => router.back()}
+          >
+            ←
+          </button>
+
           {/* Logo */}
           <Image src={IMG.LOGO} alt="Logo" width={310} height={75} />
 
@@ -45,7 +45,7 @@ export default function ProfilePage() {
           {/* Foto Profil */}
           <div className="w-24 h-24 rounded-lg overflow-hidden border border-gray-300">
             <Image
-              src="/img/user.jpg" // ganti dengan foto user
+              src="/img/avatar.jpeg"
               alt="Foto Profil"
               width={96}
               height={96}

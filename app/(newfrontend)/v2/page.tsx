@@ -32,7 +32,7 @@ export default function HomePage() {
       {/* Topbar */}
       <Topbar
         onLoginClick={() => {
-          route.push("/v2/login");
+          route.push("/auth/login");
         }}
         logoSrc={IMG.LOGO}
         isScrolled={scrolled}
@@ -42,7 +42,7 @@ export default function HomePage() {
       <main className="flex-grow">
         {/* Hero */}
         <Hero backgroundImage={IMG.HERO}>
-          <HeroText> {HOME_CONTENT.HERO_TEXT} </HeroText>
+          <HeroText> {HOME_CONTENT.HERO_TEXT}</HeroText>
         </Hero>
 
         {/* Fitur Grid 2x2 */}

@@ -6,8 +6,8 @@ import Modal from "@/app/(admin)/dashboard/_components/modal";
 import PrivacyPolicy from "./_components/privacyPolicy";
 
 export const metadata: Metadata = {
-  title: `Autorisasi | ${process.env.NEXT_PUBLIC_APP_NAME}`
-}
+  title: `Autorisasi | ${process.env.NEXT_PUBLIC_APP_NAME}`,
+};
 
 export default function AuthLayout({
   children,
@@ -16,8 +16,9 @@ export default function AuthLayout({
 }) {
   return (
     <>
-        <ProgressBar />
-        <div className="flex flex-col items-center justify-center w-screen h-screen bg-[#FFE98C] relative">
+      <ProgressBar />
+      {children}
+      {/* <div className="flex flex-col items-center justify-center w-screen h-screen bg-[#FFE98C] relative">
           <Image 
             src="/img/main-background.png" 
             alt="" 
@@ -35,7 +36,7 @@ export default function AuthLayout({
               </Modal>
             </div>
           </div>
-        </div>
+        </div> */}
     </>
   );
 }

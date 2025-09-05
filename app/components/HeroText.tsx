@@ -19,7 +19,7 @@ const HeroText: React.FC<HeroTextProps> = ({
       }}
       {...props}
     >
-      <Text type="header1" className="text-primary text-center">
+      <Text type="header1" className="text-black text-center">
         {children}
       </Text>
     </div>

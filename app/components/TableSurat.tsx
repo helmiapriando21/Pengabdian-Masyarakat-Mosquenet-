@@ -29,9 +29,9 @@ const TableSurat: React.FC<TableSuratProps> = ({ headers, rows }) => {
   return (
     <div className="w-full px-16">
       {/* Table Header */}
-      <div className="grid grid-cols-12 gap-4 mb-4 px-6">
+      <div className="grid grid-cols-12 gap-4 mb-4 px-6 ">
         <div
-          className="col-span-12 bg-white rounded-[10px] py-[15px] px-[20px] grid"
+          className="col-span-12 bg-white rounded-[10px] py-[15px] px-[20px] grid items-center"
           style={{
             ...shadowStyle,
             gridTemplateColumns: `repeat(${headers.length}, minmax(0, 1fr))`,

@@ -58,7 +58,12 @@ const LoginPage = () => {
         }
       } else {
         setIsError(true);
-        showAlert("Email atau password tidak valid", router, "error", "/v2/login");
+        showAlert(
+          "Email atau password tidak valid",
+          router,
+          "error",
+          "/v2/login"
+        );
       }
     } catch (err) {
       console.log("Error:", err);
@@ -131,17 +136,17 @@ const LoginPage = () => {
           </div>
 
           {/* Login Button */}
-          <PrimaryButton
-            className="w-full max-w-[400px]"
-            onClick={handleLogin}
-          >
+          <PrimaryButton className="w-full max-w-[400px]" onClick={handleLogin}>
             Login
           </PrimaryButton>
 
           {/* Belum punya akun */}
           <div className="text-sm text-gray-600">
             Belum punya akun?{" "}
-            <Link href="/v2/register" className="text-blue-600 hover:underline">
+            <Link
+              href="/auth/register-masjid"
+              className="text-blue-600 hover:underline"
+            >
               Daftar
             </Link>
           </div>

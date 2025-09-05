@@ -15,6 +15,7 @@ const IMG = {
   BG_ASET_MANAGEMENT: "/img/aset-management-bg.svg",
   BG_ACTIVITY_MANAGEMENT: "/img/activity-management-logo.svg",
   BG_CONTENT_MANAGEMENT: "/img/content-management-bg.svg",
+  BG_PROFILE: "/img/background-masjid.jpg",
 } as const;
 
 export default IMG;
