@@ -2,30 +2,49 @@ const DASHBOARD_CONTENT = {
   FEATURE_LIST: [
     {
       title: "Dashboard",
-      url: "/v2/dashboard",
+      url: "/dashboard/main",
     },
     {
       title: "Manajemen Sistem",
-      url: "",
+      url: "/dashboard/system",
       submenus: [
         {
           title: "Manajemen Akun",
-          url: "/v2/system-management/account",
+          url: "/dashboard/system/account",
         },
-        { title: "Pengaturan", url: "/v2/system-management/setting" },
+        { title: "Pengaturan", url: "/dashboard/system/configuration" },
+      ],
+    },
+    {
+      title: "Manajemen Keuangan",
+      url: "/dashboard/keuangan",
+      submenus: [
+        {
+          title: "Manajemen Pemasukan",
+          url: "/dashboard/keuangan/pemasukan",
+        },
+        {
+          title: "Manajemen Pengeluaran",
+          url: "/dashboard/keuangan/pengeluaran",
+        },
+        { title: "Laporan Keuangan", url: "/dashboard/keuangan/laporan" },
+        {
+          title: "List Rekening Bank",
+          url: "/dashboard/keuangan/list-rekening-bank",
+        },
       ],
     },
     {
       title: "Manajemen Aset",
-      url: "/v2/aset-management",
+      url: "/dashboard/aset",
     },
     {
       title: "Manajemen Kegiatan",
-      url: "/v2/activity-management",
+      url: "/dashboard/kegiatan",
     },
     {
       title: "Manajemen Konten",
-      url: "/v2/content-management",
+      url: "/dashboard/content",
     },
   ],
   DATA_KEUANGAN: [

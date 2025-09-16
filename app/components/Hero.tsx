@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 interface HeroProps {
   backgroundImage: string;
@@ -6,7 +6,11 @@ interface HeroProps {
   className?: string;
 }
 
-const Hero: React.FC<HeroProps> = ({ backgroundImage, children, className = '' }) => {
+const Hero: React.FC<HeroProps> = ({
+  backgroundImage,
+  children,
+  className = "",
+}) => {
   return (
     <section
       className={`w-full h-screen bg-cover bg-center flex items-center justify-center ${className}`}

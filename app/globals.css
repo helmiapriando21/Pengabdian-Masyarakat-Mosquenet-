@@ -25,7 +25,7 @@ body {
   text-align: center;
   padding-top: 10px;
   padding-bottom: 10px;
-  background-color: #FFDE72;
+  background-color: #ffde72;
   border: 5px solid white;
   font-size: 12px;
   font-weight: bold;
@@ -33,17 +33,15 @@ body {
 
 .react-calendar__navigation__label__labelText {
   font-size: 12px;
-  font-weight: bold;  
+  font-weight: bold;
   letter-spacing: 1px;
   text-transform: uppercase;
   padding: 5px;
   text-align: center;
 }
 
-
-
 #nprogress .bar {
-  background: #ffdd00;
+  background: #009000;
   position: absolute;
   right: 0;
   left: 0;

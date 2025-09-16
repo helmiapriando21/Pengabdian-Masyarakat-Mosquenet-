@@ -18,7 +18,7 @@ export default function DashboardLayout({
       <TopbarDashboard
         logoSrc={IMG.LOGO_WHITE}
         onLoginClick={() => {
-          route.push("/v2/profile");
+          route.push("/profile");
         }}
         features={DASHBOARD_CONTENT.FEATURE_LIST}
         showFeatures={true}

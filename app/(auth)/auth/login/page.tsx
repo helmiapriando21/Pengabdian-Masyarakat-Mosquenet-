@@ -45,7 +45,7 @@ const LoginPage = () => {
             responseData.message,
             router,
             "success",
-            responseData.redirect ? "/v2/dashboard" : "/"
+            responseData.redirect ? "dashboard" : "/"
           );
         } else {
           showAlert(
@@ -53,17 +53,12 @@ const LoginPage = () => {
               "Terjadi kesalahan pada login, silahkan coba lagi!",
             router,
             "error",
-            "/v2/login"
+            "login"
           );
         }
       } else {
         setIsError(true);
-        showAlert(
-          "Email atau password tidak valid",
-          router,
-          "error",
-          "/v2/login"
-        );
+        showAlert("Email atau password tidak valid", router, "error", "login");
       }
     } catch (err) {
       console.log("Error:", err);
@@ -71,7 +66,7 @@ const LoginPage = () => {
         "Terjadi kesalahan pada login, silahkan coba lagi!",
         router,
         "error",
-        "/v2/login"
+        "login"
       );
     } finally {
       nProgress.done();
@@ -88,7 +83,7 @@ const LoginPage = () => {
       <div className="bg-white w-[600px] h-[600px] rounded-[10px] p-5 relative shadow-lg">
         {/* Back Button */}
         <Link
-          href="/v2"
+          href="dashboard"
           className="absolute top-5 left-5 text-2xl font-bold text-gray-700 hover:text-black"
         >
           <FaChevronLeft />

@@ -83,15 +83,17 @@ const Topbar: React.FC<TopbarProps> = ({
 
   const isFeatureActive = (feature: Feature): boolean => {
     if (!getActiveFeatureUrl) return false;
-    
+
     // Jika feature memiliki URL dan URL aktif sama dengan URL feature
     if (feature.url && getActiveFeatureUrl === feature.url) return true;
-    
+
     // Jika feature memiliki submenu, cek apakah ada submenu yang aktif
     if (feature.submenus) {
-      return feature.submenus.some((submenu) => submenu.url === getActiveFeatureUrl);
+      return feature.submenus.some(
+        (submenu) => submenu.url === getActiveFeatureUrl
+      );
     }
-    
+
     return false;
   };
 
@@ -101,7 +103,7 @@ const Topbar: React.FC<TopbarProps> = ({
 
   return (
     <header
-      className={`sticky top-0 w-full flex items-center justify-between px-6 py-4 transition-colors duration-300 z-50 ${
+      className={`fixed top-0 w-full flex items-center justify-between px-6 py-4 transition-colors duration-300 z-50  ${
         isScrolled ? "bg-white shadow-md" : "bg-transparent"
       } ${className}`}
     >
@@ -124,10 +126,12 @@ const Topbar: React.FC<TopbarProps> = ({
             const hasSubmenus = feature.submenus && feature.submenus.length > 0;
 
             return (
-              <div 
-                key={idx} 
+              <div
+                key={idx}
                 className="relative group"
-                onMouseEnter={() => hasSubmenus && setOpenDropdown(feature.title)}
+                onMouseEnter={() =>
+                  hasSubmenus && setOpenDropdown(feature.title)
+                }
                 onMouseLeave={() => hasSubmenus && setOpenDropdown(null)}
               >
                 {/* Parent Button */}
@@ -147,7 +151,7 @@ const Topbar: React.FC<TopbarProps> = ({
 
                 {/* Dropdown jika ada submenu */}
                 {hasSubmenus && (
-                  <div 
+                  <div
                     className={`absolute bg-white shadow-lg rounded-md mt-2 min-w-[200px] ${
                       openDropdown === feature.title ? "block" : "hidden"
                     }`}

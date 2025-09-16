@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import "../globals.css";
 import NavBar from "../components/navbar";
@@ -11,13 +11,12 @@ export default function MainLayoutClient({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
   return (
     <>
-      <NavBar />
-      <ProgressBar />
       <Provider store={store}>
         {children}
+        <NavBar />
+        <ProgressBar />
       </Provider>
     </>
   );

@@ -1,5 +1,5 @@
 const HOME_CONTENT = {
-  HERO_TEXT: "Assalamualaikum, Selamat Datang di Website Mosquenet",
+  HERO_TEXT: "Selamat Datang di Website Masjid Al-Ihsan",
 
   FITUR_GRID_1: {
     title: "Kelola Keuangan Masjid",

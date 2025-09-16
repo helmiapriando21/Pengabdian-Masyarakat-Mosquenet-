@@ -1,34 +1,43 @@
-"use client"
+"use client";
 
 import showAlert from "@/services/showAlert";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect } from "react";
 
-
-export default function Verify(){
+export default function Verify() {
   const { token } = useParams();
   const router = useRouter();
 
   const verify = async () => {
-    if(token) {
-      const response = await fetch('/api/verify', {
-        method: 'POST',
-        body: JSON.stringify({ token: token })
+    if (token) {
+      const response = await fetch("/api/verify", {
+        method: "POST",
+        body: JSON.stringify({ token: token }),
       });
       const responseData = await response.json();
-      if(response.ok) {
-        showAlert(responseData.message, router, "success", '/auth');
+      if (response.ok) {
+        showAlert(responseData.message, router, "success", "/auth/login");
       } else {
-        showAlert("Terjadi kesalahan verifikasi, token tidak valid", router, "error", '/auth');
+        showAlert(
+          "Terjadi kesalahan verifikasi, token tidak valid",
+          router,
+          "error",
+          "/auth/login"
+        );
       }
     } else {
-      showAlert("Terjadi kesalahan verifikasi, tidak ada token yang diterima", router, "error", '/auth');
+      showAlert(
+        "Terjadi kesalahan verifikasi, tidak ada token yang diterima",
+        router,
+        "error",
+        "/auth"
+      );
     }
-  }
+  };
 
   useEffect(() => {
     verify();
-  }, [token])
-  
-  return null
+  }, [token]);
+
+  return null;
 }
